@@ -1,6 +1,17 @@
 version: 2
 
 updates:
+  - package-ecosystem: "npm"
+    directory: "sample/"
+    schedule:
+      interval: "weekly"
+      day: monday
+    groups:
+      action-updates:
+        update-types:
+          - minor
+          - patch
+
   - package-ecosystem: github-actions
     directory: /
     schedule:
