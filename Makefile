@@ -1,5 +1,7 @@
-GOPATH ?= $(shell go env GOPATH)
-GOBIN ?= $(GOPATH)/bin
+default: build test
 
-install/lint:
-	curl -sSfL https://golangci-lint.run/install.sh | sh -s -- -b $(GOBIN) v2.12.2
+build:
+	@echo "Building"
+
+test:
+	@echo "Testing"
