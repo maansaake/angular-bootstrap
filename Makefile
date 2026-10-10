@@ -1,7 +1,7 @@
 default: build test
 
 install:
-	(cd sample && npm install)
+	(cd sample && npm ci)
 
 install/cli:
 	npm install -g @angular/cli
