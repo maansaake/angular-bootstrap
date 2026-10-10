@@ -3,6 +3,9 @@ default: build test
 install:
 	(cd sample && npm install)
 
+install/cli:
+	npm install -g @angular/cli
+
 build:
 	(cd sample && ng build)
 
