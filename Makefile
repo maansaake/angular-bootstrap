@@ -5,3 +5,6 @@ build:
 
 test:
 	(cd sample && ng test)
+
+lint:
+	(cd sample && ng lint)
