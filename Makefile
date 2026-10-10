@@ -1,5 +1,8 @@
 default: build test
 
+install:
+	(cd sample && npm install)
+
 build:
 	(cd sample && ng build)
 
