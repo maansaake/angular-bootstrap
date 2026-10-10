@@ -1,7 +1,7 @@
 default: build test
 
 build:
-	@echo "Building"
+	(cd sample && ng build)
 
 test:
-	@echo "Testing"
+	(cd sample && ng test)
