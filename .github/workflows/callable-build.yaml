@@ -29,4 +29,4 @@ jobs:
             exit 1
           fi
 
-      - run: make build
+      - run: make build/dev
