@@ -7,6 +7,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+/* tslint:disable:no-unused-variable member-ordering */
 
 import { Inject, Injectable, Optional }                      from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams,
@@ -50,7 +51,7 @@ export class OrganisationsService extends BaseService {
     public createOrganisation(createOrganisationRequest: CreateOrganisationRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<CreateOrganisation201Response>;
     public createOrganisation(createOrganisationRequest: CreateOrganisationRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<CreateOrganisation201Response>>;
     public createOrganisation(createOrganisationRequest: CreateOrganisationRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<CreateOrganisation201Response>>;
-    public createOrganisation(createOrganisationRequest: CreateOrganisationRequest, observe: any = 'body', reportProgress = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public createOrganisation(createOrganisationRequest: CreateOrganisationRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (createOrganisationRequest === null || createOrganisationRequest === undefined) {
             throw new Error('Required parameter createOrganisationRequest was null or undefined when calling createOrganisation.');
         }
@@ -91,13 +92,13 @@ export class OrganisationsService extends BaseService {
             }
         }
 
-        const localVarPath = `/api/auth/basic/organisations`;
+        let localVarPath = `/api/auth/basic/organisations`;
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<CreateOrganisation201Response>('post', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 body: createOrganisationRequest,
-                responseType: responseType_ as any,
+                responseType: <any>responseType_,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,
                 observe: observe,
@@ -117,7 +118,7 @@ export class OrganisationsService extends BaseService {
     public deleteOrganisation(orgID: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any>;
     public deleteOrganisation(orgID: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
     public deleteOrganisation(orgID: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
-    public deleteOrganisation(orgID: number, observe: any = 'body', reportProgress = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public deleteOrganisation(orgID: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (orgID === null || orgID === undefined) {
             throw new Error('Required parameter orgID was null or undefined when calling deleteOrganisation.');
         }
@@ -149,12 +150,12 @@ export class OrganisationsService extends BaseService {
             }
         }
 
-        const localVarPath = `/api/auth/basic/organisations/${this.configuration.encodeParam({name: "orgID", value: orgID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}`;
+        let localVarPath = `/api/auth/basic/organisations/${this.configuration.encodeParam({name: "orgID", value: orgID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}`;
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<any>('delete', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                responseType: responseType_ as any,
+                responseType: <any>responseType_,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,
                 observe: observe,
@@ -174,7 +175,7 @@ export class OrganisationsService extends BaseService {
     public getOrganisation(orgID: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<Organisation>;
     public getOrganisation(orgID: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Organisation>>;
     public getOrganisation(orgID: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Organisation>>;
-    public getOrganisation(orgID: number, observe: any = 'body', reportProgress = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public getOrganisation(orgID: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (orgID === null || orgID === undefined) {
             throw new Error('Required parameter orgID was null or undefined when calling getOrganisation.');
         }
@@ -206,12 +207,12 @@ export class OrganisationsService extends BaseService {
             }
         }
 
-        const localVarPath = `/api/auth/basic/organisations/${this.configuration.encodeParam({name: "orgID", value: orgID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}`;
+        let localVarPath = `/api/auth/basic/organisations/${this.configuration.encodeParam({name: "orgID", value: orgID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}`;
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<Organisation>('get', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                responseType: responseType_ as any,
+                responseType: <any>responseType_,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,
                 observe: observe,
@@ -227,10 +228,10 @@ export class OrganisationsService extends BaseService {
      * @param reportProgress flag to report request and response progress.
      * @param options additional options
      */
-    public listOrganisations(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<Organisation[]>;
-    public listOrganisations(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Organisation[]>>;
-    public listOrganisations(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Organisation[]>>;
-    public listOrganisations(observe: any = 'body', reportProgress = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public listOrganisations(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<Array<Organisation>>;
+    public listOrganisations(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Array<Organisation>>>;
+    public listOrganisations(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Array<Organisation>>>;
+    public listOrganisations(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
 
         let localVarHeaders = this.defaultHeaders;
 
@@ -259,12 +260,12 @@ export class OrganisationsService extends BaseService {
             }
         }
 
-        const localVarPath = `/api/auth/basic/organisations`;
+        let localVarPath = `/api/auth/basic/organisations`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<Organisation[]>('get', `${basePath}${localVarPath}`,
+        return this.httpClient.request<Array<Organisation>>('get', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                responseType: responseType_ as any,
+                responseType: <any>responseType_,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,
                 observe: observe,
@@ -285,7 +286,7 @@ export class OrganisationsService extends BaseService {
     public updateOrganisation(orgID: number, organisation: Organisation, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<Organisation>;
     public updateOrganisation(orgID: number, organisation: Organisation, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Organisation>>;
     public updateOrganisation(orgID: number, organisation: Organisation, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Organisation>>;
-    public updateOrganisation(orgID: number, organisation: Organisation, observe: any = 'body', reportProgress = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public updateOrganisation(orgID: number, organisation: Organisation, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (orgID === null || orgID === undefined) {
             throw new Error('Required parameter orgID was null or undefined when calling updateOrganisation.');
         }
@@ -329,13 +330,13 @@ export class OrganisationsService extends BaseService {
             }
         }
 
-        const localVarPath = `/api/auth/basic/organisations/${this.configuration.encodeParam({name: "orgID", value: orgID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}`;
+        let localVarPath = `/api/auth/basic/organisations/${this.configuration.encodeParam({name: "orgID", value: orgID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}`;
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<Organisation>('put', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 body: organisation,
-                responseType: responseType_ as any,
+                responseType: <any>responseType_,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,
                 observe: observe,

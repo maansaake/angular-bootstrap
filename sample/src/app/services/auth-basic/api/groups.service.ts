@@ -7,6 +7,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+/* tslint:disable:no-unused-variable member-ordering */
 
 import { Inject, Injectable, Optional }                      from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams,
@@ -49,7 +50,7 @@ export class GroupsService extends BaseService {
     public createGroup(orgID: number, createOrganisationRequest: CreateOrganisationRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<Group>;
     public createGroup(orgID: number, createOrganisationRequest: CreateOrganisationRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Group>>;
     public createGroup(orgID: number, createOrganisationRequest: CreateOrganisationRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Group>>;
-    public createGroup(orgID: number, createOrganisationRequest: CreateOrganisationRequest, observe: any = 'body', reportProgress = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public createGroup(orgID: number, createOrganisationRequest: CreateOrganisationRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (orgID === null || orgID === undefined) {
             throw new Error('Required parameter orgID was null or undefined when calling createGroup.');
         }
@@ -93,13 +94,13 @@ export class GroupsService extends BaseService {
             }
         }
 
-        const localVarPath = `/api/auth/basic/organisations/${this.configuration.encodeParam({name: "orgID", value: orgID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/groups`;
+        let localVarPath = `/api/auth/basic/organisations/${this.configuration.encodeParam({name: "orgID", value: orgID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/groups`;
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<Group>('post', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 body: createOrganisationRequest,
-                responseType: responseType_ as any,
+                responseType: <any>responseType_,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,
                 observe: observe,
@@ -120,7 +121,7 @@ export class GroupsService extends BaseService {
     public deleteGroup(orgID: number, groupID: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any>;
     public deleteGroup(orgID: number, groupID: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
     public deleteGroup(orgID: number, groupID: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
-    public deleteGroup(orgID: number, groupID: number, observe: any = 'body', reportProgress = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public deleteGroup(orgID: number, groupID: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (orgID === null || orgID === undefined) {
             throw new Error('Required parameter orgID was null or undefined when calling deleteGroup.');
         }
@@ -155,12 +156,12 @@ export class GroupsService extends BaseService {
             }
         }
 
-        const localVarPath = `/api/auth/basic/organisations/${this.configuration.encodeParam({name: "orgID", value: orgID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/groups/${this.configuration.encodeParam({name: "groupID", value: groupID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}`;
+        let localVarPath = `/api/auth/basic/organisations/${this.configuration.encodeParam({name: "orgID", value: orgID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/groups/${this.configuration.encodeParam({name: "groupID", value: groupID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}`;
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<any>('delete', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                responseType: responseType_ as any,
+                responseType: <any>responseType_,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,
                 observe: observe,
@@ -181,7 +182,7 @@ export class GroupsService extends BaseService {
     public getGroup(orgID: number, groupID: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<Group>;
     public getGroup(orgID: number, groupID: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Group>>;
     public getGroup(orgID: number, groupID: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Group>>;
-    public getGroup(orgID: number, groupID: number, observe: any = 'body', reportProgress = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public getGroup(orgID: number, groupID: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (orgID === null || orgID === undefined) {
             throw new Error('Required parameter orgID was null or undefined when calling getGroup.');
         }
@@ -216,12 +217,12 @@ export class GroupsService extends BaseService {
             }
         }
 
-        const localVarPath = `/api/auth/basic/organisations/${this.configuration.encodeParam({name: "orgID", value: orgID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/groups/${this.configuration.encodeParam({name: "groupID", value: groupID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}`;
+        let localVarPath = `/api/auth/basic/organisations/${this.configuration.encodeParam({name: "orgID", value: orgID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/groups/${this.configuration.encodeParam({name: "groupID", value: groupID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}`;
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<Group>('get', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                responseType: responseType_ as any,
+                responseType: <any>responseType_,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,
                 observe: observe,
@@ -238,10 +239,10 @@ export class GroupsService extends BaseService {
      * @param reportProgress flag to report request and response progress.
      * @param options additional options
      */
-    public listGroups(orgID: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<Group[]>;
-    public listGroups(orgID: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Group[]>>;
-    public listGroups(orgID: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Group[]>>;
-    public listGroups(orgID: number, observe: any = 'body', reportProgress = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public listGroups(orgID: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<Array<Group>>;
+    public listGroups(orgID: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Array<Group>>>;
+    public listGroups(orgID: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Array<Group>>>;
+    public listGroups(orgID: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (orgID === null || orgID === undefined) {
             throw new Error('Required parameter orgID was null or undefined when calling listGroups.');
         }
@@ -273,12 +274,12 @@ export class GroupsService extends BaseService {
             }
         }
 
-        const localVarPath = `/api/auth/basic/organisations/${this.configuration.encodeParam({name: "orgID", value: orgID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/groups`;
+        let localVarPath = `/api/auth/basic/organisations/${this.configuration.encodeParam({name: "orgID", value: orgID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/groups`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<Group[]>('get', `${basePath}${localVarPath}`,
+        return this.httpClient.request<Array<Group>>('get', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                responseType: responseType_ as any,
+                responseType: <any>responseType_,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,
                 observe: observe,
@@ -300,7 +301,7 @@ export class GroupsService extends BaseService {
     public updateGroup(orgID: number, groupID: number, group: Group, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<Group>;
     public updateGroup(orgID: number, groupID: number, group: Group, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Group>>;
     public updateGroup(orgID: number, groupID: number, group: Group, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Group>>;
-    public updateGroup(orgID: number, groupID: number, group: Group, observe: any = 'body', reportProgress = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public updateGroup(orgID: number, groupID: number, group: Group, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (orgID === null || orgID === undefined) {
             throw new Error('Required parameter orgID was null or undefined when calling updateGroup.');
         }
@@ -347,13 +348,13 @@ export class GroupsService extends BaseService {
             }
         }
 
-        const localVarPath = `/api/auth/basic/organisations/${this.configuration.encodeParam({name: "orgID", value: orgID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/groups/${this.configuration.encodeParam({name: "groupID", value: groupID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}`;
+        let localVarPath = `/api/auth/basic/organisations/${this.configuration.encodeParam({name: "orgID", value: orgID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/groups/${this.configuration.encodeParam({name: "groupID", value: groupID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}`;
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<Group>('put', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 body: group,
-                responseType: responseType_ as any,
+                responseType: <any>responseType_,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,
                 observe: observe,
