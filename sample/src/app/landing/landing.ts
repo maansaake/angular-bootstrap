@@ -6,4 +6,4 @@ import { Component } from '@angular/core';
   styleUrl: './landing.scss',
   templateUrl: './landing.html',
 })
-export class Landing {}
+export class Landing { }

@@ -1,0 +1,17 @@
+<header>
+  <mat-toolbar>
+    <h1>
+      <a routerLink="/" aria-label="Go to landing page">
+        Angular bootstrap
+      </a>
+    </h1>
+    <span class="spacer"></span>
+    @if (userSvc.loggedIn()) {
+    <button matButton="filled" (click)="onProfile()">Profile</button>
+    <button matButton="outlined" (click)="onLogout()">Log out</button>
+    } @else {
+    <button matButton="outlined" (click)="onRegister()">Register</button>
+    <button matButton="filled" (click)="onLogin()">Log in</button>
+    }
+  </mat-toolbar>
+</header>

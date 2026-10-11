@@ -13,6 +13,6 @@ import { Group } from './group';
 export interface User { 
     id: number;
     name: string;
-    groups?: Array<Group>;
+    groups?: Group[];
 }
 

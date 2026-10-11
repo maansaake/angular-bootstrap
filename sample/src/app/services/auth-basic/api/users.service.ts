@@ -7,7 +7,6 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-/* tslint:disable:no-unused-variable member-ordering */
 
 import { Inject, Injectable, Optional }                      from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams,
@@ -57,7 +56,7 @@ export class UsersService extends BaseService {
     public changePassword(orgID: number, userID: number, changePasswordRequest: ChangePasswordRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any>;
     public changePassword(orgID: number, userID: number, changePasswordRequest: ChangePasswordRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
     public changePassword(orgID: number, userID: number, changePasswordRequest: ChangePasswordRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
-    public changePassword(orgID: number, userID: number, changePasswordRequest: ChangePasswordRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public changePassword(orgID: number, userID: number, changePasswordRequest: ChangePasswordRequest, observe: any = 'body', reportProgress = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (orgID === null || orgID === undefined) {
             throw new Error('Required parameter orgID was null or undefined when calling changePassword.');
         }
@@ -104,13 +103,13 @@ export class UsersService extends BaseService {
             }
         }
 
-        let localVarPath = `/api/auth/basic/organisations/${this.configuration.encodeParam({name: "orgID", value: orgID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/users/${this.configuration.encodeParam({name: "userID", value: userID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/password`;
+        const localVarPath = `/api/auth/basic/organisations/${this.configuration.encodeParam({name: "orgID", value: orgID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/users/${this.configuration.encodeParam({name: "userID", value: userID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/password`;
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<any>('put', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 body: changePasswordRequest,
-                responseType: <any>responseType_,
+                responseType: responseType_ as any,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,
                 observe: observe,
@@ -131,7 +130,7 @@ export class UsersService extends BaseService {
     public createUser(orgID: number, createUserRequest: CreateUserRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<User>;
     public createUser(orgID: number, createUserRequest: CreateUserRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<User>>;
     public createUser(orgID: number, createUserRequest: CreateUserRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<User>>;
-    public createUser(orgID: number, createUserRequest: CreateUserRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public createUser(orgID: number, createUserRequest: CreateUserRequest, observe: any = 'body', reportProgress = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (orgID === null || orgID === undefined) {
             throw new Error('Required parameter orgID was null or undefined when calling createUser.');
         }
@@ -175,13 +174,13 @@ export class UsersService extends BaseService {
             }
         }
 
-        let localVarPath = `/api/auth/basic/organisations/${this.configuration.encodeParam({name: "orgID", value: orgID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/users`;
+        const localVarPath = `/api/auth/basic/organisations/${this.configuration.encodeParam({name: "orgID", value: orgID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/users`;
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<User>('post', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 body: createUserRequest,
-                responseType: <any>responseType_,
+                responseType: responseType_ as any,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,
                 observe: observe,
@@ -202,7 +201,7 @@ export class UsersService extends BaseService {
     public deleteUser(orgID: number, userID: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any>;
     public deleteUser(orgID: number, userID: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
     public deleteUser(orgID: number, userID: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
-    public deleteUser(orgID: number, userID: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public deleteUser(orgID: number, userID: number, observe: any = 'body', reportProgress = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (orgID === null || orgID === undefined) {
             throw new Error('Required parameter orgID was null or undefined when calling deleteUser.');
         }
@@ -237,12 +236,12 @@ export class UsersService extends BaseService {
             }
         }
 
-        let localVarPath = `/api/auth/basic/organisations/${this.configuration.encodeParam({name: "orgID", value: orgID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/users/${this.configuration.encodeParam({name: "userID", value: userID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}`;
+        const localVarPath = `/api/auth/basic/organisations/${this.configuration.encodeParam({name: "orgID", value: orgID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/users/${this.configuration.encodeParam({name: "userID", value: userID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}`;
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<any>('delete', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                responseType: <any>responseType_,
+                responseType: responseType_ as any,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,
                 observe: observe,
@@ -262,7 +261,7 @@ export class UsersService extends BaseService {
     public getMe(orgID: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<User>;
     public getMe(orgID: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<User>>;
     public getMe(orgID: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<User>>;
-    public getMe(orgID: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public getMe(orgID: number, observe: any = 'body', reportProgress = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (orgID === null || orgID === undefined) {
             throw new Error('Required parameter orgID was null or undefined when calling getMe.');
         }
@@ -294,12 +293,12 @@ export class UsersService extends BaseService {
             }
         }
 
-        let localVarPath = `/api/auth/basic/organisations/${this.configuration.encodeParam({name: "orgID", value: orgID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/users/me`;
+        const localVarPath = `/api/auth/basic/organisations/${this.configuration.encodeParam({name: "orgID", value: orgID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/users/me`;
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<User>('get', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                responseType: <any>responseType_,
+                responseType: responseType_ as any,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,
                 observe: observe,
@@ -320,7 +319,7 @@ export class UsersService extends BaseService {
     public getUser(orgID: number, userID: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<User>;
     public getUser(orgID: number, userID: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<User>>;
     public getUser(orgID: number, userID: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<User>>;
-    public getUser(orgID: number, userID: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public getUser(orgID: number, userID: number, observe: any = 'body', reportProgress = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (orgID === null || orgID === undefined) {
             throw new Error('Required parameter orgID was null or undefined when calling getUser.');
         }
@@ -355,12 +354,12 @@ export class UsersService extends BaseService {
             }
         }
 
-        let localVarPath = `/api/auth/basic/organisations/${this.configuration.encodeParam({name: "orgID", value: orgID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/users/${this.configuration.encodeParam({name: "userID", value: userID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}`;
+        const localVarPath = `/api/auth/basic/organisations/${this.configuration.encodeParam({name: "orgID", value: orgID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/users/${this.configuration.encodeParam({name: "userID", value: userID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}`;
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<User>('get', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                responseType: <any>responseType_,
+                responseType: responseType_ as any,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,
                 observe: observe,
@@ -378,10 +377,10 @@ export class UsersService extends BaseService {
      * @param reportProgress flag to report request and response progress.
      * @param options additional options
      */
-    public getUserGroups(orgID: number, userID: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<Array<Group>>;
-    public getUserGroups(orgID: number, userID: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Array<Group>>>;
-    public getUserGroups(orgID: number, userID: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Array<Group>>>;
-    public getUserGroups(orgID: number, userID: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public getUserGroups(orgID: number, userID: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<Group[]>;
+    public getUserGroups(orgID: number, userID: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Group[]>>;
+    public getUserGroups(orgID: number, userID: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Group[]>>;
+    public getUserGroups(orgID: number, userID: number, observe: any = 'body', reportProgress = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (orgID === null || orgID === undefined) {
             throw new Error('Required parameter orgID was null or undefined when calling getUserGroups.');
         }
@@ -416,12 +415,12 @@ export class UsersService extends BaseService {
             }
         }
 
-        let localVarPath = `/api/auth/basic/organisations/${this.configuration.encodeParam({name: "orgID", value: orgID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/users/${this.configuration.encodeParam({name: "userID", value: userID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/groups`;
+        const localVarPath = `/api/auth/basic/organisations/${this.configuration.encodeParam({name: "orgID", value: orgID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/users/${this.configuration.encodeParam({name: "userID", value: userID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/groups`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<Array<Group>>('get', `${basePath}${localVarPath}`,
+        return this.httpClient.request<Group[]>('get', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                responseType: <any>responseType_,
+                responseType: responseType_ as any,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,
                 observe: observe,
@@ -438,10 +437,10 @@ export class UsersService extends BaseService {
      * @param reportProgress flag to report request and response progress.
      * @param options additional options
      */
-    public listUsers(orgID: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<Array<User>>;
-    public listUsers(orgID: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Array<User>>>;
-    public listUsers(orgID: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Array<User>>>;
-    public listUsers(orgID: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public listUsers(orgID: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<User[]>;
+    public listUsers(orgID: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<User[]>>;
+    public listUsers(orgID: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<User[]>>;
+    public listUsers(orgID: number, observe: any = 'body', reportProgress = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (orgID === null || orgID === undefined) {
             throw new Error('Required parameter orgID was null or undefined when calling listUsers.');
         }
@@ -473,12 +472,12 @@ export class UsersService extends BaseService {
             }
         }
 
-        let localVarPath = `/api/auth/basic/organisations/${this.configuration.encodeParam({name: "orgID", value: orgID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/users`;
+        const localVarPath = `/api/auth/basic/organisations/${this.configuration.encodeParam({name: "orgID", value: orgID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/users`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<Array<User>>('get', `${basePath}${localVarPath}`,
+        return this.httpClient.request<User[]>('get', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                responseType: <any>responseType_,
+                responseType: responseType_ as any,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,
                 observe: observe,
@@ -499,7 +498,7 @@ export class UsersService extends BaseService {
     public login(orgID: number, loginRequest: LoginRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any>;
     public login(orgID: number, loginRequest: LoginRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
     public login(orgID: number, loginRequest: LoginRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
-    public login(orgID: number, loginRequest: LoginRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public login(orgID: number, loginRequest: LoginRequest, observe: any = 'body', reportProgress = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (orgID === null || orgID === undefined) {
             throw new Error('Required parameter orgID was null or undefined when calling login.');
         }
@@ -541,13 +540,13 @@ export class UsersService extends BaseService {
             }
         }
 
-        let localVarPath = `/api/auth/basic/organisations/${this.configuration.encodeParam({name: "orgID", value: orgID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/login`;
+        const localVarPath = `/api/auth/basic/organisations/${this.configuration.encodeParam({name: "orgID", value: orgID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/login`;
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<any>('post', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 body: loginRequest,
-                responseType: <any>responseType_,
+                responseType: responseType_ as any,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,
                 observe: observe,
@@ -567,7 +566,7 @@ export class UsersService extends BaseService {
     public logout(orgID: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any>;
     public logout(orgID: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
     public logout(orgID: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
-    public logout(orgID: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public logout(orgID: number, observe: any = 'body', reportProgress = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (orgID === null || orgID === undefined) {
             throw new Error('Required parameter orgID was null or undefined when calling logout.');
         }
@@ -599,12 +598,12 @@ export class UsersService extends BaseService {
             }
         }
 
-        let localVarPath = `/api/auth/basic/organisations/${this.configuration.encodeParam({name: "orgID", value: orgID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/logout`;
+        const localVarPath = `/api/auth/basic/organisations/${this.configuration.encodeParam({name: "orgID", value: orgID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/logout`;
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<any>('post', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                responseType: <any>responseType_,
+                responseType: responseType_ as any,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,
                 observe: observe,
@@ -624,7 +623,7 @@ export class UsersService extends BaseService {
     public refresh(orgID: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any>;
     public refresh(orgID: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
     public refresh(orgID: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
-    public refresh(orgID: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public refresh(orgID: number, observe: any = 'body', reportProgress = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (orgID === null || orgID === undefined) {
             throw new Error('Required parameter orgID was null or undefined when calling refresh.');
         }
@@ -656,12 +655,12 @@ export class UsersService extends BaseService {
             }
         }
 
-        let localVarPath = `/api/auth/basic/organisations/${this.configuration.encodeParam({name: "orgID", value: orgID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/refresh`;
+        const localVarPath = `/api/auth/basic/organisations/${this.configuration.encodeParam({name: "orgID", value: orgID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/refresh`;
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<any>('post', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                responseType: <any>responseType_,
+                responseType: responseType_ as any,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,
                 observe: observe,
@@ -683,7 +682,7 @@ export class UsersService extends BaseService {
     public updateUser(orgID: number, userID: number, user: User, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<User>;
     public updateUser(orgID: number, userID: number, user: User, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<User>>;
     public updateUser(orgID: number, userID: number, user: User, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<User>>;
-    public updateUser(orgID: number, userID: number, user: User, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public updateUser(orgID: number, userID: number, user: User, observe: any = 'body', reportProgress = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (orgID === null || orgID === undefined) {
             throw new Error('Required parameter orgID was null or undefined when calling updateUser.');
         }
@@ -730,13 +729,13 @@ export class UsersService extends BaseService {
             }
         }
 
-        let localVarPath = `/api/auth/basic/organisations/${this.configuration.encodeParam({name: "orgID", value: orgID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/users/${this.configuration.encodeParam({name: "userID", value: userID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}`;
+        const localVarPath = `/api/auth/basic/organisations/${this.configuration.encodeParam({name: "orgID", value: orgID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/users/${this.configuration.encodeParam({name: "userID", value: userID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}`;
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<User>('put', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 body: user,
-                responseType: <any>responseType_,
+                responseType: responseType_ as any,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,
                 observe: observe,
@@ -755,10 +754,10 @@ export class UsersService extends BaseService {
      * @param reportProgress flag to report request and response progress.
      * @param options additional options
      */
-    public updateUserGroups(orgID: number, userID: number, group: Array<Group>, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<Array<Group>>;
-    public updateUserGroups(orgID: number, userID: number, group: Array<Group>, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Array<Group>>>;
-    public updateUserGroups(orgID: number, userID: number, group: Array<Group>, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Array<Group>>>;
-    public updateUserGroups(orgID: number, userID: number, group: Array<Group>, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public updateUserGroups(orgID: number, userID: number, group: Group[], observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<Group[]>;
+    public updateUserGroups(orgID: number, userID: number, group: Group[], observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Group[]>>;
+    public updateUserGroups(orgID: number, userID: number, group: Group[], observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Group[]>>;
+    public updateUserGroups(orgID: number, userID: number, group: Group[], observe: any = 'body', reportProgress = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (orgID === null || orgID === undefined) {
             throw new Error('Required parameter orgID was null or undefined when calling updateUserGroups.');
         }
@@ -805,13 +804,13 @@ export class UsersService extends BaseService {
             }
         }
 
-        let localVarPath = `/api/auth/basic/organisations/${this.configuration.encodeParam({name: "orgID", value: orgID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/users/${this.configuration.encodeParam({name: "userID", value: userID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/groups`;
+        const localVarPath = `/api/auth/basic/organisations/${this.configuration.encodeParam({name: "orgID", value: orgID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/users/${this.configuration.encodeParam({name: "userID", value: userID, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/groups`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<Array<Group>>('put', `${basePath}${localVarPath}`,
+        return this.httpClient.request<Group[]>('put', `${basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 body: group,
-                responseType: <any>responseType_,
+                responseType: responseType_ as any,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,
                 observe: observe,

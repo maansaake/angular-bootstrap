@@ -1,0 +1,28 @@
+:host {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  max-width: 28rem;
+  margin-inline: auto;
+}
+
+mat-divider {
+  margin-top: 1rem;
+}
+
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.profile-field {
+  width: 100%;
+}
+
+.profile-button {
+  width: 100%;
+  min-height: 48px;
+  margin-top: 0.25rem;
+}

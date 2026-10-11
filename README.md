@@ -5,11 +5,22 @@
 
 A reference repository, use as a template for new Angular apps.
 
-## Contents
+## Included boilerplate
 
-1. Angular material
-2. Register
-3. Login/logout
-4. Profile mgmt.
+1. Angular 22
+2. Angular material
+3. ESLint
+4. User management
+    * Registration
+    * Login/logout
+    * User username
+    * Update password
+5. Header/footer
+6. Landing page
+7. OpenAPI code generation
 
-Uses [Kerberos](https://github.com/trebent/kerberos) basic authentication for user management.
+    * Uses [Kerberos](https://github.com/trebent/kerberos) OpenAPI specification for basic authentication to generate an Angular client service.
+
+8. GitHub actions layout
+
+The bootstrap app uses a mocked service for user management which can be easily modified to support a real backend (preferably [Kerberos](https://github.com/trebent/kerberos) 😀).

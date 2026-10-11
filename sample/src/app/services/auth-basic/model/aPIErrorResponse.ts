@@ -10,6 +10,6 @@
 
 
 export interface APIErrorResponse { 
-    errors: Array<string>;
+    errors: string[];
 }
 

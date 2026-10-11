@@ -1,1 +1,34 @@
-<p>login works!</p>
+<h2>Log in</h2>
+
+<form class="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <!-- Username -->
+  <mat-form-field appearance="outline" class="login-field">
+    <mat-label>Username</mat-label>
+
+    <input matInput type="text" formControlName="username" autocomplete="username" required />
+
+    @if (username.hasError('required') && username.touched) {
+    <mat-error>Username is required.</mat-error>
+    }
+  </mat-form-field>
+
+  <!-- Password -->
+  <mat-form-field appearance="outline" class="login-field">
+    <mat-label>Password</mat-label>
+
+    <input matInput type="password" formControlName="password" autocomplete="current-password" required />
+
+    @if (password.hasError('required') && password.touched) {
+    <mat-error>Password is required.</mat-error>
+    }
+  </mat-form-field>
+
+  @if (loginError(); as error) {
+  <mat-error role="alert">{{ error }}</mat-error>
+  }
+
+  <!-- Submit -->
+  <button matButton="filled" type="submit" class="login-button">
+    Login
+  </button>
+</form>

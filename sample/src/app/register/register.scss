@@ -1,0 +1,24 @@
+:host {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  max-width: 28rem;
+  margin-inline: auto;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.register-field {
+  width: 100%;
+}
+
+.register-button {
+  width: 100%;
+  min-height: 48px;
+  margin-top: 0.25rem;
+}
