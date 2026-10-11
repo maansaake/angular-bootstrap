@@ -6,7 +6,13 @@ install:
 install/cli:
 	npm install -g @angular/cli
 
-build:
+codegen:
+	(cd sample && npm run codegen)
+
+build/dev:
+	(cd sample && ng build --configuration development)
+
+build/prod:
 	(cd sample && ng build)
 
 test:
