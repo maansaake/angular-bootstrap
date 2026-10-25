@@ -1,17 +1,30 @@
 <header>
-  <mat-toolbar>
-    <h1>
+  <mat-toolbar color="primary" class="header-toolbar">
+    <h1 class="header-title">
       <a routerLink="/" aria-label="Go to landing page">
-        Angular bootstrap
+        <mat-icon>angular</mat-icon>
+        <span>Angular Bootstrap</span>
       </a>
     </h1>
     <span class="spacer"></span>
     @if (authService.loggedIn()) {
-    <button matButton="filled" (click)="onProfile()">Profile</button>
-    <button matButton="outlined" (click)="onLogout()">Log out</button>
+    <button matButton="filled" color="accent" (click)="onProfile()">
+      <mat-icon>account_circle</mat-icon>
+      <span>Profile</span>
+    </button>
+    <button matButton="outlined" (click)="onLogout()">
+      <mat-icon>logout</mat-icon>
+      <span>Log out</span>
+    </button>
     } @else {
-    <button matButton="outlined" (click)="onRegister()">Register</button>
-    <button matButton="filled" (click)="onLogin()">Log in</button>
+    <button matButton="outlined" (click)="onRegister()">
+      <mat-icon>person_add</mat-icon>
+      <span>Register</span>
+    </button>
+    <button matButton="filled" color="accent" (click)="onLogin()">
+      <mat-icon>login</mat-icon>
+      <span>Log in</span>
+    </button>
     }
   </mat-toolbar>
 </header>

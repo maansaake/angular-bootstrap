@@ -1,7 +1,367 @@
-:host {
+.landing-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+// Hero Section
+.hero-toolbar {
+  margin-bottom: 24px;
+  box-shadow: var(--mat-sys-elevation-level-2);
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.hero-section {
+  margin-bottom: 48px;
+}
+
+.hero-card {
+  background: linear-gradient(135deg, var(--mat-sys-surface-container-highest) 0%, var(--mat-sys-surface-container-high) 100%);
+  border-radius: 16px;
+  padding: 48px;
+  text-align: center;
+  box-shadow: var(--mat-sys-elevation-level-4);
+}
+
+.hero-title {
+  h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0;
+    color: var(--mat-sys-on-surface);
+    
+    @media (max-width: 600px) {
+      font-size: 1.875rem;
+    }
+  }
+}
+
+.hero-description {
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: var(--mat-sys-on-surface-variant);
+  max-width: 600px;
+  margin: 16px auto 32px;
+  
+  @media (max-width: 600px) {
+    font-size: 1rem;
+  }
+}
+
+.hero-actions {
   display: flex;
-  flex-direction: column;
-  width: 100%;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+}
+
+.hero-action-button {
+  min-width: 140px;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 500;
+  
+  mat-icon {
+    margin-right: 8px;
+  }
+}
+
+// Sections
+section {
+  margin-bottom: 48px;
+}
+
+h2 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--mat-sys-on-surface);
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.section-description {
+  text-align: center;
+  color: var(--mat-sys-on-surface-variant);
+  margin-bottom: 32px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+// Features Grid
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.feature-card {
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: 1px solid var(--mat-sys-outline-variant);
+  
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--mat-sys-elevation-level-8);
+    border-color: var(--mat-sys-primary);
+  }
+}
+
+.feature-icon {
+  display: flex;
   align-items: center;
   justify-content: center;
+  background: rgba(var(--mat-sys-primary-rgb), 0.1);
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  
+  mat-icon {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+  }
 }
+
+.feature-card mat-card-header {
+  padding-bottom: 16px;
+}
+
+.feature-card mat-card-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--mat-sys-on-surface);
+}
+
+.feature-card mat-card-content {
+  color: var(--mat-sys-on-surface-variant);
+  
+  p {
+    margin: 0;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+  }
+}
+
+// Tech Grid
+.tech-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 24px;
+}
+
+.tech-card {
+  text-align: center;
+  padding: 24px;
+  background: var(--mat-sys-surface-container-low);
+  border-radius: 12px;
+}
+
+.tech-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 16px;
+  
+  mat-icon {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+  }
+  
+  &.angular {
+    background: rgba(var(--mat-sys-error-rgb), 0.1);
+  }
+  
+  &.material {
+    background: rgba(var(--mat-sys-primary-rgb), 0.1);
+  }
+  
+  &.kerberos {
+    background: rgba(var(--mat-sys-tertiary-rgb), 0.1);
+  }
+  
+  &.openapi {
+    background: rgba(var(--mat-sys-secondary-rgb), 0.1);
+  }
+  
+  &.eslint {
+    background: rgba(var(--mat-sys-warning-rgb), 0.1);
+  }
+  
+  &.github {
+    background: rgba(var(--mat-sys-info-rgb), 0.1);
+  }
+}
+
+.tech-card mat-card-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--mat-sys-on-surface);
+  margin-bottom: 8px;
+}
+
+.tech-card mat-card-content {
+  p {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--mat-sys-on-surface-variant);
+    line-height: 1.5;
+  }
+}
+
+// Quick Start Section
+.quickstart-section {
+  text-align: center;
+}
+
+.commands {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.command-card {
+  background: var(--mat-sys-surface-container);
+  border-radius: 8px;
+  padding: 16px 24px;
+  
+  code {
+    display: block;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--mat-sys-primary);
+    background: rgba(var(--mat-sys-primary-rgb), 0.08);
+    padding: 8px 12px;
+    border-radius: 4px;
+    margin-bottom: 4px;
+  }
+  
+  p {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--mat-sys-on-surface-variant);
+  }
+}
+
+.command-arrow {
+  color: var(--mat-sys-on-surface-variant);
+  font-size: 24px;
+}
+
+.quickstart-note {
+  font-size: 0.875rem;
+  color: var(--mat-sys-on-surface-variant);
+  
+  code {
+    background: var(--mat-sys-surface-container-high);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.875rem;
+  }
+}
+
+// Documentation Section
+.docs-section {
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.docs-section mat-list {
+  background: transparent;
+}
+
+.docs-section mat-list-item {
+  border-radius: 8px;
+  margin-bottom: 8px;
+  background: var(--mat-sys-surface-container-low);
+  
+  &:hover {
+    background: var(--mat-sys-surface-container);
+  }
+  
+  a {
+    color: var(--mat-sys-primary);
+    text-decoration: none;
+    font-weight: 500;
+    
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  
+  p {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--mat-sys-on-surface-variant);
+  }
+}
+
+// Footer
+.landing-footer {
+  text-align: center;
+  padding: 32px 0;
+  color: var(--mat-sys-on-surface-variant);
+  font-size: 0.875rem;
+  margin-top: 48px;
+  
+  p {
+    margin: 0;
+  }
+}
+
+// Responsive Design
+@media (max-width: 600px) {
+  .landing-content {
+    padding: 16px;
+  }
+  
+  .hero-card {
+    padding: 32px 24px;
+  }
+  
+  .hero-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .hero-action-button {
+    width: 100%;
+    max-width: 200px;
+  }
+  
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .tech-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .commands {
+    flex-direction: column;
+  }
+  
+  .command-arrow {
+    transform: rotate(90deg);
+  }
+  
+  mat-divider {
+    margin: 16px 0;
+  }
+}
+
+// Dark mode support (automatic via color-scheme)
+// The theme tokens will automatically adjust based on system preference

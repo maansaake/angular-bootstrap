@@ -6,11 +6,11 @@ import {
 import { delay, of, throwError } from 'rxjs';
 
 /**
- * ⚠️ DEV-ONLY MOCK BACKEND — REMOVE BEFORE DEVELOPING AGAINST A REAL BACKEND ⚠️
+ * \u26a0\ufe0f DEV-ONLY MOCK BACKEND \u26a0\ufe0f
  *
  * This interceptor stands in for the Kerberos backend and the application backend so the
  * app runs end-to-end without a server. It implements exactly the endpoints the sample
- * uses, in memory:
+ * uses, with persistence across page reloads:
  *
  * - `POST /api/auth/basic/organisations/{orgID}/login|logout|refresh`
  * - `GET  /api/auth/basic/organisations/{orgID}/users/me`
@@ -18,7 +18,7 @@ import { delay, of, throwError } from 'rxjs';
  * - `POST /api/register`
  *
  * To move to a real backend: delete this directory and remove the `kerberosMockInterceptor`
- * registration from `app.config.ts`. Nothing else in the app references the mock — app code
+ * registration from `app.config.ts`. Nothing else in the app references the mock \u2014 app code
  * only ever talks to the OpenAPI-generated clients.
  */
 console.warn(
@@ -32,12 +32,81 @@ interface MockUser {
   password: string;
 }
 
-const users = new Map<string, MockUser>();
-let nextUserId = 1;
+// Storage keys for persistence across page reloads
+const STORAGE_KEY_USERS = 'mockBackendUsers';
+const STORAGE_KEY_NEXT_USER_ID = 'mockBackendNextUserId';
+const STORAGE_KEY_CURRENT_USER = 'mockBackendCurrentUser';
 
-// Stands in for the HttpOnly `session` cookie the real Kerberos backend sets; a page
-// reload therefore logs the mock's user out.
-let currentUser: MockUser | null = null;
+// Load users from localStorage
+function loadUsers(): Map<string, MockUser> {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY_USERS);
+    if (saved) {
+      const parsed = JSON.parse(saved) as Array<{ key: string; value: MockUser }>;
+      return new Map(parsed.map(item => [item.key, item.value]));
+    }
+  } catch {
+    // If localStorage is not available, return empty map
+  }
+  return new Map<string, MockUser>();
+}
+
+// Save users to localStorage
+function saveUsers(users: Map<string, MockUser>): void {
+  try {
+    const serialized = Array.from(users.entries()).map(([key, value]) => ({ key, value }));
+    localStorage.setItem(STORAGE_KEY_USERS, JSON.stringify(serialized));
+  } catch {
+    // If localStorage is not available, silently fail
+  }
+}
+
+// Load next user ID from localStorage
+function loadNextUserId(): number {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY_NEXT_USER_ID);
+    return saved ? parseInt(saved, 10) : 1;
+  } catch {
+    return 1;
+  }
+}
+
+// Save next user ID to localStorage
+function saveNextUserId(id: number): void {
+  try {
+    localStorage.setItem(STORAGE_KEY_NEXT_USER_ID, id.toString());
+  } catch {
+    // Silently fail
+  }
+}
+
+// Load current user from localStorage
+function loadCurrentUser(): MockUser | null {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY_CURRENT_USER);
+    return saved ? JSON.parse(saved) as MockUser : null;
+  } catch {
+    return null;
+  }
+}
+
+// Save current user to localStorage
+function saveCurrentUser(user: MockUser | null): void {
+  try {
+    if (user) {
+      localStorage.setItem(STORAGE_KEY_CURRENT_USER, JSON.stringify(user));
+    } else {
+      localStorage.removeItem(STORAGE_KEY_CURRENT_USER);
+    }
+  } catch {
+    // Silently fail
+  }
+}
+
+// Initialize from localStorage
+let users = loadUsers();
+let nextUserId = loadNextUserId();
+let currentUser: MockUser | null = loadCurrentUser();
 
 const orgPath = '/api/auth/basic/organisations/[^/]+';
 const loginPath = new RegExp(`^${orgPath}/login$`);
@@ -64,7 +133,7 @@ export const kerberosMockInterceptor: HttpInterceptorFn = (req, next) => {
   }
 
   console.warn(
-    `[mock backend] ${req.method} ${path} — served by the mock; remove it before ` +
+    `[mock backend] ${req.method} ${path} \u2014 served by the mock; remove it before ` +
       'using a real backend.',
   );
 
@@ -80,6 +149,7 @@ export const kerberosMockInterceptor: HttpInterceptorFn = (req, next) => {
     }
 
     currentUser = user;
+    saveCurrentUser(currentUser);
     return respond(204);
   }
 
@@ -89,6 +159,7 @@ export const kerberosMockInterceptor: HttpInterceptorFn = (req, next) => {
     }
 
     currentUser = null;
+    saveCurrentUser(null);
     return respond(204);
   }
 
@@ -126,6 +197,8 @@ export const kerberosMockInterceptor: HttpInterceptorFn = (req, next) => {
     users.delete(currentUser.name);
     currentUser = { ...currentUser, name };
     users.set(name, currentUser);
+    saveUsers(users);
+    saveCurrentUser(currentUser);
     return respond(200, { id: currentUser.id, name: currentUser.name });
   }
 
@@ -149,6 +222,9 @@ export const kerberosMockInterceptor: HttpInterceptorFn = (req, next) => {
     }
 
     currentUser = { ...currentUser, password };
+    users.set(currentUser.name, currentUser);
+    saveUsers(users);
+    saveCurrentUser(currentUser);
     return respond(204);
   }
 
@@ -166,6 +242,8 @@ export const kerberosMockInterceptor: HttpInterceptorFn = (req, next) => {
 
     const user: MockUser = { id: nextUserId++, name: username, password };
     users.set(username, user);
+    saveUsers(users);
+    saveNextUserId(nextUserId);
     return respond(201, { id: user.id, name: user.name });
   }
 

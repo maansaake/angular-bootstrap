@@ -1,19 +1,240 @@
-<h2>Welcome!</h2>
+<mat-toolbar color="primary" class="hero-toolbar">
+  <h1>Angular Bootstrap</h1>
+  <span class="spacer"></span>
+  @if (authService.loggedIn()) {
+  <button matButton="filled" color="accent" routerLink="/profile">
+    <mat-icon>account_circle</mat-icon>
+    <span>Profile</span>
+  </button>
+  }
+</mat-toolbar>
 
-<div>
-  <p>This simple bootstrap application exemplifies a few methods most projects need to get started.</p>
-  <ul>
-    <li>
-      Design system usage
-    </li>
-    <li>
-      CI: Building, testing, linting, dependency management
-    </li>
-    <li>
-      Open API code generation
-    </li>
-    <li>
-      Boilerplate that most applications need
-    </li>
-  </ul>
-</div>
+<main class="landing-content">
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <mat-card class="hero-card">
+      <mat-card-header>
+        <mat-card-title class="hero-title">
+          <h2>Build Angular Apps Faster</h2>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p class="hero-description">
+          A production-ready Angular 22 template with authentication, Material Design, and
+          OpenAPI code generation. Start your next project with confidence.
+        </p>
+        
+        <div class="hero-actions">
+          @for (action of visibleQuickActions; track action.title) {
+          <button 
+            matButton="raised" 
+            color="{{ action.color }}"
+            routerLink="{{ action.link }}"
+            class="hero-action-button">
+            <mat-icon>{{ action.icon }}</mat-icon>
+            <span>{{ action.title }}</span>
+          </button>
+          }
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </section>
+
+  <mat-divider></mat-divider>
+
+  <!-- Features Section -->
+  <section class="features-section">
+    <h2>\ud83c\udf81 Features</h2>
+    <p class="section-description">
+      Everything you need to bootstrap your Angular application
+    </p>
+
+    <div class="features-grid">
+      @for (feature of visibleFeatures; track feature.title) {
+      <mat-card class="feature-card" [routerLink]="feature.link">
+        <mat-card-header>
+          <div mat-card-avatar class="feature-icon">
+            <mat-icon color="primary">{{ feature.icon }}</mat-icon>
+          </div>
+          <mat-card-title>{{ feature.title }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>{{ feature.description }}</p>
+        </mat-card-content>
+      </mat-card>
+      }
+    </div>
+  </section>
+
+  <mat-divider></mat-divider>
+
+  <!-- Technology Stack Section -->
+  <section class="tech-section">
+    <h2>\ud83d\udc80 Technology Stack</h2>
+    <p class="section-description">
+      Built with industry-standard tools and frameworks
+    </p>
+
+    <div class="tech-grid">
+      <mat-card class="tech-card">
+        <mat-card-header>
+          <div mat-card-avatar class="tech-icon angular">
+            <mat-icon color="warn">angular</mat-icon>
+          </div>
+          <mat-card-title>Angular 22</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>Standalone components, signals, modern control flow, and ESBuild</p>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="tech-card">
+        <mat-card-header>
+          <div mat-card-avatar class="tech-icon material">
+            <mat-icon color="primary">palette</mat-icon>
+          </div>
+          <mat-card-title>Material Design 3</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>Complete M3 theming with token-driven styling and dark mode</p>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="tech-card">
+        <mat-card-header>
+          <div mat-card-avatar class="tech-icon kerberos">
+            <mat-icon color="accent">security</mat-icon>
+          </div>
+          <mat-card-title>Kerberos Auth</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>Secure authentication with HttpOnly cookies and organisation isolation</p>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="tech-card">
+        <mat-card-header>
+          <div mat-card-avatar class="tech-icon openapi">
+            <mat-icon color="primary">description</mat-icon>
+          </div>
+          <mat-card-title>OpenAPI Codegen</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>Type-safe Angular clients generated from OpenAPI specifications</p>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="tech-card">
+        <mat-card-header>
+          <div mat-card-avatar class="tech-icon eslint">
+            <mat-icon color="warn">check_circle</mat-icon>
+          </div>
+          <mat-card-title>ESLint + Prettier</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>Production-ready linting and code formatting</p>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="tech-card">
+        <mat-card-header>
+          <div mat-card-avatar class="tech-icon github">
+            <mat-icon color="accent">code</mat-icon>
+          </div>
+          <mat-card-title>GitHub Actions</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>Complete CI/CD pipeline with build, test, lint, and code scanning</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </section>
+
+  <mat-divider></mat-divider>
+
+  <!-- Quick Start Section -->
+  <section class="quickstart-section">
+    <h2>\ud83d\udca1 Quick Start</h2>
+    <p class="section-description">
+      Get started with the template in just a few commands
+    </p>
+
+    <div class="commands">
+      <mat-card class="command-card">
+        <mat-card-content>
+          <code>npm install</code>
+          <p>Install dependencies</p>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-icon class="command-arrow">arrow_right_alt</mat-icon>
+
+      <mat-card class="command-card">
+        <mat-card-content>
+          <code>npm start</code>
+          <p>Start development server</p>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-icon class="command-arrow">arrow_right_alt</mat-icon>
+
+      <mat-card class="command-card">
+        <mat-card-content>
+          <code>npm run codegen</code>
+          <p>Generate API clients</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <p class="quickstart-note">
+      \u26a0\ufe0f The development server uses a mock backend. 
+      <strong>Remove <code>src/app/mocks/</code></strong> before deploying to production.
+    </p>
+  </section>
+
+  <mat-divider></mat-divider>
+
+  <!-- Documentation Section -->
+  <section class="docs-section">
+    <h2>\ud83d\udcd6 Documentation</h2>
+    <p class="section-description">
+      Learn more about the template's features and architecture
+    </p>
+
+    <mat-list>
+      <mat-list-item>
+        <mat-icon matListIcon color="primary">home</mat-icon>
+        <h3 matLine><a routerLink="/" target="_blank">README</a></h3>
+        <p matLine>Complete template overview and usage guide</p>
+      </mat-list-item>
+
+      <mat-list-item>
+        <mat-icon matListIcon color="primary">design_services</mat-icon>
+        <h3 matLine><a routerLink="/" target="_blank">Material Design</a></h3>
+        <p matLine>M3 theming, components, and best practices</p>
+      </mat-list-item>
+
+      <mat-list-item>
+        <mat-icon matListIcon color="primary">verified_user</mat-icon>
+        <h3 matLine><a routerLink="/" target="_blank">Kerberos Authentication</a></h3>
+        <p matLine>Complete authentication flow documentation</p>
+      </mat-list-item>
+
+      <mat-list-item>
+        <mat-icon matListIcon color="primary">api</mat-icon>
+        <h3 matLine><a routerLink="/" target="_blank">OpenAPI Codegen</a></h3>
+        <p matLine>API client generation from OpenAPI specs</p>
+      </mat-list-item>
+
+      <mat-list-item>
+        <mat-icon matListIcon color="primary">folder</mat-icon>
+        <h3 matLine><a routerLink="/" target="_blank">Project Structure</a></h3>
+        <p matLine>File system map and organization</p>
+      </mat-list-item>
+    </mat-list>
+  </section>
+</main>
+
+<footer class="landing-footer">
+  <p>Built with \ud83d\udc8b by Angular Bootstrap</p>
+</footer>

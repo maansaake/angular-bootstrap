@@ -1,23 +1,72 @@
-mat-toolbar {
-  background-color: var(--mat-sys-surface-container);
-  color: var(--mat-sys-on-surface);
+.header-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--mat-sys-elevation-level-2);
+}
+
+.header-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 500;
+  
+  a {
+    color: var(--mat-sys-on-primary);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    
+    &:hover {
+      text-decoration: underline;
+    }
+    
+    mat-icon {
+      font-size: 28px;
+      width: 28px;
+      height: 28px;
+    }
+  }
+  
+  @media (max-width: 600px) {
+    font-size: 1rem;
+    
+    a mat-icon {
+      font-size: 24px;
+    }
+  }
 }
 
 .spacer {
   flex: 1 1 auto;
 }
 
-h1 a {
-  color: inherit;
-  text-decoration: none;
+button[matButton] {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
 }
 
-h1 a:focus-visible {
-  outline: 2px solid currentColor;
-  outline-offset: 4px;
-  border-radius: 2px;
-}
-
-button {
-  margin-left: 0.5rem;
+@media (max-width: 600px) {
+  .header-toolbar {
+    flex-wrap: wrap;
+    padding: 0 16px;
+  }
+  
+  button[matButton] span {
+    display: none;
+  }
+  
+  button[matButton] mat-icon {
+    font-size: 24px;
+  }
 }

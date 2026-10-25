@@ -2,6 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 
 import { MatButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
 import { MatToolbar } from '@angular/material/toolbar';
 
 import { AuthService } from '../services/auth.service';
@@ -9,7 +10,7 @@ import { filter } from 'rxjs';
 import { NavigationEnd } from '@angular/router';
 
 @Component({
-  imports: [MatToolbar, MatButton, RouterLink],
+  imports: [MatToolbar, MatButton, MatIcon, RouterLink],
   selector: 'app-header',
   styleUrl: './header.scss',
   templateUrl: './header.html',
