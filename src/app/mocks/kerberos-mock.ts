@@ -42,7 +42,7 @@ function loadUsers(): Map<string, MockUser> {
   try {
     const saved = localStorage.getItem(STORAGE_KEY_USERS);
     if (saved) {
-      const parsed = JSON.parse(saved) as Array<{ key: string; value: MockUser }>;
+      const parsed = JSON.parse(saved) as { key: string; value: MockUser }[];
       return new Map(parsed.map(item => [item.key, item.value]));
     }
   } catch {
@@ -104,7 +104,7 @@ function saveCurrentUser(user: MockUser | null): void {
 }
 
 // Initialize from localStorage
-let users = loadUsers();
+const users = loadUsers();
 let nextUserId = loadNextUserId();
 let currentUser: MockUser | null = loadCurrentUser();
 

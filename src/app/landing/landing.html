@@ -27,7 +27,7 @@
         <div class="hero-actions">
           @for (action of visibleQuickActions; track action.title) {
           <button 
-            matButton="raised" 
+            matButton="filled" 
             color="{{ action.color }}"
             routerLink="{{ action.link }}"
             class="hero-action-button">
