@@ -3,7 +3,7 @@ import { Landing } from './landing/landing';
 import { Login } from './login/login';
 import { Register } from './register/register';
 import { Profile } from './profile/profile';
-import { authGuard } from './services/user';
+import { authGuard } from './services/auth.service';
 
 export const routes: Routes = [
   {

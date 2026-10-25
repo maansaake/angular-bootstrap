@@ -11,7 +11,7 @@
     @if (username.hasError('required') && username.touched) {
     <mat-error>Username is required.</mat-error>
     } @else if (username.hasError('minlength') && username.touched) {
-    <mat-error>Username must be at least 3 characters.</mat-error>
+    <mat-error>Username must be at least 5 characters.</mat-error>
     } @else if (username.hasError('maxlength') && username.touched) {
     <mat-error>Username cannot exceed 32 characters.</mat-error>
     }
@@ -26,7 +26,9 @@
     @if (password.hasError('required') && password.touched) {
     <mat-error>Password is required.</mat-error>
     } @else if (password.hasError('minlength') && password.touched) {
-    <mat-error>Password must be at least 5 characters.</mat-error>
+    <mat-error>Password must be at least 10 characters.</mat-error>
+    } @else if (password.hasError('maxlength') && password.touched) {
+    <mat-error>Password cannot exceed 40 characters.</mat-error>
     }
   </mat-form-field>
 
@@ -46,6 +48,10 @@
     <mat-error>Passwords do not match.</mat-error>
     }
   </mat-form-field>
+
+  @if (registerError(); as error) {
+  <mat-error role="alert">{{ error }}</mat-error>
+  }
 
   <button matButton="filled" type="submit" class="register-button" [disabled]="registerForm.invalid">
     Register

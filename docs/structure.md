@@ -10,31 +10,47 @@ Root component and feature components. Every feature is a directory with
 
 - `app.ts` / `app.html` / `app.scss` — root component: header, footer, and `<router-outlet>`.
 - `app.config.ts` — **application providers** (important): `provideRouter(routes)`,
-  `provideApi(environment.krbBaseUrl)`, browser error listeners. New global providers go
-  here.
+  `provideHttpClient` with the interceptors (refresh-retry outermost, mock backend
+  innermost), `provideApi` for the Kerberos client and the backend client (base URLs from
+  the environment, `withCredentials` for session cookies), and an app initializer that
+  hydrates the session from the backend on boot. New global providers go here.
 - `app.routes.ts` — route table: `''` → Landing, `login`, `register`, `profile`
   (guarded by `authGuard`). Add routes here.
 - `header/`, `footer/` — app chrome. Toolbar-based header with login/register/profile
-  buttons driven by the `User` service and router events; surface-container backgrounds
+  buttons driven by the `AuthService` and router events; surface-container backgrounds
   (see their scss).
+- `interceptors/` — `auth-refresh.interceptor.ts` (important): on a 401 from any request
+  except login/refresh themselves, refreshes the session once and retries the request.
+- `mocks/` — **dev-only mock backend** (important): `kerberos-mock.ts` implements the
+  Kerberos and registration endpoints in memory so `ng serve` works without a server. It
+  warns loudly in the console; delete the directory and its interceptor registration in
+  `app.config.ts` before developing against a real backend.
 - `landing/` — public landing page (`''`).
-- `login/`, `register/`, `profile/` — user management flows. Reactive Forms +
+- `login/`, `register/`, `profile/` — authentication flows. Reactive Forms +
   `FormBuilder.nonNullable`, `ErrorStateMatcher` for cross-field errors (register,
-  profile), `MatSnackBar` feedback pattern (login, register).
+  profile), `MatSnackBar` feedback pattern (login, register, profile). Login/profile talk
+  to `AuthService`; register calls the generated backend client (`RegistrationService`)
+  because registration is backend-owned.
 
 ## `src/app/services/` — services
 
-- `user.ts` — **hand-written session service** (important): `@Service()` class `User` with
-  signal state (`loggedIn`, `username`), `localStorage` persistence, login/logout, and
-  `authGuard` (`CanActivateFn`). Guards profile routes.
-- `user.spec.ts` — its spec.
-- `auth-basic/` — **OpenAPI-generated client** (generated code — do not hand-edit).
+- `auth.service.ts` — **session service** (important): `@Service()` class `AuthService`
+  with signal state (`user`, `username`, `loggedIn`) derived from the API — hydrated from
+  `GetMe` on boot via an app initializer. Login/logout/refresh go through the generated
+  Kerberos client (`UsersService`); a refresher loop keeps the session warm while logged
+  in. No credentials or session state are stored client-side. Also exports `authGuard`
+  (`CanActivateFn`); guards profile routes.
+- `auth.service.spec.ts` — its spec (mocked HTTP via `HttpTestingController`).
+- `auth-basic/` — **OpenAPI-generated Kerberos client** (generated code — do not hand-edit).
   Regenerate with `npm run codegen` (or `make codegen`) from `openapi/auth_basic.yaml`.
   - Barrel entry `index.ts` and `provide-api.ts` (`provideApi(basePathOrConfig)`) are the
     integration points app code uses; `app.config.ts` calls `provideApi`.
   - `api/` (endpoint services: users, groups, organisations), `model/` (request/response
     models), plus generator support files (configuration, encoder, variables).
   - `.openapi-generator-ignore` protects the integration points above from regeneration.
+- `backend/` — **OpenAPI-generated client for the app's own backend** (generated code — do
+  not hand-edit), generated from `openapi/backend.yaml` in the same `codegen` run. Currently
+  only `RegistrationService` (`POST /api/register`); grows as the backend gains endpoints.
 
 ## `src/` (non-app) — entry and styling
 
@@ -44,12 +60,17 @@ Root component and feature components. Every feature is a directory with
   `color-scheme: light dark` on body. Never add a second theme or hardcoded colors —
   use `--mat-sys-*` tokens.
 - `index.html` — loads Roboto + Material Symbols fonts.
-- `environments/environment.ts` / `environment.prod.ts` — `krbBaseUrl` (API base URL) and
-  `production` flag. Dev default: `http://localhost:30001`.
+- `environments/environment.ts` / `environment.prod.ts` — `krbBaseUrl` (Kerberos API base
+  URL), `backendBaseUrl` (app backend base URL), `orgID` (the single demo organisation all
+  Kerberos requests are scoped to), and `production` flag. Dev defaults:
+  `http://localhost:30001` / `http://localhost:30002` / `1`.
 
 ## `openapi/`
 
-- `auth_basic.yaml` — Kerberos OpenAPI spec; the generator input. Edit the spec here, then
+- `auth_basic.yaml` — Kerberos OpenAPI spec; the generator input for
+  `src/app/services/auth-basic`.
+- `backend.yaml` — the app backend's own OpenAPI spec (registration and future
+  backend-owned endpoints); the generator input for `src/app/services/backend`. Edit the spec here, then
   run codegen.
 
 ## `.agents/skills/` — agent skill library
@@ -63,11 +84,11 @@ Root component and feature components. Every feature is a directory with
 
 - `AGENTS.md` — **coding standards** (important): TypeScript/Angular rules (standalone,
   signals, control flow, no `ngClass`/`ngStyle`, `@Service()`, Signal Forms preference).
-  `CLAUDE.md` mirrors it.
 - `angular.json` — Angular CLI workspace; `Makefile` — `lint`, `build/dev`, `test` (default
   target), `codegen`, `serve`.
 - `package.json` — scripts: `start`, `build`, `watch`, `test`, `lint`, `codegen`
-  (OpenAPI generator → `src/app/services/auth-basic`).
+  (OpenAPI generator → `src/app/services/auth-basic` **and**
+  `src/app/services/backend`).
 - `eslint.config.js`, `.prettierrc`, `.editorconfig` — lint/format.
 - `tsconfig(.app/.spec).json`, `openapitools.json` — TS config and generator versioning.
 - `.github/workflows/` — `main.yaml` and `pull-request.yaml` call `callable-build.yaml` /

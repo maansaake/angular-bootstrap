@@ -8,7 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
-    "codegen": "npx @openapitools/openapi-generator-cli generate -g typescript-angular -i openapi/auth_basic.yaml -o src/app/services/auth-basic"
+    "codegen": "npx @openapitools/openapi-generator-cli generate -g typescript-angular -i openapi/auth_basic.yaml -o src/app/services/auth-basic && npx @openapitools/openapi-generator-cli generate -g typescript-angular -i openapi/backend.yaml -o src/app/services/backend"
   },
   "private": true,
   "packageManager": "npm@11.19.0",

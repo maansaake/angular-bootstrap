@@ -1,27 +1,23 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { User } from '../services/user';
 import { Router } from '@angular/router';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+
+import { MatButton } from '@angular/material/button';
+import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
+import { AuthService } from '../services/auth.service';
 
 @Component({
-  imports: [
-    ReactiveFormsModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSnackBarModule,
-  ],
+  imports: [ReactiveFormsModule, MatButton, MatError, MatFormField, MatInput, MatLabel],
   selector: 'app-login',
   styleUrl: './login.scss',
   templateUrl: './login.html',
 })
 export class Login {
   private readonly fb = inject(FormBuilder);
-  private readonly userSvc = inject(User);
+  private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
   private readonly snackBar = inject(MatSnackBar);
 
@@ -44,7 +40,7 @@ export class Login {
     this.loginError.set(null);
   }
 
-  onSubmit(): void {
+  async onSubmit(): Promise<void> {
     this.loginError.set(null);
 
     if (this.loginForm.invalid) {
@@ -54,16 +50,12 @@ export class Login {
 
     const { username, password } = this.loginForm.getRawValue();
 
-    if (this.userSvc.login(username, password)) {
-      this.snackBar.open(
-        `Logged in successfully.`,
-        'Close',
-        {
-          duration: 3000,
-          horizontalPosition: 'center',
-          verticalPosition: 'top',
-        },
-      );
+    if (await this.authService.login(username, password)) {
+      this.snackBar.open(`Logged in successfully.`, 'Close', {
+        duration: 3000,
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+      });
       this.router.navigate(['']);
     } else {
       this.loginError.set('Invalid username or password.');

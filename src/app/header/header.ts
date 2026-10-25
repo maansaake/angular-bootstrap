@@ -1,18 +1,21 @@
 import { Component, inject, signal } from '@angular/core';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { User } from '../services/user';
+import { Router, RouterLink } from '@angular/router';
+
 import { MatButton } from '@angular/material/button';
-import { NavigationEnd, Router, RouterLink } from '@angular/router';
+import { MatToolbar } from '@angular/material/toolbar';
+
+import { AuthService } from '../services/auth.service';
 import { filter } from 'rxjs';
+import { NavigationEnd } from '@angular/router';
 
 @Component({
-  imports: [MatToolbarModule, MatButton, RouterLink],
+  imports: [MatToolbar, MatButton, RouterLink],
   selector: 'app-header',
   styleUrl: './header.scss',
   templateUrl: './header.html',
 })
 export class Header {
-  private readonly userSvc = inject(User);
+  private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
   readonly showLogin = signal(false);
 
@@ -26,7 +29,9 @@ export class Header {
 
   private updateShowLogin(): void {
     const segments = this.router.url.split('?')[0].split('/').filter(Boolean);
-    this.showLogin.set(segments.at(-1) !== 'login' && segments.at(-1) !== 'register');
+    this.showLogin.set(
+      segments.at(-1) !== 'login' && segments.at(-1) !== 'register',
+    );
   }
 
   private onRegister(): void {
@@ -41,8 +46,8 @@ export class Header {
     this.router.navigate(['/profile']);
   }
 
-  private onLogout(): void {
-    this.userSvc.logout();
-    this.router.navigate([''])
+  private async onLogout(): Promise<void> {
+    await this.authService.logout();
+    this.router.navigate(['']);
   }
 }

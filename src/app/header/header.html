@@ -6,7 +6,7 @@
       </a>
     </h1>
     <span class="spacer"></span>
-    @if (userSvc.loggedIn()) {
+    @if (authService.loggedIn()) {
     <button matButton="filled" (click)="onProfile()">Profile</button>
     <button matButton="outlined" (click)="onLogout()">Log out</button>
     } @else {

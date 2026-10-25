@@ -1,13 +1,23 @@
 import { Component, inject } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroupDirective, NgForm, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroupDirective,
+  NgForm,
+  ReactiveFormsModule,
+  ValidationErrors,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { User } from '../services/user';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatDividerModule } from '@angular/material/divider';
 import { ErrorStateMatcher } from '@angular/material/core';
+import { MatButton } from '@angular/material/button';
+import { MatDivider } from '@angular/material/divider';
+import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
+import { AuthService } from '../services/auth.service';
 
 const passwordsMatchValidator: ValidatorFn = (
   control: AbstractControl,
@@ -19,26 +29,18 @@ const passwordsMatchValidator: ValidatorFn = (
     return null;
   }
 
-  return password === repeatedPassword
-    ? null
-    : { passwordsMismatch: true };
+  return password === repeatedPassword ? null : { passwordsMismatch: true };
 };
 
 @Component({
-  imports: [
-    ReactiveFormsModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatDividerModule,
-  ],
+  imports: [ReactiveFormsModule, MatButton, MatDivider, MatError, MatFormField, MatInput, MatLabel],
   selector: 'app-profile',
   styleUrl: './profile.scss',
   templateUrl: './profile.html',
 })
 export class Profile {
   private readonly fb = inject(FormBuilder);
-  private readonly userSvc = inject(User);
+  private readonly authService = inject(AuthService);
   private readonly snackBar = inject(MatSnackBar);
 
   readonly usernameForm = this.fb.nonNullable.group({
@@ -46,7 +48,7 @@ export class Profile {
       '',
       [
         Validators.required,
-        Validators.minLength(3),
+        Validators.minLength(5),
         Validators.maxLength(32),
       ],
     ],
@@ -55,10 +57,7 @@ export class Profile {
   readonly passwordForm = this.fb.nonNullable.group(
     {
       currentPassword: ['', Validators.required],
-      newPassword: ['', [
-        Validators.required,
-        Validators.minLength(8),
-      ]],
+      newPassword: ['', [Validators.required, Validators.minLength(10)]],
       repeatedPassword: ['', Validators.required],
     },
     {
@@ -89,10 +88,7 @@ export class Profile {
         'passwordsMismatch',
       );
 
-      return (
-        shouldShowError &&
-        (controlIsInvalid || passwordsDoNotMatch)
-      );
+      return shouldShowError && (controlIsInvalid || passwordsDoNotMatch);
     },
   };
 
@@ -100,7 +96,7 @@ export class Profile {
     return this.usernameForm.controls.username;
   }
 
-  onUsernameSubmit(): void {
+  async onUsernameSubmit(): Promise<void> {
     if (this.usernameForm.invalid) {
       this.usernameForm.markAllAsTouched();
       return;
@@ -108,31 +104,36 @@ export class Profile {
 
     const { username } = this.usernameForm.getRawValue();
 
-    this.userSvc.updateUsername(username);
-    this.usernameForm.reset();
+    if (await this.authService.updateUsername(username)) {
+      this.usernameForm.reset();
 
-    this.snackBar.open(
-      `Your username has been updated successfully.`,
-      'Close',
-      {
+      this.snackBar.open(
+        `Your username has been updated successfully.`,
+        'Close',
+        {
+          duration: 3000,
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+        },
+      );
+    } else {
+      this.snackBar.open(`Failed to update your username.`, 'Close', {
         duration: 3000,
         horizontalPosition: 'center',
         verticalPosition: 'top',
-      },
-    );
+      });
+    }
   }
 
-  onPasswordSubmit(): void {
+  async onPasswordSubmit(): Promise<void> {
     if (this.passwordForm.invalid) {
       this.passwordForm.markAllAsTouched();
       return;
     }
 
-    const { currentPassword, newPassword } =
-      this.passwordForm.getRawValue();
+    const { currentPassword, newPassword } = this.passwordForm.getRawValue();
 
-
-    if (this.userSvc.updatePassword(currentPassword, newPassword)) {
+    if (await this.authService.updatePassword(currentPassword, newPassword)) {
       this.passwordForm.reset();
 
       this.snackBar.open(

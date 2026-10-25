@@ -7,7 +7,7 @@ const angular = require('angular-eslint');
 module.exports = defineConfig([
   {
     files: ['**/*.ts'],
-    ignores: ['src/app/services/auth-basic/**'],
+    ignores: ['src/app/services/auth-basic/**', 'src/app/services/backend/**'],
     extends: [
       eslint.configs.recommended,
       tseslint.configs.recommended,

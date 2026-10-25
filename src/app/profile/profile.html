@@ -1,4 +1,4 @@
-<h2>Hi there, {{ userSvc.username() }}!</h2>
+<h2>Hi there, {{ authService.username() }}!</h2>
 
 <h3>Change username</h3>
 
@@ -11,7 +11,7 @@
     @if (username.hasError('required') && username.touched) {
     <mat-error>Username is required.</mat-error>
     } @else if (username.hasError('minlength') && username.touched) {
-    <mat-error>Username must be at least 3 characters.</mat-error>
+    <mat-error>Username must be at least 5 characters.</mat-error>
     } @else if (username.hasError('maxlength') && username.touched) {
     <mat-error>Username cannot exceed 32 characters.</mat-error>
     }
@@ -49,7 +49,7 @@
     @if (newPassword.hasError('required') && newPassword.touched) {
     <mat-error>New password is required.</mat-error>
     } @else if (newPassword.hasError('minlength') && newPassword.touched) {
-    <mat-error>Password must be at least 8 characters.</mat-error>
+    <mat-error>Password must be at least 10 characters.</mat-error>
     }
   </mat-form-field>
 

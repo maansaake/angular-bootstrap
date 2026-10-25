@@ -19,8 +19,18 @@ A reference repository, use as a template for new Angular apps.
 6. Landing page
 7. OpenAPI code generation
 
-    * Uses [Kerberos](https://github.com/trebent/kerberos) OpenAPI specification for basic authentication to generate an Angular client service.
+    * Generates an Angular client from [Kerberos'](https://github.com/trebent/kerberos) OpenAPI
+      specification (`openapi/auth_basic.yaml`) for authentication: login, logout, session
+      refresh, and reading/updating your own user.
+    * Generates a second client from the backend's own specification
+      (`openapi/backend.yaml`) for registration. Kerberos only creates users through a hidden
+      admin account, so the backend owns registration: it proxies user creation to Kerberos
+      and rate limits it (documented in the spec).
 
 8. GitHub actions layout
 
-The bootstrap app uses a mocked service for user management which can be easily modified to support a real backend (preferably [Kerberos](https://github.com/trebent/kerberos) 😀).
+Without a real backend, `ng serve` runs against a **mock backend interceptor**
+(`src/app/mocks/`): it implements the Kerberos and registration endpoints in memory and
+warns loudly in the console. Remove it (and its registration in `app.config.ts`) before
+pointing the app at a real backend — the app code itself only talks to the
+OpenAPI-generated clients and needs no other changes.

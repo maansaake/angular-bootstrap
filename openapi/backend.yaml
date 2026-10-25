@@ -1,0 +1,99 @@
+# yaml-language-server: $schema=https://spec.openapis.org/oas/3.0/schema/2024-10-18
+openapi: "3.0.4"
+info:
+  version: 0.1.0
+  title: Backend API.
+  description: |
+    The API owned by this application's backend.
+
+    Kerberos requires an authenticated admin account to create users, and that account must
+    stay hidden from normal users. User registration is therefore owned by the application
+    backend, not by Kerberos: the backend authenticates with its hidden admin account, proxies
+    the registration to Kerberos' user creation endpoint, and applies its own restrictions
+    (such as rate limiting) so that publicly reachable registrations stay safe. After
+    registration, users authenticate directly against Kerberos; the backend takes no further
+    part in the authentication flow.
+paths:
+  /api/register:
+    post:
+      tags:
+        - registration
+      operationId: Register
+      requestBody:
+        $ref: "#/components/requestBodies/RegisterUserRequest"
+      responses:
+        "201":
+          description: Registered a new user.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RegisteredUser"
+        "400":
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/APIErrorResponse"
+        "409":
+          description: Username already taken.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/APIErrorResponse"
+        "429":
+          description: Too many registration requests. The backend rate limits registrations
+            to keep its admin-proxied user creation safe; clients should treat this like
+            any other failed registration.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/APIErrorResponse"
+        "500":
+          description: Internal error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/APIErrorResponse"
+components:
+  requestBodies:
+    RegisterUserRequest:
+      description: A request to register a new user.
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              username:
+                type: string
+                minLength: 5
+                maxLength: 32
+              password:
+                type: string
+                minLength: 10
+                maxLength: 40
+            required:
+              - username
+              - password
+  schemas:
+    RegisteredUser:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+      required:
+        - id
+        - name
+    APIErrorResponse:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: string
+          minItems: 1
+      required:
+        - errors
