@@ -15,7 +15,7 @@ make serve
 
 The app runs at `http://localhost:4200` with a mock backend. No external services required.
 
-**Note**: Remove `src/app/mocks/` before you start. See [GitHub Pages setup](https://pages.github.com/) for deployment options.
+**Note**: Remove `src/app/mocks/` before you start. See the deployed app at [GitHub Pages](https://maansaake.github.io/angular-bootstrap/) for a live example.
 
 ---
 
@@ -46,19 +46,18 @@ Complete Material Design v3 theming with:
 
 ### Authentication System
 
-Built on [Kerberos](https://github.com/trebent/kerberos), an API gateway with authentication/authorization. The authentication system in the bootstrap app uses the Kerberos API to authenticate users, and the custom service provides automatic token refreshes and 401 retry interception.
-
-- **HttpOnly cookie sessions** — No credentials stored client-side, preventing XSS attacks
-- **Automatic token refresh** — Background refresh every 5 minutes via app initializer
-- **401 retry interceptor** — Automatic session refresh on unauthorized responses
-- **Organisation isolation** — All requests scoped to a single organisation ID
-- **CSRF protection** — Built-in protection against cross-site request forgery
-- **Session management** — Complete session lifecycle handling with automatic cleanup
+Built on [Kerberos](https://github.com/trebent/kerberos), an API gateway with authentication/authorization. The authentication system in the bootstrap app uses the Kerberos API to authenticate users.
 
 **Session service** (`AuthService`):
 - Reactive state via signals (`user`, `loggedIn`, etc.)
 - Login/logout/refresh through generated Kerberos client
 - Hydrates session on app startup
+- Automatic token refresh — Background refresh every 5 minutes via app initializer
+- 401 retry interceptor — Automatic session refresh on unauthorized responses
+- HttpOnly cookie sessions — No credentials stored client-side, preventing XSS attacks
+- Organisation isolation — All requests scoped to a single organisation ID
+- CSRF protection — Built-in protection against cross-site request forgery
+- Session management — Complete session lifecycle handling with automatic cleanup
 
 ### OpenAPI Code Generation
 
