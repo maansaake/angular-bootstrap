@@ -46,17 +46,21 @@ Complete Material Design v3 theming with:
 
 ### Authentication System
 
-Built on [Kerberos](https://github.com/trebent/kerberos) with:
+Built on [Kerberos](https://github.com/trebent/kerberos), a modern authentication library for Angular that provides:
 
-- **HttpOnly cookie sessions** — No credentials stored client-side
+- **HttpOnly cookie sessions** — No credentials stored client-side, preventing XSS attacks
 - **Automatic token refresh** — Background refresh every 5 minutes via app initializer
 - **401 retry interceptor** — Automatic session refresh on unauthorized responses
 - **Organisation isolation** — All requests scoped to a single organisation ID
+- **CSRF protection** — Built-in protection against cross-site request forgery
+- **Session management** — Complete session lifecycle handling with automatic cleanup
 
 **Session service** (`AuthService`):
 - Reactive state via signals (`user`, `loggedIn`, etc.)
 - Login/logout/refresh through generated Kerberos client
 - Hydrates session on app startup
+
+Kerberos is designed for production use with Angular applications, providing a secure and maintainable authentication solution that follows Angular best practices.
 
 ### OpenAPI Code Generation
 

@@ -1,0 +1,51 @@
+name: Deploy to GitHub Pages
+
+run-name: "Deploy to GitHub Pages"
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+
+      - run: make install/cli
+
+      - run: make install
+
+      - name: Codegen
+        run: make codegen
+
+      - name: Build for production
+        run: make build/prod
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b7197b # v3.0.1
+        with:
+          path: dist/sample/browser
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@d6db71b830a396462787c4c3e6e97e9a8e6c4c85 # v4.0.1

@@ -1,5 +1,4 @@
 <mat-toolbar color="primary" class="hero-toolbar">
-  <h1>Angular Bootstrap</h1>
   <span class="spacer"></span>
   @if (authService.loggedIn()) {
   <button matButton="filled" color="accent" routerLink="/profile">
@@ -23,19 +22,6 @@
           A production-ready Angular 22 template with authentication, Material Design, and
           OpenAPI code generation. Start your next project with confidence.
         </p>
-        
-        <div class="hero-actions">
-          @for (action of visibleQuickActions; track action.title) {
-          <button 
-            matButton="filled" 
-            color="{{ action.color }}"
-            routerLink="{{ action.link }}"
-            class="hero-action-button">
-            <mat-icon>{{ action.icon }}</mat-icon>
-            <span>{{ action.title }}</span>
-          </button>
-          }
-        </div>
       </mat-card-content>
     </mat-card>
   </section>
@@ -44,13 +30,13 @@
 
   <!-- Features Section -->
   <section class="features-section">
-    <h2>\ud83c\udf81 Features</h2>
+    <h2>Features</h2>
     <p class="section-description">
       Everything you need to bootstrap your Angular application
     </p>
 
     <div class="features-grid">
-      @for (feature of visibleFeatures; track feature.title) {
+      @for (feature of features; track feature.title) {
       <mat-card class="feature-card" [routerLink]="feature.link">
         <mat-card-header>
           <div mat-card-avatar class="feature-icon">
@@ -70,7 +56,7 @@
 
   <!-- Technology Stack Section -->
   <section class="tech-section">
-    <h2>\ud83d\udc80 Technology Stack</h2>
+    <h2>Technology Stack</h2>
     <p class="section-description">
       Built with industry-standard tools and frameworks
     </p>
@@ -79,7 +65,7 @@
       <mat-card class="tech-card">
         <mat-card-header>
           <div mat-card-avatar class="tech-icon angular">
-            <mat-icon color="warn">angular</mat-icon>
+            <span class="angular-logo">A</span>
           </div>
           <mat-card-title>Angular 22</mat-card-title>
         </mat-card-header>
@@ -154,7 +140,7 @@
 
   <!-- Quick Start Section -->
   <section class="quickstart-section">
-    <h2>\ud83d\udca1 Quick Start</h2>
+    <h2>Quick Start</h2>
     <p class="section-description">
       Get started with the template in just a few commands
     </p>
@@ -162,7 +148,7 @@
     <div class="commands">
       <mat-card class="command-card">
         <mat-card-content>
-          <code>npm install</code>
+          <code>make install</code>
           <p>Install dependencies</p>
         </mat-card-content>
       </mat-card>
@@ -171,7 +157,7 @@
 
       <mat-card class="command-card">
         <mat-card-content>
-          <code>npm start</code>
+          <code>make serve</code>
           <p>Start development server</p>
         </mat-card-content>
       </mat-card>
@@ -180,14 +166,14 @@
 
       <mat-card class="command-card">
         <mat-card-content>
-          <code>npm run codegen</code>
+          <code>make codegen</code>
           <p>Generate API clients</p>
         </mat-card-content>
       </mat-card>
     </div>
 
     <p class="quickstart-note">
-      \u26a0\ufe0f The development server uses a mock backend. 
+      Note: The development server uses a mock backend. 
       <strong>Remove <code>src/app/mocks/</code></strong> before deploying to production.
     </p>
   </section>
@@ -196,45 +182,43 @@
 
   <!-- Documentation Section -->
   <section class="docs-section">
-    <h2>\ud83d\udcd6 Documentation</h2>
+    <h2>Documentation</h2>
     <p class="section-description">
       Learn more about the template's features and architecture
     </p>
 
     <mat-list>
       <mat-list-item>
-        <mat-icon matListIcon color="primary">home</mat-icon>
-        <h3 matLine><a routerLink="/" target="_blank">README</a></h3>
+        <mat-icon matListIcon color="primary">description</mat-icon>
+        <h3 matLine><a href="https://github.com/maansaake/angular-bootstrap#readme" target="_blank" rel="noopener noreferrer">README</a></h3>
         <p matLine>Complete template overview and usage guide</p>
       </mat-list-item>
 
       <mat-list-item>
         <mat-icon matListIcon color="primary">design_services</mat-icon>
-        <h3 matLine><a routerLink="/" target="_blank">Material Design</a></h3>
+        <h3 matLine><a href="https://material.angular.io/" target="_blank" rel="noopener noreferrer">Material Design</a></h3>
         <p matLine>M3 theming, components, and best practices</p>
       </mat-list-item>
 
       <mat-list-item>
         <mat-icon matListIcon color="primary">verified_user</mat-icon>
-        <h3 matLine><a routerLink="/" target="_blank">Kerberos Authentication</a></h3>
+        <h3 matLine><a href="https://github.com/trebent/kerberos" target="_blank" rel="noopener noreferrer">Kerberos Authentication</a></h3>
         <p matLine>Complete authentication flow documentation</p>
       </mat-list-item>
 
       <mat-list-item>
         <mat-icon matListIcon color="primary">api</mat-icon>
-        <h3 matLine><a routerLink="/" target="_blank">OpenAPI Codegen</a></h3>
+        <h3 matLine><a href="https://openapi-generator.tech/" target="_blank" rel="noopener noreferrer">OpenAPI Codegen</a></h3>
         <p matLine>API client generation from OpenAPI specs</p>
       </mat-list-item>
 
       <mat-list-item>
         <mat-icon matListIcon color="primary">folder</mat-icon>
-        <h3 matLine><a routerLink="/" target="_blank">Project Structure</a></h3>
+        <h3 matLine><a href="https://github.com/maansaake/angular-bootstrap" target="_blank" rel="noopener noreferrer">Project Structure</a></h3>
         <p matLine>File system map and organization</p>
       </mat-list-item>
     </mat-list>
   </section>
 </main>
 
-<footer class="landing-footer">
-  <p>Built with \ud83d\udc8b by Angular Bootstrap</p>
-</footer>
+<app-footer></app-footer>
