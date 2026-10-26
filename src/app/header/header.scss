@@ -1,8 +1,12 @@
+.header {
+  background: var(--mat-sys-surface-container);
+  width: 100%;
+}
+
 .header-toolbar {
-  position: sticky;
-  top: 0;
   z-index: 100;
   box-shadow: var(--mat-sys-elevation-level-2);
+  background: var(--mat-sys-surface-container);
 }
 
 .header-title {
@@ -20,6 +24,7 @@
     align-items: center;
     gap: 8px;
     font-weight: 600;
+    text-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
     
     &:hover {
       text-decoration: underline;

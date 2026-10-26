@@ -70,7 +70,7 @@ export class Landing {
       requiresAuth: false,
     },
     {
-      icon: 'github',
+      icon: 'build',
       title: 'GitHub Actions CI',
       description: 'Complete CI/CD pipeline with build, test, lint, and code scanning',
       link: 'https://github.com/maansaake/angular-bootstrap/actions',

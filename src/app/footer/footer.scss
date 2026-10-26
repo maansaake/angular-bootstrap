@@ -1,18 +1,26 @@
 .footer {
   margin-top: 48px;
   background: var(--mat-sys-surface-container);
+  width: 100%;
 }
 
 .footer-toolbar {
   padding: 24px;
   background: transparent;
   min-height: auto;
+  display: flex;
+  flex-direction: column;
   
   @media (max-width: 600px) {
     flex-direction: column;
     align-items: stretch;
     gap: 16px;
   }
+}
+
+.mat-divider {
+  margin: 0;
+  width: 100%;
 }
 
 .footer-content {

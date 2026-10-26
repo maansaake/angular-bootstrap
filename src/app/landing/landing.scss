@@ -2,18 +2,10 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 24px;
+  box-sizing: border-box;
 }
 
 // Hero Section
-.hero-toolbar {
-  margin-bottom: 24px;
-  box-shadow: var(--mat-sys-elevation-level-2);
-}
-
-.spacer {
-  flex: 1 1 auto;
-}
-
 .hero-section {
   margin-bottom: 48px;
 }
@@ -26,6 +18,7 @@
   box-shadow: var(--mat-sys-elevation-level-4);
   margin: 0 auto;
   max-width: 800px;
+  box-sizing: border-box;
 }
 
 .hero-title {
@@ -34,6 +27,7 @@
     font-weight: 700;
     margin: 0;
     color: var(--mat-sys-on-surface);
+    text-align: center;
     
     @media (max-width: 600px) {
       font-size: 1.875rem;
@@ -82,6 +76,7 @@ h2 {
   color: var(--mat-sys-on-surface);
   margin-bottom: 8px;
   text-align: center;
+  width: 100%;
 }
 
 .section-description {
@@ -120,6 +115,7 @@ h2 {
   border-radius: 50%;
   width: 48px;
   height: 48px;
+  margin: 0 auto;
   
   mat-icon {
     font-size: 24px;
@@ -131,8 +127,10 @@ h2 {
 .feature-card mat-card-header {
   padding-bottom: 16px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 16px;
+  text-align: center;
 }
 
 .feature-card mat-card-title {
@@ -140,6 +138,8 @@ h2 {
   font-weight: 600;
   color: var(--mat-sys-on-surface);
   margin: 0;
+  text-align: center;
+  width: 100%;
 }
 
 .feature-card mat-card-content {
@@ -194,11 +194,11 @@ h2 {
   &.angular {
     background: rgba(var(--mat-sys-error-rgb), 0.1);
     
-    .angular-logo {
+    mat-icon {
       font-size: 24px;
-      font-weight: bold;
+      width: 24px;
+      height: 24px;
       color: var(--mat-sys-error);
-      line-height: 48px;
     }
   }
   
@@ -220,6 +220,13 @@ h2 {
   
   &.github {
     background: rgba(var(--mat-sys-info-rgb), 0.1);
+    
+    mat-icon {
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
+      color: var(--mat-sys-info);
+    }
   }
 }
 
