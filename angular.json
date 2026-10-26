@@ -56,8 +56,7 @@
                   "maximumError": "8kB"
                 }
               ],
-              "outputHashing": "all",
-              "baseHref": "/angular-bootstrap/"
+              "outputHashing": "all"
             },
             "development": {
               "optimization": false,
