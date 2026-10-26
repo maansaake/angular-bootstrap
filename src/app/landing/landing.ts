@@ -5,7 +5,7 @@ import { MatButton } from '@angular/material/button';
 import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
 import { MatDivider } from '@angular/material/divider';
 import { MatIcon } from '@angular/material/icon';
-import { MatList, MatListItem, MatListItemIcon, MatListItemTitle } from '@angular/material/list';
+import { MatList, MatListItem } from '@angular/material/list';
 import { MatToolbar } from '@angular/material/toolbar';
 
 import { AuthService } from '../services/auth.service';
@@ -21,8 +21,6 @@ import { AuthService } from '../services/auth.service';
     MatIcon,
     MatList,
     MatListItem,
-    MatListItemIcon,
-    MatListItemTitle,
     MatToolbar,
     RouterLink,
   ],
