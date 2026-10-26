@@ -24,6 +24,8 @@
   padding: 48px;
   text-align: center;
   box-shadow: var(--mat-sys-elevation-level-4);
+  margin: 0 auto;
+  max-width: 800px;
 }
 
 .hero-title {
@@ -128,16 +130,21 @@ h2 {
 
 .feature-card mat-card-header {
   padding-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
 .feature-card mat-card-title {
   font-size: 1.125rem;
   font-weight: 600;
   color: var(--mat-sys-on-surface);
+  margin: 0;
 }
 
 .feature-card mat-card-content {
   color: var(--mat-sys-on-surface-variant);
+  text-align: center;
   
   p {
     margin: 0;
@@ -158,6 +165,15 @@ h2 {
   padding: 24px;
   background: var(--mat-sys-surface-container-low);
   border-radius: 12px;
+}
+
+.tech-card mat-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding-bottom: 0;
+  margin-bottom: 16px;
 }
 
 .tech-icon {
@@ -211,7 +227,7 @@ h2 {
   font-size: 1.125rem;
   font-weight: 600;
   color: var(--mat-sys-on-surface);
-  margin-bottom: 8px;
+  margin: 0;
 }
 
 .tech-card mat-card-content {
@@ -221,6 +237,11 @@ h2 {
     color: var(--mat-sys-on-surface-variant);
     line-height: 1.5;
   }
+}
+
+.tech-card mat-card-header-text {
+  text-align: center;
+  margin: 0 auto;
 }
 
 // Quick Start Section

@@ -1,6 +1,6 @@
 .footer {
   margin-top: 48px;
-  background: var(--mat-sys-surface-container-low);
+  background: var(--mat-sys-surface-container);
 }
 
 .footer-toolbar {
@@ -21,6 +21,9 @@
   justify-content: space-between;
   gap: 32px;
   width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
   
   @media (max-width: 900px) {
     justify-content: center;
@@ -88,6 +91,8 @@
   text-align: center;
   padding: 16px 24px;
   background: var(--mat-sys-surface-container);
+  max-width: 1200px;
+  margin: 0 auto;
   
   p {
     margin: 0;

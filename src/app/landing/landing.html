@@ -1,11 +1,5 @@
 <mat-toolbar color="primary" class="hero-toolbar">
   <span class="spacer"></span>
-  @if (authService.loggedIn()) {
-  <button matButton="filled" color="accent" routerLink="/profile">
-    <mat-icon>account_circle</mat-icon>
-    <span>Profile</span>
-  </button>
-  }
 </mat-toolbar>
 
 <main class="landing-content">
@@ -32,7 +26,7 @@
   <section class="features-section">
     <h2>Features</h2>
     <p class="section-description">
-      Everything you need to bootstrap your Angular application
+    Built with industry-standard tools and frameworks - Everything you need to bootstrap your Angular application
     </p>
 
     <div class="features-grid">
@@ -49,90 +43,6 @@
         </mat-card-content>
       </mat-card>
       }
-    </div>
-  </section>
-
-  <mat-divider></mat-divider>
-
-  <!-- Technology Stack Section -->
-  <section class="tech-section">
-    <h2>Technology Stack</h2>
-    <p class="section-description">
-      Built with industry-standard tools and frameworks
-    </p>
-
-    <div class="tech-grid">
-      <mat-card class="tech-card">
-        <mat-card-header>
-          <div mat-card-avatar class="tech-icon angular">
-            <span class="angular-logo">A</span>
-          </div>
-          <mat-card-title>Angular 22</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <p>Standalone components, signals, modern control flow, and ESBuild</p>
-        </mat-card-content>
-      </mat-card>
-
-      <mat-card class="tech-card">
-        <mat-card-header>
-          <div mat-card-avatar class="tech-icon material">
-            <mat-icon color="primary">palette</mat-icon>
-          </div>
-          <mat-card-title>Material Design 3</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <p>Complete M3 theming with token-driven styling and dark mode</p>
-        </mat-card-content>
-      </mat-card>
-
-      <mat-card class="tech-card">
-        <mat-card-header>
-          <div mat-card-avatar class="tech-icon kerberos">
-            <mat-icon color="accent">security</mat-icon>
-          </div>
-          <mat-card-title>Kerberos Auth</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <p>Secure authentication with HttpOnly cookies and organisation isolation</p>
-        </mat-card-content>
-      </mat-card>
-
-      <mat-card class="tech-card">
-        <mat-card-header>
-          <div mat-card-avatar class="tech-icon openapi">
-            <mat-icon color="primary">description</mat-icon>
-          </div>
-          <mat-card-title>OpenAPI Codegen</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <p>Type-safe Angular clients generated from OpenAPI specifications</p>
-        </mat-card-content>
-      </mat-card>
-
-      <mat-card class="tech-card">
-        <mat-card-header>
-          <div mat-card-avatar class="tech-icon eslint">
-            <mat-icon color="warn">check_circle</mat-icon>
-          </div>
-          <mat-card-title>ESLint + Prettier</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <p>Production-ready linting and code formatting</p>
-        </mat-card-content>
-      </mat-card>
-
-      <mat-card class="tech-card">
-        <mat-card-header>
-          <div mat-card-avatar class="tech-icon github">
-            <mat-icon color="accent">code</mat-icon>
-          </div>
-          <mat-card-title>GitHub Actions</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <p>Complete CI/CD pipeline with build, test, lint, and code scanning</p>
-        </mat-card-content>
-      </mat-card>
     </div>
   </section>
 
@@ -220,5 +130,3 @@
     </mat-list>
   </section>
 </main>
-
-<app-footer></app-footer>
