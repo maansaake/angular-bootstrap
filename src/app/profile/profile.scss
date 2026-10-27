@@ -1,28 +1,43 @@
-:host {
-  display: flex;
-  flex-direction: column;
-
-  width: 100%;
-  max-width: 28rem;
-  margin-inline: auto;
+.profile {
+  display: grid;
+  gap: 1.5rem;
+  max-width: 40rem;
 }
 
-mat-divider {
-  margin-top: 1rem;
+.page-title {
+  margin-block-end: 0;
 }
 
-.profile-form {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+h2[mat-card-title] {
+  margin: 0;
 }
 
-.profile-field {
-  width: 100%;
+mat-card-content {
+  padding-block-start: 1rem;
 }
 
-.profile-button {
-  width: 100%;
-  min-height: 48px;
-  margin-top: 0.25rem;
+dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.5rem 1.5rem;
+  margin: 0;
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+    gap: 0.125rem;
+
+    dd {
+      margin-block-end: 0.5rem;
+    }
+  }
+}
+
+dt {
+  color: var(--mat-sys-on-surface-variant);
+  font: var(--mat-sys-label-large);
+}
+
+dd {
+  margin: 0;
+  overflow-wrap: anywhere;
 }

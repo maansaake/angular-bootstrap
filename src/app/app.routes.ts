@@ -1,26 +1,30 @@
 import { Routes } from '@angular/router';
-import { Landing } from './landing/landing';
-import { Login } from './login/login';
-import { Register } from './register/register';
-import { Profile } from './profile/profile';
-import { authGuard } from './services/auth.service';
+
+import { authGuard, guestGuard } from './guards/auth.guards';
 
 export const routes: Routes = [
   {
     path: '',
-    component: Landing,
+    title: 'Angular Bootstrap',
+    loadComponent: () => import('./landing/landing').then((m) => m.Landing),
   },
   {
     path: 'login',
-    component: Login,
+    title: 'Log in · Angular Bootstrap',
+    canActivate: [guestGuard],
+    loadComponent: () => import('./login/login').then((m) => m.Login),
   },
   {
     path: 'register',
-    component: Register,
+    title: 'Register · Angular Bootstrap',
+    canActivate: [guestGuard],
+    loadComponent: () => import('./register/register').then((m) => m.Register),
   },
   {
     path: 'profile',
-    component: Profile,
+    title: 'Profile · Angular Bootstrap',
     canActivate: [authGuard],
+    loadComponent: () => import('./profile/profile').then((m) => m.Profile),
   },
+  { path: '**', redirectTo: '' },
 ];

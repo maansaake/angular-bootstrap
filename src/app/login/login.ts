@@ -1,64 +1,57 @@
-import { Component, inject, signal } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-
+import { Component, inject, input, signal } from '@angular/core';
+import { form, FormField, required, submit } from '@angular/forms/signals';
 import { MatButton } from '@angular/material/button';
 import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router, RouterLink } from '@angular/router';
 
 import { AuthService } from '../services/auth.service';
+import { focusFirstInvalid, safeReturnUrl } from '../shared/forms';
+import { Notifier } from '../shared/notifier';
 
 @Component({
-  imports: [ReactiveFormsModule, MatButton, MatError, MatFormField, MatInput, MatLabel],
+  imports: [FormField, MatButton, MatError, MatFormField, MatInput, MatLabel, RouterLink],
   selector: 'app-login',
-  styleUrl: './login.scss',
   templateUrl: './login.html',
 })
 export class Login {
-  private readonly fb = inject(FormBuilder);
-  private readonly authService = inject(AuthService);
+  private readonly auth = inject(AuthService);
   private readonly router = inject(Router);
-  private readonly snackBar = inject(MatSnackBar);
+  private readonly notifier = inject(Notifier);
 
-  readonly loginError = signal<string | null>(null);
+  /** Where to go after logging in; set by `authGuard` and bound from the query string. */
+  readonly returnUrl = input<string>();
 
-  readonly loginForm = this.fb.nonNullable.group({
-    username: ['', Validators.required],
-    password: ['', Validators.required],
+  protected readonly error = signal('');
+
+  protected readonly form = form(signal({ username: '', password: '' }), (path) => {
+    required(path.username, { message: 'Username is required.' });
+    required(path.password, { message: 'Password is required.' });
   });
 
-  get username() {
-    return this.loginForm.controls.username;
-  }
+  protected async onSubmit(event: Event): Promise<void> {
+    event.preventDefault();
+    this.error.set('');
 
-  get password() {
-    return this.loginForm.controls.password;
-  }
+    await submit(this.form, {
+      action: async () => {
+        const { username, password } = this.form().value();
+        const result = await this.auth.login(username, password);
 
-  clearLoginError(): void {
-    this.loginError.set(null);
-  }
+        if (!result.ok) {
+          this.error.set(
+            result.reason === 'unauthorized'
+              ? 'Invalid username or password.'
+              : 'Could not log in. Please try again.',
+          );
+          return undefined;
+        }
 
-  async onSubmit(): Promise<void> {
-    this.loginError.set(null);
-
-    if (this.loginForm.invalid) {
-      this.loginForm.markAllAsTouched();
-      return;
-    }
-
-    const { username, password } = this.loginForm.getRawValue();
-
-    if (await this.authService.login(username, password)) {
-      this.snackBar.open(`Logged in successfully.`, 'Close', {
-        duration: 3000,
-        horizontalPosition: 'center',
-        verticalPosition: 'top',
-      });
-      this.router.navigate(['']);
-    } else {
-      this.loginError.set('Invalid username or password.');
-    }
+        this.notifier.show(`Welcome back, ${username}.`);
+        await this.router.navigateByUrl(safeReturnUrl(this.returnUrl()));
+        return undefined;
+      },
+      onInvalid: () => focusFirstInvalid([this.form.username, this.form.password]),
+    });
   }
 }

@@ -1,85 +1,32 @@
 <footer class="footer">
-  <mat-divider />
+  <div class="footer-inner">
+    <section class="about" aria-labelledby="footer-about">
+      <h2 id="footer-about">Angular Bootstrap</h2>
+      <p>A starter for Angular apps with Kerberos authentication and Material Design 3.</p>
+    </section>
 
-  <mat-toolbar class="footer-toolbar">
-    <div class="footer-content">
-      <div class="footer-section">
-        <h3>Angular Bootstrap</h3>
-        <p>A production-ready template for Angular applications</p>
-      </div>
+    <nav aria-labelledby="footer-built-with">
+      <h2 id="footer-built-with">Built with</h2>
+      <ul>
+        @for (link of builtWith; track link.href) {
+          <li>
+            <a [href]="link.href">{{ link.label }}</a>
+          </li>
+        }
+      </ul>
+    </nav>
 
-      <div class="footer-section">
-        <h3>Technologies</h3>
-        <div class="footer-links">
-          <a href="https://angular.dev/" target="_blank" rel="noopener noreferrer">
-            <mat-icon>angular</mat-icon>
-            <span>Angular 22</span>
-          </a>
-          <a href="https://material.angular.io/" target="_blank" rel="noopener noreferrer">
-            <mat-icon>palette</mat-icon>
-            <span>Material Design 3</span>
-          </a>
-          <a href="https://github.com/trebent/kerberos" target="_blank" rel="noopener noreferrer">
-            <mat-icon>security</mat-icon>
-            <span>Kerberos</span>
-          </a>
-          <a href="https://openapi-generator.tech/" target="_blank" rel="noopener noreferrer">
-            <mat-icon>api</mat-icon>
-            <span>OpenAPI</span>
-          </a>
-        </div>
-      </div>
-
-      <div class="footer-section">
-        <h3>Resources</h3>
-        <div class="footer-links">
-          <a
-            href="https://github.com/maansaake/angular-bootstrap"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <mat-icon>code</mat-icon>
-            <span>GitHub</span>
-          </a>
-          <a
-            href="https://github.com/maansaake/angular-bootstrap/issues"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <mat-icon>bug_report</mat-icon>
-            <span>Issues</span>
-          </a>
-          <a
-            href="https://github.com/maansaake/angular-bootstrap/actions"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <mat-icon>build</mat-icon>
-            <span>Actions</span>
-          </a>
-        </div>
-      </div>
-
-      <div class="footer-section">
-        <h3>Created by</h3>
-        <p>
-          <a href="https://github.com/maansaake/" target="_blank" rel="noopener noreferrer">
-            <mat-icon>person</mat-icon>
-            maansaake
-          </a>
-        </p>
-        <p class="footer-note">
-          For more awesome software check out
-          <a href="https://github.com/trebent/" target="_blank" rel="noopener noreferrer">
-            <mat-icon>star</mat-icon>
-            trebent
-          </a>
-        </p>
-      </div>
-    </div>
-  </mat-toolbar>
-
-  <div class="footer-bottom">
-    <p>&copy; {{ getCurrentYear() }} Angular Bootstrap. All rights reserved.</p>
+    <nav aria-labelledby="footer-project">
+      <h2 id="footer-project">Project</h2>
+      <ul>
+        @for (link of project; track link.href) {
+          <li>
+            <a [href]="link.href">{{ link.label }}</a>
+          </li>
+        }
+      </ul>
+    </nav>
   </div>
+
+  <p class="copyright">&copy; {{ year }} <a href="https://github.com/maansaake/">maansaake</a></p>
 </footer>

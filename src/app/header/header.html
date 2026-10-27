@@ -1,29 +1,58 @@
-<header class="header">
-  <mat-toolbar class="header-toolbar">
-    <h1 class="header-title">
-      <a routerLink="/" aria-label="Go to landing page">
-        <span>Angular Bootstrap</span>
-      </a>
-    </h1>
+<header>
+  <mat-toolbar class="toolbar">
+    <a class="brand" routerLink="/">
+      <mat-icon aria-hidden="true">rocket_launch</mat-icon>
+      <span>Angular Bootstrap</span>
+    </a>
+
     <span class="spacer"></span>
-    @if (authService.loggedIn()) {
-      <button matButton="filled" color="accent" (click)="onProfile()">
-        <mat-icon>account_circle</mat-icon>
-        <span>Profile</span>
+
+    <button
+      matIconButton
+      [matMenuTriggerFor]="themeMenu"
+      [attr.aria-label]="'Color theme: ' + currentTheme().label"
+    >
+      <mat-icon>{{ currentTheme().icon }}</mat-icon>
+    </button>
+    <mat-menu #themeMenu="matMenu" aria-label="Color theme">
+      @for (option of themeOptions; track option.mode) {
+        <button
+          mat-menu-item
+          role="menuitemradio"
+          [attr.aria-checked]="option.mode === theme.mode()"
+          (click)="theme.mode.set(option.mode)"
+        >
+          <mat-icon aria-hidden="true">{{ option.icon }}</mat-icon>
+          <span>{{ option.label }}</span>
+        </button>
+      }
+    </mat-menu>
+
+    @if (auth.loggedIn()) {
+      <button
+        matButton
+        class="account"
+        [matMenuTriggerFor]="accountMenu"
+        [attr.aria-label]="'Account menu, ' + auth.username()"
+      >
+        <mat-icon aria-hidden="true">account_circle</mat-icon>
+        <span class="account-name">{{ auth.username() }}</span>
       </button>
-      <button matButton="outlined" (click)="onLogout()">
-        <mat-icon>logout</mat-icon>
-        <span>Log out</span>
-      </button>
+      <mat-menu #accountMenu="matMenu" xPosition="before">
+        <a mat-menu-item routerLink="/profile">
+          <mat-icon aria-hidden="true">person</mat-icon>
+          <span>Profile</span>
+        </a>
+        <button mat-menu-item (click)="logout()">
+          <mat-icon aria-hidden="true">logout</mat-icon>
+          <span>Log out</span>
+        </button>
+      </mat-menu>
     } @else {
-      <button matButton="outlined" (click)="onRegister()">
-        <mat-icon>person_add</mat-icon>
-        <span>Register</span>
-      </button>
-      <button matButton="filled" color="accent" (click)="onLogin()">
-        <mat-icon>login</mat-icon>
-        <span>Log in</span>
-      </button>
+      <nav class="guest-links" aria-label="Account">
+        <a matButton routerLink="/register">Register</a>
+        <a matButton="filled" routerLink="/login">Log in</a>
+      </nav>
     }
   </mat-toolbar>
 </header>

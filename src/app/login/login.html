@@ -1,38 +1,27 @@
-<h2>Log in</h2>
+<div class="page page-narrow">
+  <h1 class="page-title">Log in</h1>
 
-<form class="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-  <!-- Username -->
-  <mat-form-field appearance="outline" class="login-field">
-    <mat-label>Username</mat-label>
-
-    <input matInput type="text" formControlName="username" autocomplete="username" required />
-
-    @if (username.hasError('required') && username.touched) {
-      <mat-error>Username is required.</mat-error>
-    }
-  </mat-form-field>
-
-  <!-- Password -->
-  <mat-form-field appearance="outline" class="login-field">
-    <mat-label>Password</mat-label>
-
-    <input
-      matInput
-      type="password"
-      formControlName="password"
-      autocomplete="current-password"
-      required
-    />
-
-    @if (password.hasError('required') && password.touched) {
-      <mat-error>Password is required.</mat-error>
-    }
-  </mat-form-field>
-
-  @if (loginError(); as error) {
-    <mat-error role="alert">{{ error }}</mat-error>
+  @if (error()) {
+    <p class="form-error" role="alert">{{ error() }}</p>
   }
 
-  <!-- Submit -->
-  <button matButton="filled" type="submit" class="login-button">Login</button>
-</form>
+  <form class="form-stack" novalidate (submit)="onSubmit($event)">
+    <mat-form-field>
+      <mat-label>Username</mat-label>
+      <input matInput [formField]="form.username" autocomplete="username" />
+      <mat-error>{{ form.username().errors()[0]?.message }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input matInput type="password" [formField]="form.password" autocomplete="current-password" />
+      <mat-error>{{ form.password().errors()[0]?.message }}</mat-error>
+    </mat-form-field>
+
+    <button matButton="filled" type="submit" [disabled]="form().submitting()" disabledInteractive>
+      {{ form().submitting() ? 'Logging in…' : 'Log in' }}
+    </button>
+  </form>
+
+  <p>No account yet? <a routerLink="/register">Create one</a>.</p>
+</div>

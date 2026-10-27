@@ -5,14 +5,28 @@ import { TestBed } from '@angular/core/testing';
 import { environment } from '../../environments/environment';
 import { provideApi } from './auth-basic';
 import { AuthService } from './auth.service';
+import { provideApi as provideBackendApi } from './backend';
 
 describe('AuthService', () => {
   let service: AuthService;
   let httpMock: HttpTestingController;
 
-  const meUrl = `${environment.krbBaseUrl}/api/auth/basic/organisations/${environment.orgID}/users/me`;
-  const loginUrl = `${environment.krbBaseUrl}/api/auth/basic/organisations/${environment.orgID}/login`;
-  const logoutUrl = `${environment.krbBaseUrl}/api/auth/basic/organisations/${environment.orgID}/logout`;
+  const org = `${environment.krbBaseUrl}/api/auth/basic/organisations/${environment.orgID}`;
+  const meUrl = `${org}/users/me`;
+  const alice = { id: 7, name: 'alice' };
+
+  /** Lets an awaited call continue to its next request. */
+  const settle = () => new Promise<void>((resolve) => setTimeout(resolve));
+
+  async function signIn(): Promise<void> {
+    const hydrating = service.hydrate();
+    httpMock.expectOne(meUrl).flush(alice);
+    await hydrating;
+  }
+
+  function flushError(url: string, status: number): void {
+    httpMock.expectOne(url).flush({ errors: ['nope'] }, { status, statusText: 'Error' });
+  }
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -20,6 +34,7 @@ describe('AuthService', () => {
         provideHttpClient(),
         provideHttpClientTesting(),
         provideApi(environment.krbBaseUrl),
+        provideBackendApi(environment.backendBaseUrl),
       ],
     });
 
@@ -27,85 +42,129 @@ describe('AuthService', () => {
     httpMock = TestBed.inject(HttpTestingController);
   });
 
-  afterEach(() => {
+  afterEach(async () => {
     httpMock.verify();
-    TestBed.resetTestingModule();
+    // Stop the session refresher.
+    const loggingOut = service.logout();
+    httpMock.match(`${org}/logout`).forEach((request) => request.flush(null));
+    await loggingOut;
   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
+  it('hydrates the session from GetMe', async () => {
+    await signIn();
 
-  it('hydrates the session from GetMe on boot', async () => {
-    const hydrating = service.hydrate();
-
-    const request = httpMock.expectOne(meUrl);
-    expect(request.request.method).toBe('GET');
-    request.flush({ id: 7, name: 'alice' });
-
-    expect(await hydrating).toBe(true);
     expect(service.loggedIn()).toBe(true);
     expect(service.username()).toBe('alice');
   });
 
   it('reports no session when GetMe rejects', async () => {
     const hydrating = service.hydrate();
-
-    httpMock
-      .expectOne(meUrl)
-      .flush({ errors: ['No active session.'] }, { status: 401, statusText: 'Unauthorized' });
+    flushError(meUrl, 401);
 
     expect(await hydrating).toBe(false);
     expect(service.loggedIn()).toBe(false);
   });
 
-  it('logs in against the Kerberos login endpoint and hydrates the user', async () => {
+  it('logs in against Kerberos and hydrates the user', async () => {
     const loggingIn = service.login('alice', 'correct horse battery');
 
-    const loginRequest = httpMock.expectOne(loginUrl);
-    expect(loginRequest.request.method).toBe('POST');
-    expect(loginRequest.request.body).toEqual({
-      username: 'alice',
-      password: 'correct horse battery',
-    });
-    loginRequest.flush(null, { status: 204, statusText: 'No Content' });
+    const login = httpMock.expectOne(`${org}/login`);
+    expect(login.request.body).toEqual({ username: 'alice', password: 'correct horse battery' });
+    login.flush(null, { status: 204, statusText: 'No Content' });
+    await settle();
+    httpMock.expectOne(meUrl).flush(alice);
 
-    // Let login() continue into hydrate() once the login promise resolves.
-    await new Promise<void>((resolve) => setTimeout(resolve));
-
-    httpMock.expectOne(meUrl).flush({ id: 7, name: 'alice' });
-
-    expect(await loggingIn).toBe(true);
+    expect(await loggingIn).toEqual({ ok: true });
     expect(service.username()).toBe('alice');
   });
 
-  it('rejects a failed login without hydrating', async () => {
-    const loggingIn = service.login('alice', 'wrong password');
+  it('maps a rejected login to "unauthorized"', async () => {
+    const loggingIn = service.login('alice', 'wrong');
+    flushError(`${org}/login`, 401);
 
-    httpMock
-      .expectOne(loginUrl)
-      .flush(
-        { errors: ['Invalid username or password.'] },
-        { status: 401, statusText: 'Unauthorized' },
-      );
-
-    expect(await loggingIn).toBe(false);
+    expect(await loggingIn).toEqual({ ok: false, reason: 'unauthorized' });
     expect(service.loggedIn()).toBe(false);
-    httpMock.verify();
   });
 
-  it('logs out and clears the session', async () => {
-    const hydrating = service.hydrate();
-    httpMock.expectOne(meUrl).flush({ id: 7, name: 'alice' });
-    await hydrating;
+  it.each([
+    [409, 'conflict'],
+    [429, 'rate-limited'],
+    [500, 'unknown'],
+  ])('maps a %i registration response to "%s"', async (status, reason) => {
+    const registering = service.register('alice', 'correct horse battery');
+    flushError(`${environment.backendBaseUrl}/api/register`, status);
+
+    expect(await registering).toEqual({ ok: false, reason });
+  });
+
+  it('registers through the app backend', async () => {
+    const registering = service.register('alice', 'correct horse battery');
+
+    const request = httpMock.expectOne(`${environment.backendBaseUrl}/api/register`);
+    expect(request.request.method).toBe('POST');
+    request.flush(alice, { status: 201, statusText: 'Created' });
+
+    expect(await registering).toEqual({ ok: true });
+  });
+
+  it('updates the username and the signals derived from it', async () => {
+    await signIn();
+
+    const updating = service.updateUsername('alice2');
+    const request = httpMock.expectOne(`${org}/users/7`);
+    expect(request.request.body).toEqual({ id: 7, name: 'alice2' });
+    request.flush({ id: 7, name: 'alice2' });
+
+    expect(await updating).toEqual({ ok: true });
+    expect(service.username()).toBe('alice2');
+  });
+
+  it('maps a wrong current password to "invalid"', async () => {
+    await signIn();
+
+    const updating = service.updatePassword('wrong', 'battery staple horse');
+    flushError(`${org}/users/7/password`, 400);
+
+    expect(await updating).toEqual({ ok: false, reason: 'invalid' });
+  });
+
+  it('records when the session was refreshed', async () => {
+    await signIn();
+    const refreshed = new Promise((resolve) => service.refreshSession().subscribe(resolve));
+    httpMock.expectOne(`${org}/refresh`).flush(null);
+
+    expect(await refreshed).toBe(true);
+    expect(service.lastRefreshedAt()).toBeInstanceOf(Date);
+  });
+
+  it('clears the session when a refresh fails', async () => {
+    await signIn();
+    const refreshed = new Promise((resolve) => service.refreshSession().subscribe(resolve));
+    flushError(`${org}/refresh`, 401);
+
+    expect(await refreshed).toBe(false);
+    expect(service.loggedIn()).toBe(false);
+  });
+
+  it('deletes the account through the app backend and ends the session', async () => {
+    await signIn();
+
+    const deleting = service.deleteAccount();
+    const request = httpMock.expectOne(`${environment.backendBaseUrl}/api/me`);
+    expect(request.request.method).toBe('DELETE');
+    request.flush(null, { status: 204, statusText: 'No Content' });
+
+    expect(await deleting).toEqual({ ok: true });
+    expect(service.loggedIn()).toBe(false);
+  });
+
+  it('logs out and clears the session even if the request fails', async () => {
+    await signIn();
 
     const loggingOut = service.logout();
-
-    const logoutRequest = httpMock.expectOne(logoutUrl);
-    expect(logoutRequest.request.method).toBe('POST');
-    logoutRequest.flush(null, { status: 204, statusText: 'No Content' });
-
+    flushError(`${org}/logout`, 500);
     await loggingOut;
+
     expect(service.loggedIn()).toBe(false);
     expect(service.username()).toBe('');
   });

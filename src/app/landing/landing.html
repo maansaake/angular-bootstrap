@@ -1,113 +1,66 @@
-<main class="landing-content">
-  <!-- Hero Section -->
-  <section class="hero-section">
-    <mat-card class="hero-card">
-      <mat-card-header>
-        <mat-card-title class="hero-title">
-          <h2>Build Angular Apps Faster</h2>
-        </mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <p class="hero-description">
-          A production-ready Angular 22 template with authentication, Material Design, and OpenAPI
-          code generation. Start your next project with confidence.
-        </p>
-      </mat-card-content>
-    </mat-card>
+<div class="page landing">
+  <section class="hero" aria-labelledby="hero-title">
+    @if (auth.loggedIn()) {
+      <h1 id="hero-title">Welcome back, {{ auth.username() }}</h1>
+      <p class="lead">You're logged in through Kerberos. See what your session looks like.</p>
+      <div class="actions">
+        <a matButton="filled" routerLink="/profile">Go to your profile</a>
+      </div>
+    } @else {
+      <h1 id="hero-title">Start your next Angular app in minutes</h1>
+      <p class="lead">
+        A small, production-minded starter: register, log in and manage a profile, backed by
+        Kerberos authentication and Angular Material.
+      </p>
+      <div class="actions">
+        <a matButton="filled" routerLink="/register">Try the demo</a>
+        <a matButton="outlined" [href]="repoUrl">View the source</a>
+      </div>
+    }
   </section>
 
-  <mat-divider />
-
-  <!-- Features Section -->
-  <section class="features-section">
-    <h2>Features</h2>
-    <p class="section-description">
-      Built with industry-standard tools and frameworks - Everything you need to bootstrap your
-      Angular application
-    </p>
-
-    <div class="features-grid">
+  <section aria-labelledby="features-title">
+    <h2 id="features-title">What's inside</h2>
+    <ul class="features">
       @for (feature of features; track feature.title) {
-        <mat-card class="feature-card" [routerLink]="feature.link">
-          <mat-card-header>
-            <div mat-card-avatar class="feature-icon">
-              <mat-icon color="primary">{{ feature.icon }}</mat-icon>
-            </div>
-            <mat-card-title>{{ feature.title }}</mat-card-title>
-          </mat-card-header>
-          <mat-card-content>
-            <p>{{ feature.description }}</p>
-          </mat-card-content>
-        </mat-card>
+        <li class="feature">
+          <mat-icon aria-hidden="true">{{ feature.icon }}</mat-icon>
+          <h3>
+            <a [href]="feature.href">{{ feature.title }}</a>
+          </h3>
+          <p>{{ feature.description }}</p>
+        </li>
       }
-    </div>
+    </ul>
   </section>
 
-  <mat-divider />
+  <section aria-labelledby="flow-title">
+    <h2 id="flow-title">How authentication works</h2>
+    <ol class="flow">
+      @for (step of flow; track step.title) {
+        <li class="step">
+          <mat-icon aria-hidden="true">{{ step.icon }}</mat-icon>
+          <h3>{{ step.title }}</h3>
+          <p>{{ step.description }}</p>
+        </li>
+      }
+    </ol>
+  </section>
 
-  <!-- Quick Start Section -->
-  <section class="quickstart-section">
-    <h2>Quick Start</h2>
-    <p class="section-description">Get started with the template in just a few commands</p>
-
-    <div class="commands">
-      <mat-card class="command-card">
-        <mat-card-content>
-          <code>make install</code>
-          <p>Install dependencies</p>
-        </mat-card-content>
-      </mat-card>
-
-      <mat-icon class="command-arrow">arrow_right_alt</mat-icon>
-
-      <mat-card class="command-card">
-        <mat-card-content>
-          <code>make serve</code>
-          <p>Start development server</p>
-        </mat-card-content>
-      </mat-card>
-    </div>
-
-    <p class="quickstart-note">
-      Note: The development server uses a mock backend.
-      <strong>Remove <code>src/app/mocks/</code></strong> before you start developing your own
-      service.
+  <section aria-labelledby="quickstart-title">
+    <h2 id="quickstart-title">Quick start</h2>
+    <pre
+      class="code"
+      tabindex="0"
+      aria-label="Quick start commands"
+    ><code>git clone {{ repoUrl }}.git my-app
+cd my-app
+make install
+make serve</code></pre>
+    <p>
+      The app runs against an in-browser mock backend, the same one this demo uses. When you're
+      ready for a real Kerberos, delete <code>provideMockBackend()</code> from
+      <code>app.config.ts</code> and the <code>src/app/mocks/</code> directory.
     </p>
   </section>
-
-  <mat-divider />
-
-  <!-- Documentation Section -->
-  <section class="docs-section">
-    <h2>Documentation</h2>
-    <p class="section-description">Learn more about the template's features</p>
-
-    <mat-list>
-      <mat-list-item>
-        <mat-icon matListIcon color="primary">verified_user</mat-icon>
-        <h3 matLine>Kerberos</h3>
-        <p matLine>Complete authentication flow documentation</p>
-      </mat-list-item>
-
-      <mat-list-item>
-        <mat-icon matListIcon color="primary">design_services</mat-icon>
-        <h3 matLine>
-          <a href="https://material.angular.io/" target="_blank" rel="noopener noreferrer"
-            >Material Design</a
-          >
-        </h3>
-        <p matLine>M3 theming, components, and best practices</p>
-      </mat-list-item>
-
-      <mat-list-item>
-        <mat-icon matListIcon color="primary">api</mat-icon>
-        <h3 matLine>
-          <a href="https://openapi-generator.tech/" target="_blank" rel="noopener noreferrer"
-            >OpenAPI Codegen</a
-          >
-        </h3>
-        <p matLine>API client generation from OpenAPI specs</p>
-      </mat-list-item>
-    </mat-list>
-  </section>
-</main>
+</div>

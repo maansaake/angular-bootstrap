@@ -1,52 +1,52 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
+import { MatToolbar } from '@angular/material/toolbar';
 import { Router, RouterLink } from '@angular/router';
 
-import { MatButton } from '@angular/material/button';
-import { MatIcon } from '@angular/material/icon';
-import { MatToolbar } from '@angular/material/toolbar';
-
 import { AuthService } from '../services/auth.service';
-import { filter } from 'rxjs';
-import { NavigationEnd } from '@angular/router';
+import { ThemeMode, ThemeService } from '../services/theme.service';
+
+interface ThemeOption {
+  mode: ThemeMode;
+  label: string;
+  icon: string;
+}
 
 @Component({
-  imports: [MatToolbar, MatButton, MatIcon, RouterLink],
+  imports: [
+    MatButton,
+    MatIcon,
+    MatIconButton,
+    MatMenu,
+    MatMenuItem,
+    MatMenuTrigger,
+    MatToolbar,
+    RouterLink,
+  ],
   selector: 'app-header',
   styleUrl: './header.scss',
   templateUrl: './header.html',
 })
 export class Header {
-  private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
-  readonly showLogin = signal(false);
+  protected readonly auth = inject(AuthService);
+  protected readonly theme = inject(ThemeService);
 
-  constructor() {
-    this.updateShowLogin();
+  protected readonly themeOptions: readonly ThemeOption[] = [
+    { mode: 'system', label: 'System', icon: 'brightness_auto' },
+    { mode: 'light', label: 'Light', icon: 'light_mode' },
+    { mode: 'dark', label: 'Dark', icon: 'dark_mode' },
+  ];
 
-    this.router.events
-      .pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe(() => this.updateShowLogin());
-  }
+  protected readonly currentTheme = computed(
+    () =>
+      this.themeOptions.find((option) => option.mode === this.theme.mode()) ?? this.themeOptions[0],
+  );
 
-  private updateShowLogin(): void {
-    const segments = this.router.url.split('?')[0].split('/').filter(Boolean);
-    this.showLogin.set(segments.at(-1) !== 'login' && segments.at(-1) !== 'register');
-  }
-
-  private onRegister(): void {
-    this.router.navigate(['/register']);
-  }
-
-  private onLogin(): void {
-    this.router.navigate(['/login']);
-  }
-
-  private onProfile(): void {
-    this.router.navigate(['/profile']);
-  }
-
-  private async onLogout(): Promise<void> {
-    await this.authService.logout();
-    this.router.navigate(['']);
+  protected async logout(): Promise<void> {
+    await this.auth.logout();
+    await this.router.navigateByUrl('/');
   }
 }

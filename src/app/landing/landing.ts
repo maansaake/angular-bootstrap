@@ -1,80 +1,100 @@
 import { Component, inject } from '@angular/core';
-import { RouterLink } from '@angular/router';
-
 import { MatButton } from '@angular/material/button';
-import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
-import { MatDivider } from '@angular/material/divider';
 import { MatIcon } from '@angular/material/icon';
-import { MatList, MatListItem } from '@angular/material/list';
-import { MatToolbar } from '@angular/material/toolbar';
-import { Footer } from '../footer/footer';
+import { RouterLink } from '@angular/router';
 
 import { AuthService } from '../services/auth.service';
 
+interface Feature {
+  icon: string;
+  title: string;
+  description: string;
+  href: string;
+}
+
+interface FlowStep {
+  icon: string;
+  title: string;
+  description: string;
+}
+
 @Component({
-  imports: [
-    MatButton,
-    MatCard,
-    MatCardContent,
-    MatCardHeader,
-    MatCardTitle,
-    MatDivider,
-    MatIcon,
-    MatList,
-    MatListItem,
-    MatToolbar,
-    RouterLink,
-    Footer,
-  ],
+  imports: [MatButton, MatIcon, RouterLink],
   selector: 'app-landing',
   styleUrl: './landing.scss',
   templateUrl: './landing.html',
 })
 export class Landing {
-  readonly authService = inject(AuthService);
+  protected readonly auth = inject(AuthService);
+  protected readonly repoUrl = 'https://github.com/maansaake/angular-bootstrap';
 
-  features = [
+  protected readonly features: readonly Feature[] = [
     {
-      icon: 'build',
+      icon: 'bolt',
       title: 'Modern Angular 22',
-      description: 'Standalone components, signals, modern control flow, and ESBuild',
-      link: '/',
-      requiresAuth: false,
+      description: 'Standalone components, signals, Signal Forms, lazy routes and zoneless.',
+      href: 'https://angular.dev/',
     },
     {
-      icon: 'design_services',
+      icon: 'palette',
       title: 'Material Design 3',
-      description: 'Complete M3 theming with token-driven styling and dark mode',
-      link: 'https://material.angular.io/',
-      requiresAuth: false,
+      description: 'One token-driven theme with light, dark and system modes.',
+      href: 'https://material.angular.dev/',
     },
     {
-      icon: 'verified_user',
-      title: 'Kerberos',
-      description: 'Secure authentication with HttpOnly cookies and organisation isolation',
-      link: 'https://github.com/trebent/kerberos',
-      requiresAuth: false,
+      icon: 'shield_person',
+      title: 'Kerberos authentication',
+      description: 'HttpOnly cookie sessions, automatic refresh and organisation isolation.',
+      href: 'https://github.com/trebent/kerberos',
     },
     {
       icon: 'api',
-      title: 'OpenAPI Codegen',
-      description: 'Type-safe Angular clients generated from OpenAPI specifications',
-      link: 'https://openapi-generator.tech/',
-      requiresAuth: false,
+      title: 'Generated API clients',
+      description: 'Typed Angular services generated from OpenAPI specs with one command.',
+      href: 'https://openapi-generator.tech/',
     },
     {
-      icon: 'check_circle',
-      title: 'ESLint + Prettier',
-      description: 'Production-ready linting and code formatting',
-      link: '/',
-      requiresAuth: false,
+      icon: 'rule',
+      title: 'ESLint and Prettier',
+      description: 'Strict TypeScript, accessibility lint rules and enforced formatting.',
+      href: `${this.repoUrl}/blob/main/eslint.config.js`,
     },
     {
-      icon: 'build',
-      title: 'GitHub Actions CI',
-      description: 'Complete CI/CD pipeline with build, test, lint, and code scanning',
-      link: 'https://github.com/maansaake/angular-bootstrap/actions',
-      requiresAuth: false,
+      icon: 'deployed_code',
+      title: 'CI and GitHub Pages',
+      description: 'Every push is formatted, linted, tested, built and deployed.',
+      href: `${this.repoUrl}/actions`,
+    },
+  ];
+
+  protected readonly flow: readonly FlowStep[] = [
+    {
+      icon: 'person_add',
+      title: 'Register',
+      description:
+        'The app backend creates the user in Kerberos with its hidden admin account, ' +
+        'so admin credentials never reach the browser.',
+    },
+    {
+      icon: 'login',
+      title: 'Log in',
+      description:
+        'Kerberos checks the credentials and sets an HttpOnly session cookie that ' +
+        'JavaScript cannot read.',
+    },
+    {
+      icon: 'autorenew',
+      title: 'Stay logged in',
+      description:
+        'AuthService refreshes the session every 5 minutes. A 401 triggers one ' +
+        'refresh and a retry.',
+    },
+    {
+      icon: 'lan',
+      title: 'Call your backend',
+      description:
+        'Requests go through the Kerberos gateway, which tells your backend who the user ' +
+        'is and which organisation they belong to.',
     },
   ];
 }

@@ -1,22 +1,26 @@
 :host {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  width: 100%;
-  overflow-x: hidden;
+  min-height: 100dvh;
 }
 
 main {
-  display: flex;
-  flex-direction: column;
   flex: 1;
-  margin: 1rem;
-  width: 100%;
-  max-width: 100%;
-  overflow-x: hidden;
+  outline: none;
 }
 
-app-footer {
-  margin-top: auto;
-  width: 100%;
+.skip-link {
+  position: absolute;
+  inset-inline-start: 1rem;
+  inset-block-start: -100%;
+  z-index: 1000;
+  padding: 0.75rem 1rem;
+  border-radius: var(--mat-sys-corner-small);
+  background: var(--mat-sys-primary);
+  color: var(--mat-sys-on-primary);
+  font: var(--mat-sys-label-large);
+
+  &:focus {
+    inset-block-start: 0.5rem;
+  }
 }

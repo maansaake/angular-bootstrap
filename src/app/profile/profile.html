@@ -1,91 +1,131 @@
-<h2>Hi there, {{ authService.username() }}!</h2>
+<div class="page profile">
+  <h1 class="page-title">Profile</h1>
 
-<h3>Change username</h3>
+  <mat-card appearance="outlined" class="session">
+    <mat-card-header>
+      <h2 mat-card-title>Your Kerberos session</h2>
+      <p mat-card-subtitle>What Kerberos knows about you, as reported by <code>GetMe</code>.</p>
+    </mat-card-header>
+    <mat-card-content>
+      <dl>
+        <dt>User ID</dt>
+        <dd>{{ auth.user()?.id }}</dd>
+        <dt>Username</dt>
+        <dd>{{ auth.username() }}</dd>
+        <dt>Organisation</dt>
+        <dd>{{ auth.orgId }}</dd>
+        <dt>Groups</dt>
+        <dd>{{ groups() }}</dd>
+        <dt>Session</dt>
+        <dd>HttpOnly cookie set by Kerberos. This app cannot read it.</dd>
+        <dt>Auto-refresh</dt>
+        <dd>Every {{ refreshIntervalMinutes }} minutes, plus once on any 401 response</dd>
+        <dt>Last refreshed</dt>
+        <dd>{{ (auth.lastRefreshedAt() | date: 'mediumTime') ?? 'Not yet in this tab' }}</dd>
+      </dl>
+    </mat-card-content>
+    <mat-card-actions>
+      <button
+        matButton="outlined"
+        [disabled]="refreshing()"
+        disabledInteractive
+        (click)="refreshSession()"
+      >
+        Refresh session now
+      </button>
+    </mat-card-actions>
+  </mat-card>
 
-<form class="profile-form" [formGroup]="usernameForm" (ngSubmit)="onUsernameSubmit()">
-  <mat-form-field appearance="outline" class="profile-field">
-    <mat-label>New username</mat-label>
+  <mat-card appearance="outlined">
+    <mat-card-header>
+      <h2 mat-card-title>Change username</h2>
+    </mat-card-header>
+    <mat-card-content>
+      <form class="form-stack" novalidate (submit)="updateUsername($event)">
+        <mat-form-field>
+          <mat-label>Username</mat-label>
+          <input matInput [formField]="usernameForm.username" autocomplete="username" />
+          <mat-error>{{ usernameForm.username().errors()[0]?.message }}</mat-error>
+        </mat-form-field>
+        <button
+          matButton="filled"
+          type="submit"
+          [disabled]="usernameForm().submitting()"
+          disabledInteractive
+        >
+          Update username
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
 
-    <input matInput type="text" formControlName="username" autocomplete="username" required />
+  <mat-card appearance="outlined">
+    <mat-card-header>
+      <h2 mat-card-title>Change password</h2>
+    </mat-card-header>
+    <mat-card-content>
+      <form class="form-stack" novalidate (submit)="updatePassword($event)">
+        <!-- Lets password managers associate the change with this account. -->
+        <input
+          type="text"
+          class="visually-hidden"
+          autocomplete="username"
+          tabindex="-1"
+          aria-hidden="true"
+          [value]="auth.username()"
+          readonly
+        />
+        <mat-form-field>
+          <mat-label>Current password</mat-label>
+          <input
+            matInput
+            type="password"
+            [formField]="passwordForm.currentPassword"
+            autocomplete="current-password"
+          />
+          <mat-error>{{ passwordForm.currentPassword().errors()[0]?.message }}</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>New password</mat-label>
+          <input
+            matInput
+            type="password"
+            [formField]="passwordForm.newPassword"
+            autocomplete="new-password"
+          />
+          <mat-error>{{ passwordForm.newPassword().errors()[0]?.message }}</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Repeat new password</mat-label>
+          <input
+            matInput
+            type="password"
+            [formField]="passwordForm.repeatedPassword"
+            autocomplete="new-password"
+          />
+          <mat-error>{{ passwordForm.repeatedPassword().errors()[0]?.message }}</mat-error>
+        </mat-form-field>
+        <button
+          matButton="filled"
+          type="submit"
+          [disabled]="passwordForm().submitting()"
+          disabledInteractive
+        >
+          Update password
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
 
-    @if (username.hasError('required') && username.touched) {
-      <mat-error>Username is required.</mat-error>
-    } @else if (username.hasError('minlength') && username.touched) {
-      <mat-error>Username must be at least 5 characters.</mat-error>
-    } @else if (username.hasError('maxlength') && username.touched) {
-      <mat-error>Username cannot exceed 32 characters.</mat-error>
-    }
-  </mat-form-field>
-
-  <button matButton="filled" type="submit" class="profile-button" [disabled]="usernameForm.invalid">
-    Update username
-  </button>
-</form>
-
-<mat-divider />
-
-<h3>Change password</h3>
-
-<form class="profile-form" [formGroup]="passwordForm" (ngSubmit)="onPasswordSubmit()">
-  <!-- Current password -->
-  <mat-form-field appearance="outline" class="profile-field">
-    <mat-label>Current password</mat-label>
-
-    <input
-      matInput
-      type="password"
-      formControlName="currentPassword"
-      autocomplete="current-password"
-      required
-    />
-
-    @if (currentPassword.hasError('required') && currentPassword.touched) {
-      <mat-error>Current password is required.</mat-error>
-    } @else if (currentPassword.hasError('incorrect') && currentPassword.touched) {
-      <mat-error>Current password incorrect.</mat-error>
-    }
-  </mat-form-field>
-
-  <!-- New password -->
-  <mat-form-field appearance="outline" class="profile-field">
-    <mat-label>New password</mat-label>
-
-    <input
-      matInput
-      type="password"
-      formControlName="newPassword"
-      autocomplete="new-password"
-      required
-    />
-
-    @if (newPassword.hasError('required') && newPassword.touched) {
-      <mat-error>New password is required.</mat-error>
-    } @else if (newPassword.hasError('minlength') && newPassword.touched) {
-      <mat-error>Password must be at least 10 characters.</mat-error>
-    }
-  </mat-form-field>
-
-  <!-- Repeat new password -->
-  <mat-form-field appearance="outline" class="profile-field">
-    <mat-label>Repeat new password</mat-label>
-
-    <input
-      matInput
-      type="password"
-      formControlName="repeatedPassword"
-      autocomplete="new-password"
-      [errorStateMatcher]="repeatedPasswordMatcher"
-      required
-    />
-
-    @if (repeatedPassword.hasError('required') && repeatedPassword.touched) {
-      <mat-error>Please repeat your new password.</mat-error>
-    } @else if (passwordForm.hasError('passwordsMismatch') && repeatedPassword.touched) {
-      <mat-error>Passwords do not match.</mat-error>
-    }
-  </mat-form-field>
-
-  <button matButton="filled" type="submit" class="profile-button" [disabled]="passwordForm.invalid">
-    Update password
-  </button>
-</form>
+  <mat-card appearance="outlined">
+    <mat-card-header>
+      <h2 mat-card-title>Delete account</h2>
+      <p mat-card-subtitle>Removes your user from Kerberos through the app backend.</p>
+    </mat-card-header>
+    <mat-card-actions>
+      <button matButton="outlined" class="danger-button" (click)="deleteAccount()">
+        Delete account…
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
