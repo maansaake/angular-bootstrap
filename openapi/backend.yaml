@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=https://spec.openapis.org/oas/3.0/schema/2024-10-18
-openapi: "3.0.4"
+openapi: '3.0.4'
 info:
   version: 0.1.0
   title: Backend API.
@@ -20,40 +20,40 @@ paths:
         - registration
       operationId: Register
       requestBody:
-        $ref: "#/components/requestBodies/RegisterUserRequest"
+        $ref: '#/components/requestBodies/RegisterUserRequest'
       responses:
-        "201":
+        '201':
           description: Registered a new user.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/RegisteredUser"
-        "400":
+                $ref: '#/components/schemas/RegisteredUser'
+        '400':
           description: Bad request.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/APIErrorResponse"
-        "409":
+                $ref: '#/components/schemas/APIErrorResponse'
+        '409':
           description: Username already taken.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/APIErrorResponse"
-        "429":
+                $ref: '#/components/schemas/APIErrorResponse'
+        '429':
           description: Too many registration requests. The backend rate limits registrations
             to keep its admin-proxied user creation safe; clients should treat this like
             any other failed registration.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/APIErrorResponse"
-        "500":
+                $ref: '#/components/schemas/APIErrorResponse'
+        '500':
           description: Internal error.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/APIErrorResponse"
+                $ref: '#/components/schemas/APIErrorResponse'
 components:
   requestBodies:
     RegisterUserRequest:

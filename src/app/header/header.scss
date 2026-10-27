@@ -16,7 +16,7 @@
   margin: 0;
   font-size: 1.25rem;
   font-weight: 500;
-  
+
   a {
     color: var(--mat-sys-on-primary);
     text-decoration: none;
@@ -25,21 +25,21 @@
     gap: 8px;
     font-weight: 600;
     text-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
-    
+
     &:hover {
       text-decoration: underline;
     }
-    
+
     mat-icon {
       font-size: 28px;
       width: 28px;
       height: 28px;
     }
   }
-  
+
   @media (max-width: 600px) {
     font-size: 1rem;
-    
+
     a mat-icon {
       font-size: 24px;
     }
@@ -54,7 +54,7 @@ button[matButton] {
   display: flex;
   align-items: center;
   gap: 8px;
-  
+
   mat-icon {
     font-size: 18px;
     width: 18px;
@@ -67,11 +67,11 @@ button[matButton] {
     flex-wrap: wrap;
     padding: 0 16px;
   }
-  
+
   button[matButton] span {
     display: none;
   }
-  
+
   button[matButton] mat-icon {
     font-size: 24px;
   }

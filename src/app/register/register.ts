@@ -56,18 +56,8 @@ export class Register {
   // Field constraints mirror the backend's register endpoint (see openapi/backend.yaml).
   readonly registerForm = this.fb.nonNullable.group(
     {
-      username: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(5),
-          Validators.maxLength(32),
-        ],
-      ],
-      password: [
-        '',
-        [Validators.required, Validators.minLength(10), Validators.maxLength(40)],
-      ],
+      username: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(32)]],
+      password: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(40)]],
       repeatedPassword: ['', Validators.required],
     },
     {
@@ -94,9 +84,7 @@ export class Register {
     ): boolean => {
       const shouldShowError = !!(control?.touched || form?.submitted);
       const controlIsInvalid = !!control?.invalid;
-      const passwordsDoNotMatch = !!control?.parent?.hasError(
-        'passwordsMismatch',
-      );
+      const passwordsDoNotMatch = !!control?.parent?.hasError('passwordsMismatch');
 
       return shouldShowError && (controlIsInvalid || passwordsDoNotMatch);
     },

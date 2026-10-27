@@ -9,11 +9,11 @@
     <input matInput type="text" formControlName="username" autocomplete="username" required />
 
     @if (username.hasError('required') && username.touched) {
-    <mat-error>Username is required.</mat-error>
+      <mat-error>Username is required.</mat-error>
     } @else if (username.hasError('minlength') && username.touched) {
-    <mat-error>Username must be at least 5 characters.</mat-error>
+      <mat-error>Username must be at least 5 characters.</mat-error>
     } @else if (username.hasError('maxlength') && username.touched) {
-    <mat-error>Username cannot exceed 32 characters.</mat-error>
+      <mat-error>Username cannot exceed 32 characters.</mat-error>
     }
   </mat-form-field>
 
@@ -31,12 +31,18 @@
   <mat-form-field appearance="outline" class="profile-field">
     <mat-label>Current password</mat-label>
 
-    <input matInput type="password" formControlName="currentPassword" autocomplete="current-password" required />
+    <input
+      matInput
+      type="password"
+      formControlName="currentPassword"
+      autocomplete="current-password"
+      required
+    />
 
     @if (currentPassword.hasError('required') && currentPassword.touched) {
-    <mat-error>Current password is required.</mat-error>
+      <mat-error>Current password is required.</mat-error>
     } @else if (currentPassword.hasError('incorrect') && currentPassword.touched) {
-    <mat-error>Current password incorrect.</mat-error>
+      <mat-error>Current password incorrect.</mat-error>
     }
   </mat-form-field>
 
@@ -44,12 +50,18 @@
   <mat-form-field appearance="outline" class="profile-field">
     <mat-label>New password</mat-label>
 
-    <input matInput type="password" formControlName="newPassword" autocomplete="new-password" required />
+    <input
+      matInput
+      type="password"
+      formControlName="newPassword"
+      autocomplete="new-password"
+      required
+    />
 
     @if (newPassword.hasError('required') && newPassword.touched) {
-    <mat-error>New password is required.</mat-error>
+      <mat-error>New password is required.</mat-error>
     } @else if (newPassword.hasError('minlength') && newPassword.touched) {
-    <mat-error>Password must be at least 10 characters.</mat-error>
+      <mat-error>Password must be at least 10 characters.</mat-error>
     }
   </mat-form-field>
 
@@ -57,16 +69,19 @@
   <mat-form-field appearance="outline" class="profile-field">
     <mat-label>Repeat new password</mat-label>
 
-    <input matInput type="password" formControlName="repeatedPassword" autocomplete="new-password"
-      [errorStateMatcher]="repeatedPasswordMatcher" required />
+    <input
+      matInput
+      type="password"
+      formControlName="repeatedPassword"
+      autocomplete="new-password"
+      [errorStateMatcher]="repeatedPasswordMatcher"
+      required
+    />
 
     @if (repeatedPassword.hasError('required') && repeatedPassword.touched) {
-    <mat-error>Please repeat your new password.</mat-error>
-    } @else if (
-    passwordForm.hasError('passwordsMismatch') &&
-    repeatedPassword.touched
-    ) {
-    <mat-error>Passwords do not match.</mat-error>
+      <mat-error>Please repeat your new password.</mat-error>
+    } @else if (passwordForm.hasError('passwordsMismatch') && repeatedPassword.touched) {
+      <mat-error>Passwords do not match.</mat-error>
     }
   </mat-form-field>
 

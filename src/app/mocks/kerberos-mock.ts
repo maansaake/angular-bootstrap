@@ -1,8 +1,4 @@
-import {
-  HttpErrorResponse,
-  HttpInterceptorFn,
-  HttpResponse,
-} from '@angular/common/http';
+import { HttpErrorResponse, HttpInterceptorFn, HttpResponse } from '@angular/common/http';
 import { delay, of, throwError } from 'rxjs';
 
 /**
@@ -43,7 +39,7 @@ function loadUsers(): Map<string, MockUser> {
     const saved = localStorage.getItem(STORAGE_KEY_USERS);
     if (saved) {
       const parsed = JSON.parse(saved) as { key: string; value: MockUser }[];
-      return new Map(parsed.map(item => [item.key, item.value]));
+      return new Map(parsed.map((item) => [item.key, item.value]));
     }
   } catch {
     // If localStorage is not available, return empty map
@@ -84,7 +80,7 @@ function saveNextUserId(id: number): void {
 function loadCurrentUser(): MockUser | null {
   try {
     const saved = localStorage.getItem(STORAGE_KEY_CURRENT_USER);
-    return saved ? JSON.parse(saved) as MockUser : null;
+    return saved ? (JSON.parse(saved) as MockUser) : null;
   } catch {
     return null;
   }
@@ -121,9 +117,7 @@ const respond = <T>(status: number, body?: T) =>
   of(new HttpResponse<T>({ status, body })).pipe(delay(300));
 
 const fail = (status: number, ...errors: string[]) =>
-  throwError(
-    () => new HttpErrorResponse({ status, error: { errors: errors } }),
-  );
+  throwError(() => new HttpErrorResponse({ status, error: { errors: errors } }));
 
 export const kerberosMockInterceptor: HttpInterceptorFn = (req, next) => {
   const path = new URL(req.url, 'http://mock.invalid').pathname;

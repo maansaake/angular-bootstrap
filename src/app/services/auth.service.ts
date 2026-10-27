@@ -39,9 +39,7 @@ export class AuthService {
   /** Hydrates the session from the backend. Called by the app initializer on boot. */
   async hydrate(): Promise<boolean> {
     try {
-      const me = await firstValueFrom(
-        this.usersService.getMe(environment.orgID),
-      );
+      const me = await firstValueFrom(this.usersService.getMe(environment.orgID));
       this.user.set(me);
     } catch {
       this.user.set(null);
@@ -55,9 +53,7 @@ export class AuthService {
 
   async login(username: string, password: string): Promise<boolean> {
     try {
-      await firstValueFrom(
-        this.usersService.login(environment.orgID, { username, password }),
-      );
+      await firstValueFrom(this.usersService.login(environment.orgID, { username, password }));
     } catch {
       return false;
     }

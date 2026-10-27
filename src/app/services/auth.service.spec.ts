@@ -84,7 +84,10 @@ describe('AuthService', () => {
 
     httpMock
       .expectOne(loginUrl)
-      .flush({ errors: ['Invalid username or password.'] }, { status: 401, statusText: 'Unauthorized' });
+      .flush(
+        { errors: ['Invalid username or password.'] },
+        { status: 401, statusText: 'Unauthorized' },
+      );
 
     expect(await loggingIn).toBe(false);
     expect(service.loggedIn()).toBe(false);

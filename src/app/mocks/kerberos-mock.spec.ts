@@ -1,8 +1,4 @@
-import {
-  provideHttpClient,
-  withInterceptors,
-  HttpClient,
-} from '@angular/common/http';
+import { provideHttpClient, withInterceptors, HttpClient } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { firstValueFrom } from 'rxjs';
 
@@ -27,9 +23,7 @@ describe('kerberosMockInterceptor', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        provideHttpClient(withInterceptors([kerberosMockInterceptor])),
-      ],
+      providers: [provideHttpClient(withInterceptors([kerberosMockInterceptor]))],
     });
 
     http = TestBed.inject(HttpClient);
@@ -42,20 +36,24 @@ describe('kerberosMockInterceptor', () => {
   it('supports the full registration and authentication flow', async () => {
     // Registration is backend-owned.
     const registered = await firstValueFrom(
-      http.post<{ id: number; name: string }>(
-        `${backendBase}/api/register`,
-        { username: 'alice', password: 'correct horse' },
-      ),
+      http.post<{ id: number; name: string }>(`${backendBase}/api/register`, {
+        username: 'alice',
+        password: 'correct horse',
+      }),
     );
     expect(registered.name).toBe('alice');
 
     // Wrong password fails like Kerberos would.
-    expect(await rejects(() => firstValueFrom(
-      http.post(`${orgBase}/login`, {
-          username: 'alice',
-          password: 'wrong',
-        }),
-    ))).toBe(true);
+    expect(
+      await rejects(() =>
+        firstValueFrom(
+          http.post(`${orgBase}/login`, {
+            username: 'alice',
+            password: 'wrong',
+          }),
+        ),
+      ),
+    ).toBe(true);
 
     // A successful login opens the in-memory session...
     await firstValueFrom(
@@ -66,18 +64,20 @@ describe('kerberosMockInterceptor', () => {
     );
 
     // ...which GetMe reports back.
-    const me = await firstValueFrom(
-      http.get<{ id: number; name: string }>(`${orgBase}/users/me`),
-    );
+    const me = await firstValueFrom(http.get<{ id: number; name: string }>(`${orgBase}/users/me`));
     expect(me.name).toBe('alice');
 
     // Password change requires the current one.
-    expect(await rejects(() => firstValueFrom(
-      http.put(`${orgBase}/users/${me.id}/password`, {
-          oldPassword: 'incorrect',
-          password: 'battery staple',
-        }),
-    ))).toBe(true);
+    expect(
+      await rejects(() =>
+        firstValueFrom(
+          http.put(`${orgBase}/users/${me.id}/password`, {
+            oldPassword: 'incorrect',
+            password: 'battery staple',
+          }),
+        ),
+      ),
+    ).toBe(true);
     await firstValueFrom(
       http.put(`${orgBase}/users/${me.id}/password`, {
         oldPassword: 'correct horse',
@@ -87,9 +87,7 @@ describe('kerberosMockInterceptor', () => {
 
     // Log out closes the session.
     await firstValueFrom(http.post(`${orgBase}/logout`, {}));
-    expect(await rejects(() => firstValueFrom(
-      http.get(`${orgBase}/users/me`)
-    ))).toBe(true);
+    expect(await rejects(() => firstValueFrom(http.get(`${orgBase}/users/me`)))).toBe(true);
   });
 
   it('rejects a second registration of the same username', async () => {
@@ -100,11 +98,15 @@ describe('kerberosMockInterceptor', () => {
       }),
     );
 
-    expect(await rejects(() => firstValueFrom(
-      http.post(`${backendBase}/api/register`, {
-          username: 'bob',
-          password: 'correct horse',
-        }),
-    ))).toBe(true);
+    expect(
+      await rejects(() =>
+        firstValueFrom(
+          http.post(`${backendBase}/api/register`, {
+            username: 'bob',
+            password: 'correct horse',
+          }),
+        ),
+      ),
+    ).toBe(true);
   });
 });

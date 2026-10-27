@@ -22,11 +22,9 @@ export const authRefreshInterceptor: HttpInterceptorFn = (req, next) => {
 
       const authService = inject(AuthService);
 
-      return authService.refreshSession().pipe(
-        exhaustMap((refreshed) =>
-          refreshed ? next(req) : throwError(() => error),
-        ),
-      );
+      return authService
+        .refreshSession()
+        .pipe(exhaustMap((refreshed) => (refreshed ? next(req) : throwError(() => error))));
     }),
   );
 };

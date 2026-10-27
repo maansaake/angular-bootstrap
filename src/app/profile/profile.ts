@@ -44,14 +44,7 @@ export class Profile {
   private readonly snackBar = inject(MatSnackBar);
 
   readonly usernameForm = this.fb.nonNullable.group({
-    username: [
-      '',
-      [
-        Validators.required,
-        Validators.minLength(5),
-        Validators.maxLength(32),
-      ],
-    ],
+    username: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(32)]],
   });
 
   readonly passwordForm = this.fb.nonNullable.group(
@@ -84,9 +77,7 @@ export class Profile {
     ): boolean => {
       const shouldShowError = !!(control?.touched || form?.submitted);
       const controlIsInvalid = !!control?.invalid;
-      const passwordsDoNotMatch = !!control?.parent?.hasError(
-        'passwordsMismatch',
-      );
+      const passwordsDoNotMatch = !!control?.parent?.hasError('passwordsMismatch');
 
       return shouldShowError && (controlIsInvalid || passwordsDoNotMatch);
     },
@@ -107,15 +98,11 @@ export class Profile {
     if (await this.authService.updateUsername(username)) {
       this.usernameForm.reset();
 
-      this.snackBar.open(
-        `Your username has been updated successfully.`,
-        'Close',
-        {
-          duration: 3000,
-          horizontalPosition: 'center',
-          verticalPosition: 'top',
-        },
-      );
+      this.snackBar.open(`Your username has been updated successfully.`, 'Close', {
+        duration: 3000,
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+      });
     } else {
       this.snackBar.open(`Failed to update your username.`, 'Close', {
         duration: 3000,
@@ -136,15 +123,11 @@ export class Profile {
     if (await this.authService.updatePassword(currentPassword, newPassword)) {
       this.passwordForm.reset();
 
-      this.snackBar.open(
-        'Your password has been updated successfully.',
-        'Close',
-        {
-          duration: 3000,
-          horizontalPosition: 'center',
-          verticalPosition: 'bottom',
-        },
-      );
+      this.snackBar.open('Your password has been updated successfully.', 'Close', {
+        duration: 3000,
+        horizontalPosition: 'center',
+        verticalPosition: 'bottom',
+      });
     } else {
       this.currentPassword.setErrors({ incorrect: true });
     }

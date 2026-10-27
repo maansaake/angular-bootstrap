@@ -30,9 +30,7 @@ export class Header {
 
   private updateShowLogin(): void {
     const segments = this.router.url.split('?')[0].split('/').filter(Boolean);
-    this.showLogin.set(
-      segments.at(-1) !== 'login' && segments.at(-1) !== 'register',
-    );
+    this.showLogin.set(segments.at(-1) !== 'login' && segments.at(-1) !== 'register');
   }
 
   private onRegister(): void {

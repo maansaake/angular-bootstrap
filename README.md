@@ -84,11 +84,11 @@ make codegen
 
 ## Available Commands
 
-| Command | Description |
-| --------- | ------------- |
-| `make serve` | Start development server |
-| `make build` | Production build |
-| `make test` | Run unit tests |
-| `make lint` | Run ESLint |
-| `make codegen` | Generate API clients |
-| `make check` | Run lint, build, and test |
+| Command        | Description               |
+| -------------- | ------------------------- |
+| `make serve`   | Start development server  |
+| `make build`   | Production build          |
+| `make test`    | Run unit tests            |
+| `make lint`    | Run ESLint                |
+| `make codegen` | Generate API clients      |
+| `make check`   | Run lint, build, and test |
