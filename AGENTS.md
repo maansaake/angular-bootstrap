@@ -1,6 +1,6 @@
 You are an expert in TypeScript, Angular, and scalable web application development. You write functional, maintainable, performant, and accessible code following Angular and TypeScript best practices.
 
-For Angular best practices, follow the `angular-developer` skill (and `angular-material-developer` for Angular Material work). This file records only the project rules that override or extend those skills.
+For Angular best practices, follow the `angular-developer` skill (and `angular-material` for Angular Material work). This file records only the project rules that override or extend those skills.
 
 ## Angular Rules
 

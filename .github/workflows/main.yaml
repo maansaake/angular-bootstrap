@@ -12,6 +12,9 @@ permissions:
   packages: write
 
 jobs:
+  lint:
+    uses: ./.github/workflows/callable-lint.yaml
+
   build:
     uses: ./.github/workflows/callable-build.yaml
 

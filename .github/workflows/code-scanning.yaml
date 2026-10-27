@@ -26,4 +26,4 @@ jobs:
 
       - run: make install
 
-      - run: make lint
+      - run: make lint/ci

@@ -9,7 +9,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "sample": {
+    "angular-bootstrap": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -71,10 +71,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "sample:build:production"
+              "buildTarget": "angular-bootstrap:build:production"
             },
             "development": {
-              "buildTarget": "sample:build:development"
+              "buildTarget": "angular-bootstrap:build:development"
             }
           },
           "defaultConfiguration": "development"

@@ -49,6 +49,7 @@ Complete Material Design v3 theming with:
 Built on [Kerberos](https://github.com/trebent/kerberos), an API gateway with authentication/authorization. The authentication system in the bootstrap app uses the Kerberos API to authenticate users.
 
 **Session service** (`AuthService`):
+
 - Reactive state via signals (`user`, `loggedIn`, etc.)
 - Login/logout/refresh through generated Kerberos client
 - Hydrates session on app startup
@@ -67,10 +68,12 @@ Type-safe Angular API clients generated from OpenAPI specifications:
 - `openapi/backend.yaml` — Application backend API
 
 **Generated clients**:
+
 - `src/app/services/auth-basic/` — Kerberos client
 - `src/app/services/backend/` — Backend client
 
 **Command**:
+
 ```bash
 make codegen
 ```
@@ -82,7 +85,7 @@ make codegen
 ## Available Commands
 
 | Command | Description |
-|---------|-------------|
+| --------- | ------------- |
 | `make serve` | Start development server |
 | `make build` | Production build |
 | `make test` | Run unit tests |
