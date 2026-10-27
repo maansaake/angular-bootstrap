@@ -54,6 +54,31 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/APIErrorResponse'
+  /api/me:
+    delete:
+      tags:
+        - account
+      operationId: DeleteMe
+      description: |
+        Deletes the calling user's account. Like registration, deleting users in Kerberos
+        requires its admin account, so the backend performs the deletion on the user's behalf.
+        The caller is identified by the Kerberos session that the gateway forwards; the session
+        is invalidated together with the account.
+      responses:
+        '204':
+          description: Deleted the account.
+        '401':
+          description: No active session.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIErrorResponse'
+        '500':
+          description: Internal error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIErrorResponse'
 components:
   requestBodies:
     RegisterUserRequest:

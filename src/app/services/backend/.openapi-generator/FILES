@@ -2,6 +2,7 @@
 README.md
 api.base.service.ts
 api.module.ts
+api/account.service.ts
 api/api.ts
 api/registration.service.ts
 configuration.ts
