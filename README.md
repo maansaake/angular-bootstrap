@@ -121,3 +121,7 @@ openapi/               API specs the clients are generated from
   GitHub Pages, with a `404.html` fallback so deep links work.
 
 Coding conventions for humans and AI agents are in [`AGENTS.md`](AGENTS.md).
+
+## License
+
+[MIT](LICENSE)

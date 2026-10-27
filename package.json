@@ -11,6 +11,7 @@
     "codegen": "npx @openapitools/openapi-generator-cli generate -g typescript-angular -i openapi/auth_basic.yaml -o src/app/services/auth-basic && npx @openapitools/openapi-generator-cli generate -g typescript-angular -i openapi/backend.yaml -o src/app/services/backend"
   },
   "private": true,
+  "license": "MIT",
   "packageManager": "npm@11.19.0",
   "dependencies": {
     "@angular/cdk": "^22.2.4",
