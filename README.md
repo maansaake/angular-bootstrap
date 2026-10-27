@@ -3,92 +3,121 @@
 [![Main branch protection](https://github.com/maansaake/angular-bootstrap/actions/workflows/main.yaml/badge.svg?branch=main)](https://github.com/maansaake/angular-bootstrap/actions/workflows/main.yaml)
 [![Code scanning](https://github.com/maansaake/angular-bootstrap/actions/workflows/code-scanning.yaml/badge.svg?branch=main)](https://github.com/maansaake/angular-bootstrap/actions/workflows/code-scanning.yaml)
 
-A production-ready Angular 22 template with authentication, Material Design 3, and OpenAPI code generation. Clone it, run `make serve`, and you have a working application.
+A small, production-minded Angular 22 starter: register, log in, log out and manage a profile,
+backed by [Kerberos](https://github.com/trebent/kerberos) authentication, Angular Material 3 and
+OpenAPI-generated clients.
 
----
+**[Try the live demo →](https://maansaake.github.io/angular-bootstrap/)**
 
-## Quick Start
+## Quick start
 
 ```bash
+git clone https://github.com/maansaake/angular-bootstrap.git my-app
+cd my-app
+make install
 make serve
 ```
 
-The app runs at `http://localhost:4200` with a mock backend. No external services required.
+Open `http://localhost:4200`. No backend needed: an in-browser mock serves the API, the same one
+the live demo uses.
 
-**Note**: Remove `src/app/mocks/` before you start. See the deployed app at [GitHub Pages](https://maansaake.github.io/angular-bootstrap/) for a live example.
+## What's inside
 
----
+- **Angular 22**: standalone components, signals, Signal Forms, zoneless change detection,
+  lazy-loaded routes, strict TypeScript and strict templates.
+- **Angular Material 3**: a single theme in `src/styles.scss`, built from `--mat-sys-*` tokens,
+  with a System/Light/Dark switch.
+- **Kerberos auth**: HttpOnly cookie sessions, automatic refresh, a 401 retry, route guards
+  and organisation scoping.
+- **OpenAPI clients**: typed Angular services generated from `openapi/` with `make codegen`.
+- **Accessibility**: a skip link, focus management on navigation, and axe-core checks in every
+  page spec. Targets WCAG 2.2 AA.
+- **Tooling**: ESLint (including template accessibility rules), Prettier, Vitest with Material
+  component harnesses, and GitHub Actions CI that deploys to GitHub Pages.
 
-## Project Setup
+## How authentication works
 
-### Angular 22 (Standalone-First)
+```mermaid
+sequenceDiagram
+    participant B as Browser (AuthService)
+    participant A as App backend
+    participant K as Kerberos
 
-This bootstrap uses Angular 22 with a modern, opinionated setup:
-
-- **Standalone components** — No NgModules; components import only what they use
-- **Signals-based state** — Reactive state management via `signal()` and `computed()`
-- **Modern control flow** — `@if`, `@for`, `@switch` template syntax
-- **Service decorator** — Uses `@Service()` and `inject()` for dependency injection
-
-Coding standards are defined in `AGENTS.md`. The project uses ESLint for code quality.
-
-### Angular Material (Material 3)
-
-Complete Material Design v3 theming with:
-
-- **Token-driven styling** — All colors use `--mat-sys-*` CSS custom properties
-- **Dark mode support** — `color-scheme: light dark` on body
-- **Single theme source** — Defined once in `src/styles.scss` via `mat.theme()`
-
-**Theme**: Magenta primary, violet tertiary, Roboto font family.
-
-**Rule**: Never use hardcoded colors. Always use system tokens like `var(--mat-sys-surface)`.
-
-### Authentication System
-
-Built on [Kerberos](https://github.com/trebent/kerberos), an API gateway with authentication/authorization. The authentication system in the bootstrap app uses the Kerberos API to authenticate users.
-
-**Session service** (`AuthService`):
-
-- Reactive state via signals (`user`, `loggedIn`, etc.)
-- Login/logout/refresh through generated Kerberos client
-- Hydrates session on app startup
-- Automatic token refresh — Background refresh every 5 minutes via app initializer
-- 401 retry interceptor — Automatic session refresh on unauthorized responses
-- HttpOnly cookie sessions — No credentials stored client-side, preventing XSS attacks
-- Organisation isolation — All requests scoped to a single organisation ID
-- CSRF protection — Built-in protection against cross-site request forgery
-- Session management — Complete session lifecycle handling with automatic cleanup
-
-### OpenAPI Code Generation
-
-Type-safe Angular API clients generated from OpenAPI specifications:
-
-- `openapi/auth_basic.yaml` — Kerberos authentication API
-- `openapi/backend.yaml` — Application backend API
-
-**Generated clients**:
-
-- `src/app/services/auth-basic/` — Kerberos client
-- `src/app/services/backend/` — Backend client
-
-**Command**:
-
-```bash
-make codegen
+    B->>A: POST /api/register
+    A->>K: CreateUser (hidden admin account)
+    B->>K: POST /login
+    K-->>B: Set-Cookie: session (HttpOnly)
+    loop every 5 minutes
+        B->>K: POST /refresh
+    end
+    B->>K: Any request returning 401
+    B->>K: POST /refresh, then retry once
+    B->>A: DELETE /api/me
+    A->>K: DeleteUser (hidden admin account)
 ```
 
-**Integration**: Clients are wired via `provideApi()` in `app.config.ts` with base URLs from environment.
+- **Registration and account deletion** go through the app backend (`openapi/backend.yaml`).
+  Kerberos requires an admin account for both, and that account must never reach the browser.
+- **Everything else** goes straight to Kerberos (`openapi/auth_basic.yaml`) through the generated
+  `UsersService`.
+- **`AuthService`** (`src/app/services/auth.service.ts`) is the only place that knows about
+  sessions. It exposes signals (`user`, `username`, `loggedIn`, `lastRefreshedAt`) and returns
+  typed results (`{ ok: true } | { ok: false, reason }`) so pages can show accurate errors.
+- **`authRefreshInterceptor`** catches a 401, refreshes the session once and retries.
+- **`authGuard` / `guestGuard`** (`src/app/guards/`) protect `/profile`, keep signed-in users off
+  `/login` and `/register`, and send users back to where they were going after logging in.
 
----
+## Make it yours
 
-## Available Commands
+1. **Rename** the project in `package.json`, `angular.json` (and the `dist/` path in
+   `.github/workflows/deploy.yaml`), `src/index.html` and the header and footer.
+2. **Retheme** by changing the palettes in `src/styles.scss`. Components only use system tokens,
+   so nothing else needs to change.
+3. **Connect a real backend**:
+   - Delete `provideMockBackend()` from `src/app/app.config.ts` and remove `src/app/mocks/`.
+   - Set `krbBaseUrl`, `backendBaseUrl` and `orgID` in `src/environments/`.
+   - Implement `openapi/backend.yaml` (register and delete-me) in your backend.
+4. **Change an API** by editing the spec in `openapi/`, then run `make codegen` and commit the
+   output. Never hand-edit `src/app/services/auth-basic/` or `src/app/services/backend/`.
 
-| Command        | Description               |
-| -------------- | ------------------------- |
-| `make serve`   | Start development server  |
-| `make build`   | Production build          |
-| `make test`    | Run unit tests            |
-| `make lint`    | Run ESLint                |
-| `make codegen` | Generate API clients      |
-| `make check`   | Run lint, build, and test |
+## Commands
+
+| Command             | What it does                                      |
+| ------------------- | ------------------------------------------------- |
+| `make install`      | Install dependencies (`npm ci`)                   |
+| `make serve`        | Start the dev server on `http://localhost:4200`   |
+| `make check`        | Run everything CI runs: format, lint, build, test |
+| `make format`       | Format the code with Prettier                     |
+| `make format/check` | Check formatting without changing files           |
+| `make lint`         | Lint and auto-fix with ESLint                     |
+| `make lint/ci`      | Lint without fixing                               |
+| `make build/prod`   | Production build into `dist/angular-bootstrap/`   |
+| `make build/dev`    | Development build                                 |
+| `make test`         | Run the unit tests once                           |
+| `make codegen`      | Regenerate the API clients from `openapi/`        |
+
+## Project layout
+
+```text
+src/app/
+  app.config.ts        providers: router, HTTP, API clients, mock backend
+  app.routes.ts        lazy routes and guards
+  guards/              authGuard, guestGuard
+  interceptors/        401 refresh-and-retry
+  mocks/               demo-only in-browser backend (delete for real use)
+  services/            AuthService, ThemeService and the generated clients
+  shared/              validation rules, notifier and form helpers
+  header/ footer/      app shell
+  landing/ login/ register/ profile/
+src/testing/           test helpers: AuthService stub, axe-core check
+openapi/               API specs the clients are generated from
+```
+
+## CI and deployment
+
+- **Pull requests and `main`**: format check, lint, build (including a check that the generated
+  clients are up to date) and tests.
+- **Deploy**: every push to `main` runs lint and tests, builds for production and publishes to
+  GitHub Pages, with a `404.html` fallback so deep links work.
+
+Coding conventions for humans and AI agents are in [`AGENTS.md`](AGENTS.md).

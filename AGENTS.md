@@ -33,8 +33,11 @@ For Angular best practices, follow the `angular-developer` skill (and `angular-m
 
 ## Verification
 
-- Before declaring a change complete, run in order: **build -> lint -> test**. All three must pass.
+- Before declaring a change complete, run in order: **format -> build -> lint -> test**. All four must pass.
+- Format: `make format` (Prettier; CI runs `make format/check`)
 - Build: `make build/prod` (production `ng build`)
-- Lint: `make lint` (`ng lint --fix`)
+- Lint: `make lint` (`ng lint --fix`; CI runs `make lint/ci`)
 - Test: `make test` (`ng test --watch false`)
-- A change is not complete until all three pass. Read the output of each step; do not claim success without it. Fix failures before moving on.
+- `make check` runs the CI sequence in one go.
+- Every page spec must call `expectNoAxeViolations` from `src/testing/axe.ts`. jsdom cannot check color contrast, so verify contrast in a browser in both light and dark mode.
+- A change is not complete until all steps pass. Read the output of each step; do not claim success without it. Fix failures before moving on.
