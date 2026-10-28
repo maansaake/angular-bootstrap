@@ -5,16 +5,16 @@ import { MatError, MatFormField, MatHint, MatLabel } from '@angular/material/for
 import { MatInput } from '@angular/material/input';
 import { Router, RouterLink } from '@angular/router';
 
-import { AuthService } from '../services/auth.service';
-import { focusFirstInvalid } from '../shared/forms';
-import { Notifier } from '../shared/notifier';
+import { AuthService } from '../../services/auth.service';
+import { focusFirstInvalid } from '../../utils/forms';
+import { Notifier } from '../../services/notifier.service';
 import {
   newPasswordRules,
   PASSWORD_LENGTH,
   repeats,
   USERNAME_LENGTH,
   usernameRules,
-} from '../shared/validation';
+} from '../../utils/validation';
 
 @Component({
   imports: [FormField, MatButton, MatError, MatFormField, MatHint, MatInput, MatLabel, RouterLink],

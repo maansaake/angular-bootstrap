@@ -3,8 +3,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { filter, skip } from 'rxjs';
 
-import { Footer } from './footer/footer';
-import { Header } from './header/header';
+import { Footer } from './core/footer/footer';
+import { Header } from './core/header/header';
 
 @Component({
   imports: [RouterOutlet, Header, Footer],

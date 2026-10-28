@@ -5,9 +5,9 @@ import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { Router, RouterLink } from '@angular/router';
 
-import { AuthService } from '../services/auth.service';
-import { focusFirstInvalid, safeReturnUrl } from '../shared/forms';
-import { Notifier } from '../shared/notifier';
+import { AuthService } from '../../services/auth.service';
+import { focusFirstInvalid, safeReturnUrl } from '../../utils/forms';
+import { Notifier } from '../../services/notifier.service';
 
 @Component({
   imports: [FormField, MatButton, MatError, MatFormField, MatInput, MatLabel, RouterLink],

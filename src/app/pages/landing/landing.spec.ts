@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 
-import { AuthStub, createAuthStub, provideAuthStub } from '../../testing/auth-stub';
-import { expectNoAxeViolations } from '../../testing/axe';
+import { AuthStub, createAuthStub, provideAuthStub } from '../../../testing/auth-stub';
+import { expectNoAxeViolations } from '../../../testing/axe';
 import { Landing } from './landing';
 
 describe('Landing', () => {

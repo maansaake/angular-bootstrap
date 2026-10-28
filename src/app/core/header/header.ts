@@ -5,8 +5,8 @@ import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
 import { MatToolbar } from '@angular/material/toolbar';
 import { Router, RouterLink } from '@angular/router';
 
-import { AuthService } from '../services/auth.service';
-import { ThemeMode, ThemeService } from '../services/theme.service';
+import { AuthService } from '../../services/auth.service';
+import { ThemeMode, ThemeService } from '../../services/theme.service';
 
 interface ThemeOption {
   mode: ThemeMode;

@@ -102,16 +102,20 @@ sequenceDiagram
 src/app/
   app.config.ts        providers: router, HTTP, API clients, mock backend
   app.routes.ts        lazy routes and guards
+  core/                app shell: header, footer
+  pages/               one directory per route, with page-only components under it
+  components/          shared components used by several pages
+  services/            AuthService, ThemeService, Notifier and the generated clients
   guards/              authGuard, guestGuard
   interceptors/        401 refresh-and-retry
+  utils/               validation rules and form helpers
   mocks/               demo-only in-browser backend (delete for real use)
-  services/            AuthService, ThemeService and the generated clients
-  shared/              validation rules, notifier and form helpers
-  header/ footer/      app shell
-  landing/ login/ register/ profile/
 src/testing/           test helpers: AuthService stub, axe-core check
 openapi/               API specs the clients are generated from
 ```
+
+Where each kind of file goes, and the rules for adding new ones, are in
+[`docs/structure.md`](docs/structure.md).
 
 ## CI and deployment
 

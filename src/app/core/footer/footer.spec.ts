@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { expectNoAxeViolations } from '../../testing/axe';
+import { expectNoAxeViolations } from '../../../testing/axe';
 import { Footer } from './footer';
 
 describe('Footer', () => {

@@ -4,9 +4,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatMenuHarness } from '@angular/material/menu/testing';
 import { provideRouter, Router } from '@angular/router';
 
-import { ThemeService } from '../services/theme.service';
-import { AuthStub, createAuthStub, provideAuthStub } from '../../testing/auth-stub';
-import { expectNoAxeViolations } from '../../testing/axe';
+import { ThemeService } from '../../services/theme.service';
+import { AuthStub, createAuthStub, provideAuthStub } from '../../../testing/auth-stub';
+import { expectNoAxeViolations } from '../../../testing/axe';
 import { Header } from './header';
 
 describe('Header', () => {

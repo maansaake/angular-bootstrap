@@ -2,6 +2,11 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 
 For Angular best practices, follow the `angular-developer` skill (and `angular-material` for Angular Material work). This file records only the project rules that override or extend those skills.
 
+## Project Structure
+
+- Follow the directory layout in `docs/structure.md`; it overrides the folder examples in the `angular-developer` skill
+- `core/` for the app shell (header, footer), `pages/` for routed components (sub-pages and page-only `components/` nested inside the page), `components/` for components shared by several pages, `services/` for all services
+
 ## Angular Rules
 
 - Use standalone components over NgModules; do NOT set `standalone: true` (default in v20+) or `changeDetection: ChangeDetectionStrategy.OnPush` (default in v22+) in decorators

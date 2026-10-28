@@ -16,11 +16,11 @@ import { MatInput } from '@angular/material/input';
 import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 
-import { AuthService } from '../services/auth.service';
-import { focusFirstInvalid } from '../shared/forms';
-import { Notifier } from '../shared/notifier';
-import { newPasswordRules, repeats, usernameRules } from '../shared/validation';
-import { DeleteAccountDialog } from './delete-account-dialog';
+import { AuthService } from '../../services/auth.service';
+import { focusFirstInvalid } from '../../utils/forms';
+import { Notifier } from '../../services/notifier.service';
+import { newPasswordRules, repeats, usernameRules } from '../../utils/validation';
+import { DeleteAccountDialog } from './components/delete-account-dialog/delete-account-dialog';
 
 @Component({
   imports: [

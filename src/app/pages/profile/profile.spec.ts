@@ -8,8 +8,8 @@ import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 import { MatInputHarness } from '@angular/material/input/testing';
 import { provideRouter, Router } from '@angular/router';
 
-import { AuthStub, createAuthStub, provideAuthStub } from '../../testing/auth-stub';
-import { expectNoAxeViolations } from '../../testing/axe';
+import { AuthStub, createAuthStub, provideAuthStub } from '../../../testing/auth-stub';
+import { expectNoAxeViolations } from '../../../testing/axe';
 import { Profile } from './profile';
 
 describe('Profile', () => {
