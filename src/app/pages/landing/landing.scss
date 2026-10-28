@@ -1,5 +1,8 @@
 .landing {
   display: grid;
+  // minmax(0, …) lets the column shrink below its widest content (e.g. the code block), so
+  // nothing pushes the page wider than a phone screen.
+  grid-template-columns: minmax(0, 1fr);
   gap: 4rem;
 }
 
@@ -28,6 +31,8 @@ p {
   h1 {
     margin: 0 0 1rem;
     font: var(--mat-sys-display-small);
+    // Long usernames have no spaces to wrap on.
+    overflow-wrap: anywhere;
   }
 
   .lead {
@@ -49,7 +54,7 @@ p {
 .features,
 .flow {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(16rem, 100%), 1fr));
   gap: 1rem;
   margin: 0;
   padding: 0;
@@ -115,7 +120,9 @@ p {
 .code {
   margin: 0 0 1rem;
   padding: 1rem 1.25rem;
-  overflow-x: auto;
+  // Wrap long commands instead of scrolling sideways on narrow screens.
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
   border-radius: var(--mat-sys-corner-medium);
   background: var(--mat-sys-surface-container-highest);
   color: var(--mat-sys-on-surface);
