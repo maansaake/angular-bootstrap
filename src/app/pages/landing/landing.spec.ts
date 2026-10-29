@@ -38,6 +38,14 @@ describe('Landing', () => {
     await expectNoAxeViolations(fixture);
   });
 
+  it('follows the feature cards with the Kerberos section', async () => {
+    const fixture = await render();
+    const element: HTMLElement = fixture.nativeElement;
+    const headings = [...element.querySelectorAll('h2')].map((h) => h.textContent?.trim());
+
+    expect(headings.indexOf('Kerberos')).toBeGreaterThan(headings.indexOf("What's inside"));
+  });
+
   it('gives every feature card a named link', async () => {
     const fixture = await render();
     const cards = fixture.nativeElement.querySelectorAll('.feature') as NodeListOf<HTMLElement>;

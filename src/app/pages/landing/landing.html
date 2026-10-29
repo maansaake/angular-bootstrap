@@ -9,8 +9,8 @@
     } @else {
       <h1 id="hero-title">Start your next Angular app in minutes</h1>
       <p class="lead">
-        A small, production-minded starter: register, log in and manage a profile, backed by
-        Kerberos authentication and Angular Material.
+        A small, production-minded Angular starter with Material Design 3, Signal Forms and
+        generated API clients. Register, log in and manage a profile, all backed by Kerberos.
       </p>
       <div class="actions">
         <a matButton="filled" routerLink="/register">Try the demo</a>
@@ -34,18 +34,7 @@
     </ul>
   </section>
 
-  <section aria-labelledby="flow-title">
-    <h2 id="flow-title">How authentication works</h2>
-    <ol class="flow">
-      @for (step of flow; track step.title) {
-        <li class="step">
-          <mat-icon aria-hidden="true">{{ step.icon }}</mat-icon>
-          <h3>{{ step.title }}</h3>
-          <p>{{ step.description }}</p>
-        </li>
-      }
-    </ol>
-  </section>
+  <app-kerberos-overview />
 
   <section aria-labelledby="quickstart-title">
     <h2 id="quickstart-title">Quick start</h2>

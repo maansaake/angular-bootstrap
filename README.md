@@ -28,14 +28,77 @@ the live demo uses.
 - **Angular Material 3**: a single theme in `src/styles.scss`, built from `--mat-sys-*` tokens,
   with a System/Light/Dark switch.
 - **Kerberos auth**: HttpOnly cookie sessions, automatic refresh, a 401 retry, route guards
-  and organisation scoping.
+  and organisation scoping. See [About Kerberos](#about-kerberos).
 - **OpenAPI clients**: typed Angular services generated from `openapi/` with `make codegen`.
 - **Accessibility**: a skip link, focus management on navigation, and axe-core checks in every
   page spec. Targets WCAG 2.2 AA.
 - **Tooling**: ESLint (including template accessibility rules), Prettier, Vitest with Material
   component harnesses, and GitHub Actions CI that deploys to GitHub Pages.
 
-## How authentication works
+## About Kerberos
+
+[Kerberos](https://github.com/trebent/kerberos) is an open-source API gateway that sits between
+this app and your backend. It owns user accounts and sessions, checks every request before it
+reaches your services, and tells your backend who is calling. Your backend never handles a
+password or a session.
+
+### What it does
+
+- **Routes** traffic sent to `/gw/backend/<backend-name>/<path>` to the configured backend, with
+  TLS, CORS and timeouts set per backend.
+- **Authenticates** users with basic auth and HttpOnly cookie sessions: log in, refresh, log out.
+- **Authorizes** requests with group-based rules for a whole backend or individual paths.
+- **Validates** requests against each backend's OpenAPI spec, and **observes** every call with
+  OpenTelemetry traces and metrics.
+
+### How a request flows
+
+Every gateway request passes through a fixed pipeline. Any stage can stop it with a `401`, `403`
+or `400`; only a request that passes them all reaches your backend.
+
+```mermaid
+flowchart LR
+    App["Angular app<br/>(browser)"] -- "Cookie: session" --> Obs
+
+    subgraph Kerberos["Kerberos gateway"]
+        direction LR
+        Obs["1. Observability<br/>trace + metrics"] --> Router["2. Router<br/>find the backend"]
+        Router --> Auth["3. Auth<br/>session + groups"]
+        Auth --> OAS["4. Validation<br/>OpenAPI spec"]
+        OAS --> Fwd["5. Forwarder"]
+    end
+
+    Fwd -- "X-Krb-Org<br/>X-Krb-User<br/>X-Krb-Groups" --> Backend["Your backend"]
+```
+
+The forwarder adds the caller's organisation, user and groups as `X-Krb-*` headers, so your
+backend can authorize and scope data without talking to Kerberos.
+
+> [!IMPORTANT]
+> Kerberos must be the only way to reach your backend. The identity headers can only be trusted
+> if nobody can call the backend without going through the gateway.
+
+### Deployment modes
+
+An **organisation** is the tenant boundary in Kerberos. Users, groups, group memberships and
+sessions belong to exactly one organisation and never cross into another, and every auth call
+names its organisation (`/api/auth/basic/organisations/{orgID}/login`). The API and the
+isolation model are the same in both modes; the difference is how many organisations the app
+uses and where the ID comes from.
+
+|                          | Multi-tenant                                                                                                | Single-tenant (this starter)                    |
+| ------------------------ | ----------------------------------------------------------------------------------------------------------- | ----------------------------------------------- |
+| Organisations            | Many, such as one per customer of a SaaS product                                                            | Exactly one                                     |
+| Where `orgID` comes from | Resolved at runtime, e.g. from a subdomain, an invite link or an organisation picker                        | Hard-coded as `orgID` in `src/environments/`    |
+| Who signs up where       | Each user joins the organisation they were invited to                                                       | Everyone joins the one organisation             |
+| Administration           | Creating an organisation also creates its admin account, which manages that organisation's users and groups | One admin account, used only by the app backend |
+| Backend                  | Scopes all data by `X-Krb-Org`                                                                              | Can ignore `X-Krb-Org`                          |
+
+To move from single- to multi-tenant, replace the constant `orgId` in `AuthService` with a value
+resolved at runtime (a signal works well) and scope your backend's data by `X-Krb-Org`. The
+generated clients already take the organisation as a parameter, so nothing else changes.
+
+### How authentication works in this app
 
 ```mermaid
 sequenceDiagram

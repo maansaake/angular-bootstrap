@@ -13,6 +13,9 @@ src/app/
     footer/
   pages/                       one directory per navigable route
     landing/
+      components/              components only the landing page uses
+        kerberos-overview/
+        kerberos-flow-diagram/
     login/
     register/
     profile/

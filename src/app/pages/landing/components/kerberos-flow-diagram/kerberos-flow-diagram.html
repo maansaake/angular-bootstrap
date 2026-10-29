@@ -1,0 +1,52 @@
+<figure class="diagram">
+  <div class="lanes">
+    <div class="node endpoint">
+      <mat-icon aria-hidden="true">web</mat-icon>
+      <p class="node-title">This Angular app</p>
+      <p class="node-detail">Runs in the browser</p>
+    </div>
+
+    <div class="link">
+      <mat-icon aria-hidden="true">arrow_forward</mat-icon>
+      <code>Cookie: session</code>
+    </div>
+
+    <div class="node gateway">
+      <p class="node-title">
+        <mat-icon aria-hidden="true">shield_person</mat-icon>
+        Kerberos gateway
+      </p>
+      <ol class="stages">
+        @for (stage of stages; track stage.title) {
+          <li class="stage">
+            <span class="stage-title">{{ stage.title }}</span>
+            <span class="stage-detail">{{ stage.description }}</span>
+          </li>
+        }
+      </ol>
+      <p class="node-detail reject">
+        <mat-icon aria-hidden="true">block</mat-icon>
+        Any stage can stop the request with 401, 403 or 400.
+      </p>
+    </div>
+
+    <div class="link">
+      <mat-icon aria-hidden="true">arrow_forward</mat-icon>
+      <span class="headers">
+        @for (header of identityHeaders; track header) {
+          <code>{{ header }}</code>
+        }
+      </span>
+    </div>
+
+    <div class="node endpoint">
+      <mat-icon aria-hidden="true">dns</mat-icon>
+      <p class="node-title">Your backend</p>
+      <p class="node-detail">Trusts the identity headers</p>
+    </div>
+  </div>
+  <figcaption>
+    The browser sends its session cookie; Kerberos checks it and forwards the request with the
+    organisation, user and groups as headers. Your backend never sees a password or a session.
+  </figcaption>
+</figure>

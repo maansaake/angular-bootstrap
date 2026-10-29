@@ -4,6 +4,7 @@ import { MatIcon } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 
 import { AuthService } from '../../services/auth.service';
+import { KerberosOverview } from './components/kerberos-overview/kerberos-overview';
 
 interface Feature {
   icon: string;
@@ -12,14 +13,8 @@ interface Feature {
   href: string;
 }
 
-interface FlowStep {
-  icon: string;
-  title: string;
-  description: string;
-}
-
 @Component({
-  imports: [MatButton, MatIcon, RouterLink],
+  imports: [KerberosOverview, MatButton, MatIcon, RouterLink],
   selector: 'app-landing',
   styleUrl: './landing.scss',
   templateUrl: './landing.html',
@@ -64,37 +59,6 @@ export class Landing {
       title: 'CI and GitHub Pages',
       description: 'Every push is formatted, linted, tested, built and deployed.',
       href: `${this.repoUrl}/actions`,
-    },
-  ];
-
-  protected readonly flow: readonly FlowStep[] = [
-    {
-      icon: 'person_add',
-      title: 'Register',
-      description:
-        'The app backend creates the user in Kerberos with its hidden admin account, ' +
-        'so admin credentials never reach the browser.',
-    },
-    {
-      icon: 'login',
-      title: 'Log in',
-      description:
-        'Kerberos checks the credentials and sets an HttpOnly session cookie that ' +
-        'JavaScript cannot read.',
-    },
-    {
-      icon: 'autorenew',
-      title: 'Stay logged in',
-      description:
-        'AuthService refreshes the session every 5 minutes. A 401 triggers one ' +
-        'refresh and a retry.',
-    },
-    {
-      icon: 'lan',
-      title: 'Call your backend',
-      description:
-        'Requests go through the Kerberos gateway, which tells your backend who the user ' +
-        'is and which organisation they belong to.',
     },
   ];
 }
