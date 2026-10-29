@@ -7,6 +7,14 @@
       and your backend. It owns user accounts and sessions, checks every request before it reaches
       your services, and tells your backend who is calling.
     </p>
+    <p class="mock-note">
+      <mat-icon aria-hidden="true">science</mat-icon>
+      <span>
+        <strong>This demo doesn't talk to a real Kerberos.</strong> An in-browser mock answers the
+        same API, so you can try every flow without a server. The rest of this section describes how
+        a real Kerberos deployment works; switching to one is covered in Quick start below.
+      </span>
+    </p>
   </header>
 
   <section aria-labelledby="kerberos-does-title">
@@ -28,7 +36,11 @@
   </section>
 
   <section aria-labelledby="kerberos-auth-title">
-    <h3 id="kerberos-auth-title">How authentication works in this app</h3>
+    <h3 id="kerberos-auth-title">How authentication works</h3>
+    <p class="intro">
+      These are the steps against a real Kerberos. In this demo the mock plays both Kerberos and the
+      app backend, step for step, so the app code is identical either way.
+    </p>
     <ol class="steps">
       @for (step of authSteps; track step.title) {
         <li class="card step">
@@ -43,9 +55,9 @@
   <section aria-labelledby="kerberos-modes-title">
     <h3 id="kerberos-modes-title">Deployment modes</h3>
     <p class="intro">
-      An organisation is the tenant boundary in Kerberos: users, groups and sessions never cross
-      from one organisation to another, and every login names its organisation. You can run it two
-      ways.
+      Kerberos supports multi-tenancy through organisations. Each organisation is a tenant with its
+      own users, groups and sessions, none of which are shared with another tenant, and every login
+      names its organisation. You can deploy it two ways.
     </p>
     <ul class="modes">
       <li class="card mode">

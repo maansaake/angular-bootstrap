@@ -38,6 +38,13 @@ describe('Landing', () => {
     await expectNoAxeViolations(fixture);
   });
 
+  it('says up front that Kerberos is mocked in the demo', async () => {
+    const fixture = await render();
+    const hero: HTMLElement = fixture.nativeElement.querySelector('.hero');
+
+    expect(hero.querySelector('.demo-note')?.textContent).toContain('mocked');
+  });
+
   it('follows the feature cards with the Kerberos section', async () => {
     const fixture = await render();
     const element: HTMLElement = fixture.nativeElement;

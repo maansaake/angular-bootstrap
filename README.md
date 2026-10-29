@@ -28,7 +28,7 @@ the live demo uses.
 - **Angular Material 3**: a single theme in `src/styles.scss`, built from `--mat-sys-*` tokens,
   with a System/Light/Dark switch.
 - **Kerberos auth**: HttpOnly cookie sessions, automatic refresh, a 401 retry, route guards
-  and organisation scoping. See [About Kerberos](#about-kerberos).
+  and multi-tenancy. See [About Kerberos](#about-kerberos).
 - **OpenAPI clients**: typed Angular services generated from `openapi/` with `make codegen`.
 - **Accessibility**: a skip link, focus management on navigation, and axe-core checks in every
   page spec. Targets WCAG 2.2 AA.
@@ -41,6 +41,12 @@ the live demo uses.
 this app and your backend. It owns user accounts and sessions, checks every request before it
 reaches your services, and tells your backend who is calling. Your backend never handles a
 password or a session.
+
+> [!NOTE]
+> The live demo and `make serve` don't talk to a real Kerberos. An in-browser mock
+> (`src/app/mocks/`) answers the same API in place of Kerberos and the app backend, so everything
+> runs without a server. This section describes how a real Kerberos deployment works; see
+> [Connect a real backend](#make-it-yours) to switch.
 
 ### What it does
 
@@ -80,10 +86,10 @@ backend can authorize and scope data without talking to Kerberos.
 
 ### Deployment modes
 
-An **organisation** is the tenant boundary in Kerberos. Users, groups, group memberships and
-sessions belong to exactly one organisation and never cross into another, and every auth call
+Kerberos supports **multi-tenancy** through organisations. Each organisation is a tenant: its
+users, groups, group memberships and sessions are never shared with another tenant, and every auth call
 names its organisation (`/api/auth/basic/organisations/{orgID}/login`). The API and the
-isolation model are the same in both modes; the difference is how many organisations the app
+multi-tenancy model are the same in both modes; the difference is how many organisations the app
 uses and where the ID comes from.
 
 |                          | Multi-tenant                                                                                                | Single-tenant (this starter)                    |
@@ -99,6 +105,9 @@ resolved at runtime (a signal works well) and scope your backend's data by `X-Kr
 generated clients already take the organisation as a parameter, so nothing else changes.
 
 ### How authentication works in this app
+
+These are the steps against a real Kerberos. In the demo, the mock plays both Kerberos and the app
+backend, so the app code is identical either way.
 
 ```mermaid
 sequenceDiagram

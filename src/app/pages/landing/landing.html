@@ -2,7 +2,9 @@
   <section class="hero" aria-labelledby="hero-title">
     @if (auth.loggedIn()) {
       <h1 id="hero-title">Welcome back, {{ auth.username() }}</h1>
-      <p class="lead">You're logged in through Kerberos. See what your session looks like.</p>
+      <p class="lead">
+        You're logged in through the mocked Kerberos. See what your session looks like.
+      </p>
       <div class="actions">
         <a matButton="filled" routerLink="/profile">Go to your profile</a>
       </div>
@@ -10,13 +12,20 @@
       <h1 id="hero-title">Start your next Angular app in minutes</h1>
       <p class="lead">
         A small, production-minded Angular starter with Material Design 3, Signal Forms and
-        generated API clients. Register, log in and manage a profile, all backed by Kerberos.
+        generated API clients. Register, log in and manage a profile with Kerberos authentication.
       </p>
       <div class="actions">
         <a matButton="filled" routerLink="/register">Try the demo</a>
         <a matButton="outlined" [href]="repoUrl">View the source</a>
       </div>
     }
+    <p class="demo-note">
+      <mat-icon aria-hidden="true">science</mat-icon>
+      <span>
+        <strong>Demo mode:</strong> Kerberos and the app backend are mocked inside your browser.
+        Accounts are saved in this browser only, so don't use a real password.
+      </span>
+    </p>
   </section>
 
   <section aria-labelledby="features-title">
@@ -47,9 +56,10 @@ cd my-app
 make install
 make serve</code></pre>
     <p>
-      The app runs against an in-browser mock backend, the same one this demo uses. When you're
-      ready for a real Kerberos, delete <code>provideMockBackend()</code> from
-      <code>app.config.ts</code> and the <code>src/app/mocks/</code> directory.
+      Like this demo, the app runs against an in-browser mock of Kerberos and the app backend, so it
+      works without a server. When you're ready for a real Kerberos deployment, delete
+      <code>provideMockBackend()</code> from <code>app.config.ts</code> and the
+      <code>src/app/mocks/</code> directory.
     </p>
   </section>
 </div>

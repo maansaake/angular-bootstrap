@@ -4,7 +4,10 @@
   <mat-card appearance="outlined" class="session">
     <mat-card-header>
       <h2 mat-card-title>Your Kerberos session</h2>
-      <p mat-card-subtitle>What Kerberos knows about you, as reported by <code>GetMe</code>.</p>
+      <p mat-card-subtitle>
+        What Kerberos knows about you, as reported by <code>GetMe</code>. In this demo, the
+        in-browser mock answers in its place.
+      </p>
     </mat-card-header>
     <mat-card-content>
       <dl>
@@ -17,7 +20,10 @@
         <dt>Groups</dt>
         <dd>{{ groups() }}</dd>
         <dt>Session</dt>
-        <dd>HttpOnly cookie set by Kerberos. This app cannot read it.</dd>
+        <dd>
+          With a real Kerberos, an HttpOnly cookie this app cannot read. The demo mock keeps it in
+          localStorage instead.
+        </dd>
         <dt>Auto-refresh</dt>
         <dd>Every {{ refreshIntervalMinutes }} minutes, plus once on any 401 response</dd>
         <dt>Last refreshed</dt>

@@ -44,8 +44,8 @@ export class KerberosOverview {
       icon: 'admin_panel_settings',
       title: 'Authorizes',
       description:
-        'Group-based rules for a whole backend or single paths, with users isolated per ' +
-        'organisation.',
+        'Group-based rules for a whole backend or single paths, with multi-tenancy through ' +
+        'organisations.',
     },
     {
       icon: 'monitoring',

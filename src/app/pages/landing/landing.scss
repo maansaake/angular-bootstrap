@@ -43,6 +43,25 @@ p {
   }
 }
 
+.demo-note {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  max-width: 40rem;
+  margin: 2rem auto 0;
+  padding: 0.75rem 1rem;
+  border-radius: var(--mat-sys-corner-large);
+  background: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  font: var(--mat-sys-body-medium);
+  text-align: start;
+
+  mat-icon {
+    flex-shrink: 0;
+    color: var(--mat-sys-primary);
+  }
+}
+
 .actions {
   display: flex;
   flex-wrap: wrap;

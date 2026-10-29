@@ -39,7 +39,7 @@ export class Landing {
     {
       icon: 'shield_person',
       title: 'Kerberos authentication',
-      description: 'HttpOnly cookie sessions, automatic refresh and organisation isolation.',
+      description: 'HttpOnly cookie sessions, automatic refresh and multi-tenancy.',
       href: 'https://github.com/trebent/kerberos',
     },
     {
