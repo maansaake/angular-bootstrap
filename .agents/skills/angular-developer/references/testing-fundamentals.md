@@ -1,10 +1,10 @@
 # Testing Fundamentals
 
-This guide covers the fundamental principles and practices for writing unit tests in this repository, which uses Vitest as the test runner.
+This guide covers the fundamental principles and practices for writing unit tests in Angular projects that use Vitest as the test runner (the default for new Angular CLI projects).
 
 ## Core Philosophy: Zoneless & Async-First
 
-This project follows a modern, zoneless testing approach. State changes schedule updates asynchronously, and tests must account for this.
+Use a modern, zoneless testing approach. State changes schedule updates asynchronously, and tests must account for this.
 
 **Do NOT** use `fixture.detectChanges()` to manually trigger updates.
 **Do NOT** use `fixture.changeDetectorRef.markForCheck()` either: it marks only the host view and does not refresh the template of `OnPush` components (the default). Update state through signals, inputs, or DOM events instead.

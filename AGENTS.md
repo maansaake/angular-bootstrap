@@ -20,6 +20,12 @@ For Angular best practices, follow the `angular-developer` skill (and `angular-m
 - It MUST pass all AXE checks.
 - It MUST follow all WCAG AA minimums, including focus management, color contrast, and ARIA attributes.
 
+## Angular Material
+
+- The single M3 theme lives in `src/styles.scss` (`mat.$red-palette` primary, `mat.$violet-palette` tertiary, Roboto, density 0). `color-scheme` is set on `html`; `ThemeService` switches it between `light`, `dark`, and `light dark`
+- Show transient messages through `inject(Notifier).show(message)` (`src/app/services/notifier.service.ts`), not `MatSnackBar` directly
+- App chrome (header, footer) uses `--mat-sys-surface-container` backgrounds
+
 ## Forms
 
 - Prefer Signal Forms (`@angular/forms/signals`) for new forms. They are stable in Angular v22+ and provide signal-based state, type-safe field access, and schema-based validation

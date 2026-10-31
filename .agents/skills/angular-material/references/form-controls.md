@@ -42,10 +42,9 @@ Every `<mat-form-field>` MUST contain exactly one form control child (`matInput`
 ## Forms integration
 
 `mat-form-field` works with template-driven forms, Reactive Forms (`FormControl`,
-`formControlName`), and Signal Forms (`@angular/forms/signals`, preferred for NEW forms per
-AGENTS.md).
+`formControlName`), and Signal Forms (`@angular/forms/signals`, preferred for NEW forms).
 
-Reactive (existing repo pattern, `login.ts`):
+Reactive example:
 
 ```ts
 readonly loginForm = this.fb.nonNullable.group({
@@ -62,8 +61,8 @@ readonly loginForm = this.fb.nonNullable.group({
 </mat-form-field>
 ```
 
-Error rendering pattern — per-validator messages, using `@if` control flow (AGENTS.md
-bans `*ngIf`):
+Error rendering pattern — per-validator messages, using `@if` control flow (never
+`*ngIf`):
 
 ```html
 @if (username.hasError('required')) { <mat-error>Username is required</mat-error> }

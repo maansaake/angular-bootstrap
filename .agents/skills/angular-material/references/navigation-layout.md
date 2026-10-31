@@ -42,9 +42,8 @@ names (https://fonts.google.com/icons).
 </mat-toolbar>
 ```
 
-Import `MatToolbar` (and `MatToolbarRow` only when using multiple rows). This repo's
-`header` component uses a toolbar with system-variable-based background in `header.scss`.
-Use one toolbar per role; don't nest toolbars for layout — use flexbox inside.
+Import `MatToolbar` (and `MatToolbarRow` only when using multiple rows). Give the
+toolbar a system-variable-based background (e.g. `--mat-sys-surface-container`). Use one toolbar per role; don't nest toolbars for layout — use flexbox inside.
 
 ## Sidenav (`@angular/material/sidenav`)
 
@@ -126,5 +125,5 @@ responsive tile grids (cols + rowHeight; otherwise prefer CSS grid).
 ## Layout guidance
 
 Prefer Material tokens/utility classes (`mat-bg-surface-container`, `--mat-sys-*`) over
-custom spacing colors. This repo recently standardized header/footer on surface-container
-backgrounds — follow that pattern for chrome-level surfaces.
+custom spacing colors. Use surface-container backgrounds for chrome-level surfaces such as
+the header and footer, and follow whatever the project already uses.

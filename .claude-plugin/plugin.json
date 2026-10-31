@@ -1,0 +1,11 @@
+{
+  "name": "angular-bootstrap",
+  "version": "1.0.0",
+  "description": "Angular skills: angular-developer, angular-material (M3), and angular-new-app.",
+  "author": {
+    "name": "maansaake"
+  },
+  "repository": "https://github.com/maansaake/angular-bootstrap",
+  "license": "MIT",
+  "skills": "./.agents/skills/"
+}

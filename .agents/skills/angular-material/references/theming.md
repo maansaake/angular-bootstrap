@@ -4,17 +4,21 @@ Condensed from the official theming guides:
 https://material.angular.dev/guide/theming and
 https://material.angular.dev/guide/theming-your-components
 
-## What's already set up in this repo
+## Expected global setup
 
-`src/styles.scss` contains the single source of theme truth:
+The global stylesheet (usually `src/styles.scss`) is the single source of theme truth. A
+typical setup:
 
 ```scss
 @use '@angular/material' as mat;
 
 html {
   height: 100%;
-  @include mat.theme((color: (primary: magenta, tertiary: violet palettes),
-      typography: Roboto, density: 0));
+  @include mat.theme((
+    color: (primary: mat.$azure-palette, tertiary: mat.$blue-palette),
+    typography: Roboto,
+    density: 0,
+  ));
   @include mat.system-classes();
 }
 
@@ -28,12 +32,12 @@ body {
 
 `mat.theme()` emits CSS variables (design tokens) consumed by every Material component and
 available to app CSS. Colors are emitted with the CSS `light-dark()` function, so light/dark
-switching is driven by `color-scheme` — already `light dark` here (system preference).
+switching is driven by `color-scheme` — `light dark` follows the system preference.
 
 Rules:
 
-- Only categories included in the map emit variables (this repo includes color, typography,
-  density).
+- Only categories included in the map emit variables (include color, typography, and
+  density unless there is a reason not to).
 - To change app colors later, edit the palettes in `mat.theme()` — do not create a second
   global theme or import a prebuilt theme CSS file.
 - Multiple themes are legal for scoped regions: call `@include mat.theme((color: ...))`
@@ -131,5 +135,5 @@ highly visible outlines, add to `html`:
 ));
 ```
 
-This repo's AGENTS.md requires WCAG AA — prefer including it if the app's default focus
-visibility is judged insufficient.
+Prefer including it when the project targets WCAG AA and the default focus visibility is
+judged insufficient.

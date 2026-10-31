@@ -1,0 +1,13 @@
+{
+  "name": "angular-bootstrap",
+  "owner": {
+    "name": "maansaake"
+  },
+  "plugins": [
+    {
+      "name": "angular-bootstrap",
+      "source": "./",
+      "description": "Angular skills: angular-developer, angular-material (M3), and angular-new-app."
+    }
+  ]
+}

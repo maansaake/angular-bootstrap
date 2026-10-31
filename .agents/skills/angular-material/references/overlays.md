@@ -33,7 +33,7 @@ export class ConfirmDialog {
 
 ## Snack bar (`@angular/material/snack-bar`)
 
-Repo pattern (see `login.ts` / `register.ts`) — simple text messages:
+Simple text messages:
 
 ```ts
 readonly snackBar = inject(MatSnackBar);

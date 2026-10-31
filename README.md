@@ -198,6 +198,20 @@ Where each kind of file goes, and the rules for adding new ones, are in
 
 Coding conventions for humans and AI agents are in [`AGENTS.md`](AGENTS.md).
 
+## Claude Code skills
+
+The Angular skills in [`.agents/skills`](.agents/skills) (`angular-developer`, `angular-material`,
+`angular-new-app`) are maintained here and published as a Claude Code plugin. To use them in
+another project:
+
+```
+/plugin marketplace add maansaake/angular-bootstrap
+/plugin install angular-bootstrap@angular-bootstrap
+```
+
+Run `/plugin marketplace update angular-bootstrap` to pick up changes after they are pushed.
+Keep the skills project-agnostic; facts specific to this app belong in `AGENTS.md`.
+
 ## License
 
 [MIT](LICENSE)
