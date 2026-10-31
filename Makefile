@@ -7,7 +7,7 @@ install/cli:
 	npm install -g @angular/cli
 
 codegen:
-	npm run codegen
+	npx @openapitools/openapi-generator-cli generate -g typescript-angular -i openapi/auth_basic.yaml -o src/app/services/auth-basic && npx @openapitools/openapi-generator-cli generate -g typescript-angular -i openapi/backend.yaml -o src/app/services/backend
 
 format:
 	npx prettier --write .

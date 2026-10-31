@@ -1,15 +1,6 @@
 {
   "name": "angular-bootstrap",
   "version": "0.0.0",
-  "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "lint": "ng lint",
-    "codegen": "npx @openapitools/openapi-generator-cli generate -g typescript-angular -i openapi/auth_basic.yaml -o src/app/services/auth-basic && npx @openapitools/openapi-generator-cli generate -g typescript-angular -i openapi/backend.yaml -o src/app/services/backend"
-  },
   "private": true,
   "license": "MIT",
   "packageManager": "npm@11.19.0",
