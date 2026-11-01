@@ -136,7 +136,7 @@ sequenceDiagram
   sessions. It exposes signals (`user`, `username`, `loggedIn`, `lastRefreshedAt`) and returns
   typed results (`{ ok: true } | { ok: false, reason }`) so pages can show accurate errors.
 - **`authRefreshInterceptor`** catches a 401, refreshes the session once and retries.
-- **`authGuard` / `guestGuard`** (`src/app/guards/`) protect `/profile`, keep signed-in users off
+- **`authGuard` / `guestGuard`** (`src/app/core/guards/`) protect `/profile`, keep signed-in users off
   `/login` and `/register`, and send users back to where they were going after logging in.
 
 ## Make it yours
@@ -174,12 +174,10 @@ sequenceDiagram
 src/app/
   app.config.ts        providers: router, HTTP, API clients, mock backend
   app.routes.ts        lazy routes and guards
-  core/                app shell: header, footer
+  core/                app shell (header, footer), route guards, HTTP interceptors
   pages/               one directory per route, with page-only components under it
   components/          shared components used by several pages
   services/            AuthService, ThemeService, Notifier and the generated clients
-  guards/              authGuard, guestGuard
-  interceptors/        401 refresh-and-retry
   utils/               validation rules and form helpers
   mocks/               demo-only in-browser backend (delete for real use)
 src/testing/           test helpers: AuthService stub, axe-core check
@@ -201,7 +199,7 @@ Coding conventions for humans and AI agents are in [`AGENTS.md`](AGENTS.md).
 ## Claude Code skills
 
 The Angular skills in [`.agents/skills`](.agents/skills) (`angular-developer`, `angular-material`,
-`angular-new-app`) are maintained here and published as a Claude Code plugin. To use them in
+`angular-new-app`, `angular-project-structure`) are maintained here and published as a Claude Code plugin. To use them in
 another project:
 
 ```
@@ -210,7 +208,11 @@ another project:
 ```
 
 Run `/plugin marketplace update angular-bootstrap` to pick up changes after they are pushed.
-Keep the skills project-agnostic; facts specific to this app belong in `AGENTS.md`.
+Keep the skills project-agnostic; facts specific to this app belong in `AGENTS.md`. The
+directory layout and coding conventions live in the `angular-project-structure` skill so other
+projects get them through the plugin. Bump `version` in
+[`.claude-plugin/plugin.json`](.claude-plugin/plugin.json) when a skill changes so installs pick
+up the update.
 
 ## License
 

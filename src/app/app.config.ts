@@ -10,7 +10,7 @@ import { provideRouter, withComponentInputBinding, withInMemoryScrolling } from 
 
 import { environment } from '../environments/environment';
 import { routes } from './app.routes';
-import { authRefreshInterceptor } from './interceptors/auth-refresh.interceptor';
+import { authRefreshInterceptor } from './core/interceptors/auth-refresh.interceptor';
 import { provideMockBackend } from './mocks/kerberos-mock';
 import { provideApi } from './services/auth-basic';
 import { AuthService } from './services/auth.service';

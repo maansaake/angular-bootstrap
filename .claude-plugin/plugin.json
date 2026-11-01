@@ -1,7 +1,7 @@
 {
   "name": "angular-bootstrap",
-  "version": "1.0.0",
-  "description": "Angular skills: angular-developer, angular-material (M3), and angular-new-app.",
+  "version": "1.1.0",
+  "description": "Angular skills: angular-developer, angular-material (M3), angular-new-app, and angular-project-structure (layout and conventions).",
   "author": {
     "name": "maansaake"
   },

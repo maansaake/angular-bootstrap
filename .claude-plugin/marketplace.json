@@ -7,7 +7,7 @@
     {
       "name": "angular-bootstrap",
       "source": "./",
-      "description": "Angular skills: angular-developer, angular-material (M3), and angular-new-app."
+      "description": "Angular skills: angular-developer, angular-material (M3), angular-new-app, and angular-project-structure (layout and conventions)."
     }
   ]
 }
