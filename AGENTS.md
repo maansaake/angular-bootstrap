@@ -8,19 +8,13 @@ Follow these skills (in `.agents/skills`, also published as the `angular-bootstr
 
 This file records only the facts specific to this project. Where it conflicts with a skill, this file wins.
 
-## Project Structure
+## Project docs
 
-- This app's directory map, including the demo-only `mocks/` directory, is in `docs/structure.md`
+Read these before planning a change, and update them in the same change when the code moves:
 
-## Angular Material
-
-- The single M3 theme lives in `src/styles.scss` (`mat.$red-palette` primary, `mat.$violet-palette` tertiary, Roboto, density 0). `color-scheme` is set on `html`; `ThemeService` switches it between `light`, `dark`, and `light dark`
-- Show transient messages through `inject(Notifier).show(message)` (`src/app/services/notifier.service.ts`), not `MatSnackBar` directly
-- App chrome (header, footer) uses `--mat-sys-surface-container` backgrounds
-
-## API Clients
-
-- Clients are generated from `openapi/` into `src/app/services/<api-name>` via `make codegen`. Generated output is committed
+- `docs/overview.md`: what this repo is and its high-level design
+- `docs/structure.md`: the file map, including the demo-only `mocks/` directory and the skills/plugin layout
+- `docs/design-rules.md`: standing conventions for theming, API clients, testing and the skills
 
 ## Verification
 
@@ -29,4 +23,3 @@ This file records only the facts specific to this project. Where it conflicts wi
 - Lint: `make lint` (`ng lint --fix`; CI runs `make lint/ci`)
 - Test: `make test` (`ng test --watch false`)
 - `make check` runs the CI sequence in one go
-- Every page spec must call `expectNoAxeViolations` from `src/testing/axe.ts`

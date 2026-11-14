@@ -142,7 +142,7 @@ sequenceDiagram
 ## Make it yours
 
 1. **Rename** the project in `package.json`, `angular.json` (and the `dist/` path in
-   `.github/workflows/deploy.yaml`), `src/index.html` and the header and footer.
+   `.github/workflows/main.yaml`), `src/index.html` and the header and footer.
 2. **Retheme** by changing the palettes in `src/styles.scss`. Components only use system tokens,
    so nothing else needs to change.
 3. **Connect a real backend**:
@@ -184,8 +184,8 @@ src/testing/           test helpers: AuthService stub, axe-core check
 openapi/               API specs the clients are generated from
 ```
 
-Where each kind of file goes, and the rules for adding new ones, are in
-[`docs/structure.md`](docs/structure.md).
+The full file map is in [`docs/structure.md`](docs/structure.md), the project design in
+[`docs/overview.md`](docs/overview.md) and the standing conventions in [`docs/design-rules.md`](docs/design-rules.md).
 
 ## CI and deployment
 
