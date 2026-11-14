@@ -73,7 +73,10 @@ regenerate.
 ### `utils/`
 
 Plain, framework-light functions and constants (no `@Component` or `@Service`): validation rules,
-form helpers.
+form helpers, data formatting. This is the only place for them, even for a helper only one page
+uses: pages have no `utils/` of their own. A small helper used by a single component may stay as
+a module-level function in that component's file; move it here once it is shared or grows big
+enough to deserve its own spec.
 
 Add other role directories (for example `mocks/` for a demo backend) only when the code fits none
 of the above, and document them in the project's `AGENTS.md`.
