@@ -47,7 +47,7 @@
       <h2 mat-card-title>Change username</h2>
     </mat-card-header>
     <mat-card-content>
-      <form class="form-stack" novalidate (submit)="updateUsername($event)">
+      <form class="form-stack" [formRoot]="usernameForm">
         <mat-form-field>
           <mat-label>Username</mat-label>
           <input matInput [formField]="usernameForm.username" autocomplete="username" />
@@ -70,7 +70,7 @@
       <h2 mat-card-title>Change password</h2>
     </mat-card-header>
     <mat-card-content>
-      <form class="form-stack" novalidate (submit)="updatePassword($event)">
+      <form class="form-stack" [formRoot]="passwordForm">
         <!-- Lets password managers associate the change with this account. -->
         <input
           type="text"

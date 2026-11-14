@@ -5,7 +5,7 @@
     <p class="form-error" role="alert">{{ error() }}</p>
   }
 
-  <form class="form-stack" novalidate (submit)="onSubmit($event)">
+  <form class="form-stack" [formRoot]="form">
     <mat-form-field>
       <mat-label>Username</mat-label>
       <input matInput [formField]="form.username" autocomplete="username" />

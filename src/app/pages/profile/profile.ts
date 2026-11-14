@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, computed, inject, linkedSignal, signal } from '@angular/core';
-import { form, FormField, required, submit } from '@angular/forms/signals';
+import { form, FormField, FormRoot, required, TreeValidationResult } from '@angular/forms/signals';
 import { MatButton } from '@angular/material/button';
 import {
   MatCard,
@@ -17,8 +17,8 @@ import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 
 import { AuthService } from '../../services/auth.service';
-import { focusFirstInvalid } from '../../utils/forms';
 import { Notifier } from '../../services/notifier.service';
+import { focusFirstInvalid } from '../../utils/forms';
 import { newPasswordRules, repeats, usernameRules } from '../../utils/validation';
 import { DeleteAccountDialog } from './components/delete-account-dialog/delete-account-dialog';
 
@@ -26,6 +26,7 @@ import { DeleteAccountDialog } from './components/delete-account-dialog/delete-a
   imports: [
     DatePipe,
     FormField,
+    FormRoot,
     MatButton,
     MatCard,
     MatCardActions,
@@ -62,6 +63,12 @@ export class Profile {
   protected readonly usernameForm = form(
     linkedSignal(() => ({ username: this.auth.username() })),
     (path) => usernameRules(path.username),
+    {
+      submission: {
+        action: async () => this.updateUsername(),
+        onInvalid: () => focusFirstInvalid([this.usernameForm.username]),
+      },
+    },
   );
 
   protected readonly passwordForm = form(
@@ -70,6 +77,17 @@ export class Profile {
       required(path.currentPassword, { message: 'Current password is required.' });
       newPasswordRules(path.newPassword);
       repeats(path.repeatedPassword, path.newPassword);
+    },
+    {
+      submission: {
+        action: async () => this.updatePassword(),
+        onInvalid: () =>
+          focusFirstInvalid([
+            this.passwordForm.currentPassword,
+            this.passwordForm.newPassword,
+            this.passwordForm.repeatedPassword,
+          ]),
+      },
     },
   );
 
@@ -86,61 +104,46 @@ export class Profile {
     }
   }
 
-  protected async updateUsername(event: Event): Promise<void> {
-    event.preventDefault();
+  private async updateUsername(): Promise<TreeValidationResult> {
+    const result = await this.auth.updateUsername(this.usernameForm.username().value());
 
-    await submit(this.usernameForm, {
-      action: async () => {
-        const result = await this.auth.updateUsername(this.usernameForm.username().value());
+    if (result.ok) {
+      this.notifier.show('Username updated.');
+      return undefined;
+    }
 
-        if (result.ok) {
-          this.notifier.show('Username updated.');
-          return undefined;
-        }
-
-        return {
-          kind: 'server',
-          message:
-            result.reason === 'conflict'
-              ? 'That username is already taken.'
-              : 'Could not update your username. Please try again.',
-          fieldTree: this.usernameForm.username,
-        };
-      },
-      onInvalid: () => focusFirstInvalid([this.usernameForm.username]),
-    });
+    return {
+      kind: 'server',
+      message:
+        result.reason === 'conflict'
+          ? 'That username is already taken.'
+          : 'Could not update your username. Please try again.',
+      fieldTree: this.usernameForm.username,
+    };
   }
 
-  protected async updatePassword(event: Event): Promise<void> {
-    event.preventDefault();
+  private async updatePassword(): Promise<TreeValidationResult> {
     const fields = this.passwordForm;
+    const { currentPassword, newPassword } = fields().value();
+    const result = await this.auth.updatePassword(currentPassword, newPassword);
 
-    await submit(fields, {
-      action: async () => {
-        const { currentPassword, newPassword } = fields().value();
-        const result = await this.auth.updatePassword(currentPassword, newPassword);
+    if (result.ok) {
+      fields().reset({ currentPassword: '', newPassword: '', repeatedPassword: '' });
+      this.notifier.show('Password updated.');
+      return undefined;
+    }
 
-        if (result.ok) {
-          fields().reset({ currentPassword: '', newPassword: '', repeatedPassword: '' });
-          this.notifier.show('Password updated.');
-          return undefined;
+    return result.reason === 'invalid'
+      ? {
+          kind: 'server',
+          message: 'Current password is incorrect.',
+          fieldTree: fields.currentPassword,
         }
-
-        return result.reason === 'invalid'
-          ? {
-              kind: 'server',
-              message: 'Current password is incorrect.',
-              fieldTree: fields.currentPassword,
-            }
-          : {
-              kind: 'server',
-              message: 'Could not update your password. Please try again.',
-              fieldTree: fields.newPassword,
-            };
-      },
-      onInvalid: () =>
-        focusFirstInvalid([fields.currentPassword, fields.newPassword, fields.repeatedPassword]),
-    });
+      : {
+          kind: 'server',
+          message: 'Could not update your password. Please try again.',
+          fieldTree: fields.newPassword,
+        };
   }
 
   protected async deleteAccount(): Promise<void> {
