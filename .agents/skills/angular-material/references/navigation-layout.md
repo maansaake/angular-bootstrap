@@ -121,6 +121,7 @@ responsive tile grids (cols + rowHeight; otherwise prefer CSS grid).
   linear.
 - `MatProgressSpinner` (`<mat-progress-spinner mode="indeterminate" [diameter]="40">`) —
   circular; `aria-label` for meaningful spinners (role `progressbar` is built in).
+- Which indicator to use when, and skeleton placeholders: [loading-states.md](loading-states.md).
 
 ## Layout guidance
 

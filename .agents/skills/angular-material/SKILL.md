@@ -44,6 +44,12 @@ styling anything, and never add another theme, prebuilt theme CSS, or `@angular/
 - State: signals (`signal`, `computed`) with `inject()` for services.
 - Forms: prefer Signal Forms (`@angular/forms/signals`) for new forms; `mat-form-field`
   supports both Signal Forms and Reactive Forms. Follow existing form patterns in the project.
+- Loading: a skeleton (`<app-skeleton>`) shaped like the content on first load or a parameter
+  change; a thin indeterminate `mat-progress-bar` over data that is refreshing; small spinners
+  only inside or beside the control that started a request. Never a large centred spinner in
+  place of content. Mark the region `aria-busy` and announce the state in a `role="status"`
+  element. See [loading-states.md](references/loading-states.md), which also holds the skeleton
+  component's source to copy.
 - Feedback: `inject(MatSnackBar).open(message, 'Close', {duration: 3000})` for transient
   messages.
 - Project instructions (`AGENTS.md`, `CLAUDE.md`) override these defaults where they differ.
@@ -57,6 +63,7 @@ Read the file that matches the task, under `references/` next to this file:
 - **Dialog, snack bar, tooltip, menu, bottom sheet**: [overlays.md](references/overlays.md)
 - **Toolbar, sidenav, tabs, stepper, list, card, buttons, icons, progress, badge, expansion, grid**: [navigation-layout.md](references/navigation-layout.md)
 - **Table with sort and pagination**: [data-table.md](references/data-table.md)
+- **Loading states: skeletons, progress bars, spinners, and the skeleton component**: [loading-states.md](references/loading-states.md)
 - **CDK primitives (a11y, overlay, drag-drop, virtual scroll, layout breakpoints, clipboard)**: [cdk.md](references/cdk.md)
 - **Component test harnesses**: [testing.md](references/testing.md)
 
