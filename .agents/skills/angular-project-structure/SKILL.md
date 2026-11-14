@@ -34,6 +34,11 @@ src/app/
 src/testing/     shared test helpers
 ```
 
+- Plain functions and types live in `utils/`, even when only one page uses them; pages have no
+  `utils/` of their own. A small helper used by one component may stay as a module-level
+  function in that component's file. Move it to `utils/` once it is shared, or large enough to
+  deserve its own spec.
+
 - Place a component by who uses it: the app shell → `core/`; a route → `pages/`; one page → that
   page's `components/`; several pages → `components/`.
 - One component per directory, named in kebab-case, with template, styles and spec beside it.
@@ -86,3 +91,7 @@ src/testing/     shared test helpers
 Before calling a change complete, run in order: **format → build → lint → test**. All four must
 pass. Read the output of each step and fix failures before moving on; do not claim success
 without it. Use the project's own scripts (Makefile, `package.json`) for each step.
+
+Keep one script (for example `make check`) that runs exactly what CI runs, and have CI run the
+production build on the Node version the project pins (`.nvmrc` or `engines`). When the two
+drift, a change can pass locally and fail in CI, or the reverse.

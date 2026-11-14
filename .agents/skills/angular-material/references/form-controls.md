@@ -43,8 +43,51 @@ Every `<mat-form-field>` MUST contain exactly one form control child (`matInput`
 
 `mat-form-field` works with template-driven forms, Reactive Forms (`FormControl`,
 `formControlName`), and Signal Forms (`@angular/forms/signals`, preferred for NEW forms).
+`MatInput` reads a Signal Forms field directly, so `[formField]` on a `matInput` gives the
+form field its required marker and error state with no extra wiring. Controls that are
+`ControlValueAccessor`s (`mat-select`, `mat-slide-toggle`, `mat-checkbox`) take `[formField]`
+too.
 
-Reactive example:
+Signal Forms example:
+
+```ts
+import {form, FormField, FormRoot, required, validate} from '@angular/forms/signals';
+
+protected readonly form = form(
+  signal({newPassword: '', confirmPassword: ''}),
+  (path) => {
+    required(path.newPassword);
+    required(path.confirmPassword);
+    // A cross-field rule goes on the field that shows the error.
+    validate(path.confirmPassword, ({value, valueOf}) =>
+      value() === valueOf(path.newPassword) ? undefined : {kind: 'mismatch'},
+    );
+  },
+  // Runs only when the form is valid, after marking every field touched.
+  {submission: {action: async () => this.save()}},
+);
+```
+
+```html
+<!-- formRoot sets novalidate and runs the submission action on submit. -->
+<form [formRoot]="form">
+  <mat-form-field>
+    <mat-label>Confirm password</mat-label>
+    <input matInput type="password" [formField]="form.confirmPassword" />
+    @if (form.confirmPassword().getError('mismatch')) {
+      <mat-error>Passwords do not match</mat-error>
+    }
+  </mat-form-field>
+  <button matButton="filled" type="submit" [disabled]="form().invalid()">Save</button>
+</form>
+```
+
+- An edit form that follows an input takes its model from
+  `linkedSignal(() => ({name: this.item().name}))` instead of resetting itself in an `effect`.
+- After a successful create, `this.form().reset(emptyValue)` clears the values and the
+  touched state together.
+
+Reactive example, for existing Reactive forms:
 
 ```ts
 readonly loginForm = this.fb.nonNullable.group({
@@ -69,9 +112,10 @@ Error rendering pattern — per-validator messages, using `@if` control flow (ne
 @else if (username.hasError('minlength')) { <mat-error>Too short</mat-error> }
 ```
 
-Cross-field error timing: implement `ErrorStateMatcher` (from `@angular/material/core`) and
-provide it on the control (`[errorStateMatcher]`) when validity depends on form-level state.
-The repo's `profile` page already does this.
+Cross-field errors: with Signal Forms, put the rule on the field that shows the error (see
+above) and no matcher is needed. With Reactive Forms, a group-level validator does not mark the
+field invalid, so implement `ErrorStateMatcher` (from `@angular/material/core`) and provide it
+on the control (`[errorStateMatcher]`).
 
 ## Select
 
@@ -80,7 +124,7 @@ The repo's `profile` page already does this.
   <mat-label>State</mat-label>
   <mat-select formControlName="state" required>
     @for (s of states; track s) {
-      <option [value]="s.code">{{ s.name }}</option>
+      <mat-option [value]="s.code">{{ s.name }}</mat-option>
     }
   </mat-select>
 </mat-form-field>
