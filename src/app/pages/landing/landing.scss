@@ -89,9 +89,7 @@ p {
   mat-icon {
     color: var(--mat-sys-primary);
   }
-}
 
-.feature {
   &:hover {
     border-color: var(--mat-sys-primary);
   }
@@ -131,7 +129,11 @@ p {
   border-radius: var(--mat-sys-corner-medium);
   background: var(--mat-sys-surface-container-highest);
   color: var(--mat-sys-on-surface);
-  font-family: 'Roboto Mono', ui-monospace, monospace;
+
+  // The block sets the size; the global code rule would shrink it again.
+  code {
+    font-size: inherit;
+  }
 }
 
 @media (max-width: 600px) {

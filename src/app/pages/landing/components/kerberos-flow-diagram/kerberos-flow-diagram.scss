@@ -7,12 +7,6 @@ p {
   color: var(--mat-sys-on-surface-variant);
 }
 
-code {
-  font-family: 'Roboto Mono', ui-monospace, monospace;
-  font-size: 0.875em;
-  overflow-wrap: anywhere;
-}
-
 // Request flow diagram: app → gateway stages → backend.
 .diagram {
   margin: 0;
