@@ -60,6 +60,16 @@ describe('provideMockBackend', () => {
     expect(await statusOf(me())).toBe(401);
   });
 
+  it('serves only the signed-in user from GetUser', async () => {
+    const alice = await register('alice');
+    const bobby = await register('bobby');
+    await login('alice');
+
+    const user = await firstValueFrom(http.get(`${org}/users/${alice.id}`));
+    expect(user).toEqual({ id: alice.id, name: 'alice', groups: [] });
+    expect(await statusOf(http.get(`${org}/users/${bobby.id}`))).toBe(403);
+  });
+
   it('rejects taken usernames on registration and rename', async () => {
     await register('alice');
     const { id } = await register('bobby');

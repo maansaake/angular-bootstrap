@@ -55,6 +55,46 @@ describe('Profile', () => {
     await expectNoAxeViolations(fixture);
   });
 
+  it('shows skeletons until the profile has loaded', async () => {
+    let finish!: () => void;
+    auth.fetchProfile.mockImplementation(
+      () =>
+        new Promise((resolve) => {
+          finish = () => resolve({ id: 7, name: 'alice', groups: [{ id: 2, name: 'admins' }] });
+        }),
+    );
+    fixture = TestBed.createComponent(Profile);
+    fixture.detectChanges();
+    await Promise.resolve();
+    fixture.detectChanges();
+    const element: HTMLElement = fixture.nativeElement;
+
+    expect(element.querySelectorAll('app-skeleton')).toHaveLength(3);
+    expect(element.querySelector('[aria-busy="true"]')).not.toBeNull();
+    expect(element.querySelector('[role="status"]')?.textContent).toContain('Loading your profile');
+    await expectNoAxeViolations(fixture, { waitForStable: false });
+
+    finish();
+    await fixture.whenStable();
+
+    expect(element.querySelectorAll('app-skeleton')).toHaveLength(0);
+    expect(element.textContent).toContain('admins');
+  });
+
+  it('offers a retry when the profile fails to load', async () => {
+    auth.fetchProfile.mockRejectedValueOnce(new Error('offline'));
+    fixture = TestBed.createComponent(Profile);
+    loader = TestbedHarnessEnvironment.loader(fixture);
+    rootLoader = TestbedHarnessEnvironment.documentRootLoader(fixture);
+    await fixture.whenStable();
+    expect(fixture.nativeElement.textContent).toContain('Could not load your profile.');
+
+    await click('Try again');
+
+    expect(auth.fetchProfile).toHaveBeenCalledTimes(3);
+    expect(fixture.nativeElement.textContent).not.toContain('Could not load your profile.');
+  });
+
   it('starts with the current username and saves a new one', async () => {
     const username = await input('Username');
     expect(await username.getValue()).toBe('alice');

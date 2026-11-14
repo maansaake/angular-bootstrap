@@ -9,16 +9,43 @@
         in-browser mock answers in its place.
       </p>
     </mat-card-header>
-    <mat-card-content>
+    <mat-card-content [attr.aria-busy]="profile.isLoading()">
+      <p class="visually-hidden" role="status">
+        {{ profile.isLoading() ? 'Loading your profile…' : '' }}
+      </p>
+      @if (profile.error()) {
+        <div class="load-error">
+          <p>Could not load your profile.</p>
+          <button matButton (click)="profile.reload()">Try again</button>
+        </div>
+      }
       <dl>
         <dt>User ID</dt>
-        <dd>{{ auth.user()?.id }}</dd>
+        <dd>
+          @if (profile.isLoading()) {
+            <app-skeleton width="3rem" />
+          } @else {
+            {{ auth.user()?.id }}
+          }
+        </dd>
         <dt>Username</dt>
-        <dd>{{ auth.username() }}</dd>
+        <dd>
+          @if (profile.isLoading()) {
+            <app-skeleton width="8rem" />
+          } @else {
+            {{ auth.username() }}
+          }
+        </dd>
         <dt>Organisation</dt>
         <dd>{{ auth.orgId }}</dd>
         <dt>Groups</dt>
-        <dd>{{ groups() }}</dd>
+        <dd>
+          @if (profile.isLoading()) {
+            <app-skeleton width="12rem" />
+          } @else {
+            {{ groups() }}
+          }
+        </dd>
         <dt>Session</dt>
         <dd>
           With a real Kerberos, an HttpOnly cookie this app cannot read. The demo mock keeps it in

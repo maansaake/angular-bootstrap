@@ -70,6 +70,21 @@ export class AuthService {
    * Creates an account through the application backend, which proxies to Kerberos with its
    * hidden admin account (see `openapi/backend.yaml`).
    */
+  /**
+   * Fetches the full record of the logged-in user (`GetUser`), including the groups `GetMe`
+   * leaves out, and keeps the session's user in step with it.
+   */
+  async fetchProfile(): Promise<User> {
+    const current = this.currentUser();
+    if (!current) {
+      throw new Error('Not logged in.');
+    }
+
+    const user = await firstValueFrom(this.usersService.getUser(this.orgId, current.id));
+    this.currentUser.set(user);
+    return user;
+  }
+
   async register(username: string, password: string): Promise<AuthResult> {
     try {
       await firstValueFrom(this.registrationService.register({ username, password }));

@@ -17,6 +17,13 @@ export function createAuthStub(initialUser: User | null = null) {
     loggedIn: computed(() => user() !== null),
     lastRefreshedAt: signal<Date | null>(null).asReadonly(),
     setUser: (next: User | null) => user.set(next),
+    fetchProfile: vi.fn(async (): Promise<User> => {
+      const current = user();
+      if (!current) {
+        throw new Error('Not logged in.');
+      }
+      return current;
+    }),
     login: vi.fn(async (): Promise<AuthResult> => ok),
     register: vi.fn(async (): Promise<AuthResult> => ok),
     logout: vi.fn(async () => user.set(null)),

@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, computed, inject, linkedSignal, signal } from '@angular/core';
+import { Component, computed, inject, linkedSignal, resource, signal } from '@angular/core';
 import { form, FormField, FormRoot, required, TreeValidationResult } from '@angular/forms/signals';
 import { MatButton } from '@angular/material/button';
 import {
@@ -16,6 +16,7 @@ import { MatInput } from '@angular/material/input';
 import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 
+import { Skeleton } from '../../components/skeleton/skeleton';
 import { AuthService } from '../../services/auth.service';
 import { Notifier } from '../../services/notifier.service';
 import { focusFirstInvalid } from '../../utils/forms';
@@ -38,6 +39,7 @@ import { DeleteAccountDialog } from './components/delete-account-dialog/delete-a
     MatFormField,
     MatInput,
     MatLabel,
+    Skeleton,
   ],
   selector: 'app-profile',
   styleUrl: './profile.scss',
@@ -50,11 +52,12 @@ export class Profile {
   protected readonly auth = inject(AuthService);
 
   protected readonly refreshIntervalMinutes = AuthService.refreshIntervalMs / 60_000;
+  /** The full user record, fetched each time the page opens. Shows skeletons until it lands. */
+  protected readonly profile = resource({ loader: () => this.auth.fetchProfile() });
   protected readonly groups = computed(
     () =>
-      this.auth
-        .user()
-        ?.groups?.map((group) => group.name)
+      (this.profile.hasValue() ? this.profile.value() : this.auth.user())?.groups
+        ?.map((group) => group.name)
         .join(', ') || 'None',
   );
   protected readonly refreshing = signal(false);

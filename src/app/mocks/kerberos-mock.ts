@@ -20,6 +20,7 @@ import { delay, Observable, of, throwError } from 'rxjs';
  *
  * - `POST   /api/auth/basic/organisations/{orgID}/login|logout|refresh`
  * - `GET    /api/auth/basic/organisations/{orgID}/users/me`
+ * - `GET    /api/auth/basic/organisations/{orgID}/users/{userID}` (slow, see below)
  * - `PUT    /api/auth/basic/organisations/{orgID}/users/{userID}[/password]`
  * - `POST   /api/register`
  * - `DELETE /api/me`
@@ -48,6 +49,8 @@ interface MockState {
 
 const STORAGE_KEY = 'angular-bootstrap.mock-backend';
 const LATENCY_MS = 300;
+/** `GetUser` answers slowly so the profile page's loading skeleton is visible in the demo. */
+const SLOW_LATENCY_MS = 1200;
 
 const orgPath = '/api/auth/basic/organisations/[^/]+';
 const loginPath = new RegExp(`^${orgPath}/login$`);
@@ -71,8 +74,12 @@ function loadState(): MockState {
   return { users: [], nextUserId: 1, currentUserId: null };
 }
 
-function respond<T>(status: number, body: T | null = null): Observable<HttpEvent<T>> {
-  return of(new HttpResponse<T>({ status, body })).pipe(delay(LATENCY_MS));
+function respond<T>(
+  status: number,
+  body: T | null = null,
+  latencyMs = LATENCY_MS,
+): Observable<HttpEvent<T>> {
+  return of(new HttpResponse<T>({ status, body })).pipe(delay(latencyMs));
 }
 
 function fail(req: HttpRequest<unknown>, status: number, error: string): Observable<never> {
@@ -125,6 +132,12 @@ export class KerberosMockBackend implements HttpBackend {
     }
     if (req.method === 'GET' && mePath.test(path)) {
       return respond(200, { id: current.id, name: current.name });
+    }
+    if (req.method === 'GET' && userPath.test(path)) {
+      if (current.id !== userId(userPath)) {
+        return fail(req, 403, 'Users can only read themselves.');
+      }
+      return respond(200, { id: current.id, name: current.name, groups: [] }, SLOW_LATENCY_MS);
     }
     if (req.method === 'PUT' && userPath.test(path)) {
       return this.updateUser(req, current, userId(userPath));

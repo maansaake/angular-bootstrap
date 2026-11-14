@@ -42,3 +42,16 @@ dd {
   margin: 0;
   overflow-wrap: anywhere;
 }
+
+.load-error {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  margin-block-end: 1rem;
+  color: var(--mat-sys-error);
+
+  p {
+    margin: 0;
+  }
+}

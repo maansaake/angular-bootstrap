@@ -26,6 +26,7 @@ src/app/
       components/              components only the profile page uses
         delete-account-dialog/
   components/                  shared components used by two or more pages
+    skeleton/                  pulsing placeholder blocks for loading content
   services/                    all services, hand-written and generated
     auth.service.ts
     notifier.service.ts
@@ -39,7 +40,10 @@ src/testing/                   test helpers: AuthService stub, axe-core check
 
 ## Specific to this app
 
-- `components/` is empty until the first shared component is added.
+- `components/skeleton/` (`<app-skeleton>`) is a self-contained loading placeholder with no
+  dependency on the rest of the app, so it can be copied into other projects as is. It takes a
+  `shape` (`text`, `rect`, `circle`), `width`, `height` and `lines`. The profile page uses it while
+  `GetUser` loads.
 - `services/auth-basic/` and `services/backend/` are written by `make codegen`. Never hand-edit
   them; change the spec in `openapi/` and regenerate.
 - `mocks/` is the demo backend. Remove it with `provideMockBackend()` when connecting a real

@@ -5,8 +5,14 @@ import axe from 'axe-core';
  * Runs axe-core against a rendered component and fails with a readable list of violations.
  * jsdom has no layout engine, so color contrast is checked in a real browser instead.
  */
-export async function expectNoAxeViolations(fixture: ComponentFixture<unknown>): Promise<void> {
-  await fixture.whenStable();
+export async function expectNoAxeViolations(
+  fixture: ComponentFixture<unknown>,
+  { waitForStable = true } = {},
+): Promise<void> {
+  // Pass `waitForStable: false` to check a loading state, which is never stable.
+  if (waitForStable) {
+    await fixture.whenStable();
+  }
 
   const { violations } = await axe.run(fixture.nativeElement as HTMLElement, {
     rules: { 'color-contrast': { enabled: false } },
