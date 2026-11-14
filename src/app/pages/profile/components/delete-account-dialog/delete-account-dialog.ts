@@ -25,35 +25,8 @@ import { MatInput } from '@angular/material/input';
     MatLabel,
   ],
   selector: 'app-delete-account-dialog',
-  template: `
-    <h2 mat-dialog-title>Delete your account?</h2>
-    <mat-dialog-content>
-      <p>
-        This permanently deletes <strong>{{ username }}</strong> and logs you out. It cannot be
-        undone.
-      </p>
-      <mat-form-field class="confirmation">
-        <mat-label>Type your username to confirm</mat-label>
-        <input matInput [formField]="form.confirmation" autocomplete="off" />
-      </mat-form-field>
-    </mat-dialog-content>
-    <mat-dialog-actions align="end">
-      <button matButton mat-dialog-close>Cancel</button>
-      <button
-        matButton="filled"
-        class="danger-button"
-        [mat-dialog-close]="true"
-        [disabled]="!confirmed()"
-      >
-        Delete account
-      </button>
-    </mat-dialog-actions>
-  `,
-  styles: `
-    .confirmation {
-      width: 100%;
-    }
-  `,
+  templateUrl: './delete-account-dialog.html',
+  styleUrl: './delete-account-dialog.scss',
 })
 export class DeleteAccountDialog {
   protected readonly username = inject<string>(MAT_DIALOG_DATA);

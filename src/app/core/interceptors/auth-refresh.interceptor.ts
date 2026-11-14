@@ -10,6 +10,9 @@ import { AuthService } from '../../services/auth.service';
  * The auth endpoints themselves are never retried.
  */
 export const authRefreshInterceptor: HttpInterceptorFn = (req, next) => {
+  // Inject here: the catchError callback below runs outside the injection context.
+  const authService = inject(AuthService);
+
   return next(req).pipe(
     catchError((error: unknown) => {
       if (!(error instanceof HttpErrorResponse) || error.status !== 401) {
@@ -19,8 +22,6 @@ export const authRefreshInterceptor: HttpInterceptorFn = (req, next) => {
       if (req.url.endsWith('/login') || req.url.endsWith('/refresh')) {
         return throwError(() => error);
       }
-
-      const authService = inject(AuthService);
 
       return authService
         .refreshSession()
