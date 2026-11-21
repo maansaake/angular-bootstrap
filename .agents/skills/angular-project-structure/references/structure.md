@@ -17,6 +17,7 @@ src/app/
     home/
       components/              components only the home page uses
         feature-list/
+          feature-card/        a child only feature-list uses, beside its files
     login/
     profile/
       security/                sub-page: /profile/security
@@ -56,6 +57,12 @@ a page.
 - **Page-only components** live in a `components/` directory inside the page that uses them, e.g.
   `pages/profile/components/delete-account-dialog/`. If a second page needs one, move it to the
   top-level `components/`.
+- **Child components** used by only one parent component live in their own directory directly
+  inside that parent's directory, beside the parent's files, with no `components/` level between:
+  `pages/home/components/feature-list/feature-card/`. A page's `components/` holds only what the
+  page's own template renders. When a second component needs a child, move it up to the nearest
+  directory both can import from: the page's `components/`, or the top-level `components/` when
+  they sit on different pages.
 
 ### `components/`
 
@@ -85,8 +92,9 @@ of the above, and document them in the project's `AGENTS.md`.
 
 1. **One component per directory**, named after the component in kebab-case
    (`delete-account-dialog/delete-account-dialog.ts`) with its template, styles and spec beside it.
-2. **Place a component by who uses it**: the app shell → `core/`; a route → `pages/`; one page →
-   that page's `components/`; several pages → `components/`.
+2. **Place a component by who uses it**: the app shell → `core/`; a route → `pages/`; one parent
+   component → inside that parent's own directory; one page → that page's `components/`; several
+   pages → `components/`.
 3. **Imports point down or across to shared code, never into another page.** A page may import
    from `components/`, `services/` and `utils/`, but not from another page's directory.
 4. **Specs sit next to the file they test** (`*.spec.ts`).
