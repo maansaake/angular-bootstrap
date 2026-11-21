@@ -44,8 +44,7 @@ src/
       landing/                 /
         components/
           kerberos-overview/       "About Kerberos" section
-            components/
-              kerberos-flow-diagram/   request pipeline diagram
+            kerberos-flow-diagram/   request pipeline diagram
       login/                   /login
       register/                /register
       profile/                 /profile: view and update username and password, delete account

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 
 import { environment } from '../../../../../environments/environment';
-import { KerberosFlowDiagram } from './components/kerberos-flow-diagram/kerberos-flow-diagram';
+import { KerberosFlowDiagram } from './kerberos-flow-diagram/kerberos-flow-diagram';
 
 interface Capability {
   icon: string;
