@@ -14,7 +14,7 @@ permissions:
 jobs:
   update-branches:
     runs-on: ubuntu-latest
-    if: github.repository == 'maansaake/angular-boostrap'
+    if: github.repository == 'maansaake/angular-bootstrap'
     steps:
       - name: Generate Jeeves app token
         id: jeeves-token
