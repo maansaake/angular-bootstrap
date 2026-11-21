@@ -7,7 +7,7 @@ updates:
       interval: 'weekly'
       day: monday
     groups:
-      action-updates:
+      npm-updates:
         update-types:
           - minor
           - patch
