@@ -110,10 +110,47 @@ Selection lists (`MatSelectionList, MatSelectionListItem`) for multi-select of i
 ```
 
 Imports: `MatCard, MatCardHeader, MatCardTitle, MatCardContent, MatCardActions` — import the
-sections used. `MatDivider` for separators. Expansion: `MatAccordion, MatExpansionPanel`
+sections used. `MatDivider` for separators.
+
+Card spacing:
+
+- Build cards from their sections and let them set the padding: `mat-card-header` (with
+  `mat-card-title-group`, `mat-card-title` and `mat-card-subtitle`), one or more
+  `mat-card-content`, `mat-card-actions`, and full-width `mat-divider`s between sections.
+- Adjust fonts and colors with `mat.card-overrides(...)` tokens, never padding or margin
+  overrides on the sections. Custom spacing is only for laying out the card's own content (such as
+  the gap between rows inside a `mat-card-content`).
+- The one gap Material leaves open: a header with nothing below it (for example a collapsed card)
+  has no bottom padding; give it 16px.
+- Any panel that sets itself apart from the page (a filter panel, a summary box) should be a card,
+  not a styled `div`.
+- Cards laid out in a grid can be as narrow on a desktop as on a phone. Make the card an
+  inline-size container (`container-type: inline-size` on its host) and use `@container` queries,
+  not `@media` width queries, for styles inside it that change with width. Expansion: `MatAccordion, MatExpansionPanel`
 (`multi` for independent panels). Badge: `MatBadge` attribute directive
 (`<span matBadge="5" matBadgeColor="warn">`). Grid: `MatGridList, MatGridTile` for simple
 responsive tile grids (cols + rowHeight; otherwise prefer CSS grid).
+
+## Controls revealed on hover
+
+A control that only appears on hover (such as an edit button on a list row) must still reach
+keyboard and touch users:
+
+```scss
+@media (hover: hover) {
+  .row .reveal {
+    opacity: 0;
+  }
+  .row:hover .reveal,
+  .row:focus-within .reveal {
+    opacity: 1;
+  }
+}
+```
+
+Hide it with `opacity: 0` only inside `@media (hover: hover)`, and show it on `:hover` and
+`:focus-within` of its row. Never hide it with `display: none` or `visibility: hidden`, which
+removes it from the tab order; touch screens have no hover, so it always shows there.
 
 ## Progress indicators
 

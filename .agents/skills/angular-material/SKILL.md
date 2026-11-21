@@ -50,6 +50,10 @@ styling anything, and never add another theme, prebuilt theme CSS, or `@angular/
   place of content. Mark the region `aria-busy` and announce the state in a `role="status"`
   element. See [loading-states.md](references/loading-states.md), which also holds the skeleton
   component's source to copy.
+- Cards: build them from `mat-card-header`, `mat-card-content` and full-width `mat-divider`s,
+  and let those set the padding; size their contents with `@container` queries. Controls that
+  appear on hover must also show on focus and on touch screens. See
+  [navigation-layout.md](references/navigation-layout.md).
 - Feedback: `inject(MatSnackBar).open(message, 'Close', {duration: 3000})` for transient
   messages.
 - Project instructions (`AGENTS.md`, `CLAUDE.md`) override these defaults where they differ.
@@ -61,7 +65,7 @@ Read the file that matches the task, under `references/` next to this file:
 - **Theming, tokens, utility classes, overrides, dark mode**: [theming.md](references/theming.md)
 - **Form field, input, select, datepicker/timepicker, checkbox/radio/slider/toggle/chips, forms integration, error handling**: [form-controls.md](references/form-controls.md)
 - **Dialog, snack bar, tooltip, menu, bottom sheet**: [overlays.md](references/overlays.md)
-- **Toolbar, sidenav, tabs, stepper, list, card, buttons, icons, progress, badge, expansion, grid**: [navigation-layout.md](references/navigation-layout.md)
+- **Toolbar, sidenav, tabs, stepper, list, card (spacing, container queries), buttons, hover-revealed controls, icons, progress, badge, expansion, grid**: [navigation-layout.md](references/navigation-layout.md)
 - **Table with sort and pagination**: [data-table.md](references/data-table.md)
 - **Loading states: skeletons, progress bars, spinners, and the skeleton component**: [loading-states.md](references/loading-states.md)
 - **CDK primitives (a11y, overlay, drag-drop, virtual scroll, layout breakpoints, clipboard)**: [cdk.md](references/cdk.md)
