@@ -27,7 +27,8 @@ src/app/
     header/, footer/   app shell, rendered on every page
     guards/            functional route guards
     interceptors/      functional HTTP interceptors
-  pages/         one directory per route; sub-pages and page-only components/ nested inside
+  pages/         one directory per route; sub-pages and page-only components/ nested inside,
+                 and a component used by one parent nested in that parent's components/
   components/    shared components used by two or more pages
   services/      all services, hand-written and generated
   utils/         plain functions and constants
@@ -39,8 +40,9 @@ src/testing/     shared test helpers
   function in that component's file. Move it to `utils/` once it is shared, or large enough to
   deserve its own spec.
 
-- Place a component by who uses it: the app shell → `core/`; a route → `pages/`; one page → that
-  page's `components/`; several pages → `components/`.
+- Place a component by who uses it: the app shell → `core/`; a route → `pages/`; one parent
+  component → that parent's own `components/`; one page → that page's `components/`; several
+  pages → `components/`.
 - One component per directory, named in kebab-case, with template, styles and spec beside it.
 - A page never imports from another page's directory. Move shared code to `components/`,
   `services/` or `utils/` instead.
